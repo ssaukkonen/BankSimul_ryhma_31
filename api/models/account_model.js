@@ -1,28 +1,28 @@
 const db = require('../database');
 
-const customer = {
+const account = {
   getById: function(id, callback) {
-    return db.query('select * from customer where id_customer=?', [id], callback);
+    return db.query('select * from account where id_account=?', [id], callback);
   },
   getAll: function(callback) {
-    return db.query('select * from customer', callback);
+    return db.query('select * from account', callback);
   },
-  add: function(customer, callback) {
+  add: function(account, callback) {
     return db.query(
-      'insert into customer (fname,lname,address,phone_num) values(?,?,?,?)',
-      [customer.fname, customer.lname, customer.address, customer.phone_num],
+      'insert into account (acc_number, balance) values(?,?)',
+      [account.acc_number, account.balance],
       callback
     );
   },
   delete: function(id, callback) {
-    return db.query('delete from customer where id_customer=?', [id], callback);
+    return db.query('delete from account where id_account=?', [id], callback);
   },
-  update: function(id, customer, callback) {
+  update: function(id, account, callback) {
     return db.query(
-      'update customer set fname=?,lname=?,address=?, phone_num=? where id_customer=?',
-      [customer.fname, customer.lname, customer.address, customer.phone_num, id],
+      'update account set acc_numbere=?,balance=? where id_account=?',
+      [account.acc_number, account.balance, id],
       callback
     );
   }
 };
-module.exports = customer;
+module.exports = account;
