@@ -10,7 +10,7 @@ const card = {
   add: function(card, callback) {
     return db.query(
       'insert into card (id_customer,id_account,pin) values(?,?,?)',
-      [card.fname, card.lname, card.address, card.phone_num],
+      [card.id_customer, card.id_account, card.pin],
       callback
     );
   },
