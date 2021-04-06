@@ -1,22 +1,22 @@
-#ifndef DIALOG_H
-#define DIALOG_H
+#ifndef PIN_H
+#define PIN_H
 
 #include <QDialog>
 
 namespace Ui {
-class Dialog;
+class pin;
 }
 
-class Dialog : public QDialog
+class pin : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Dialog(QWidget *parent = nullptr);
-    ~Dialog();
+    explicit pin(QWidget *parent = nullptr);
+    ~pin();
 
 private:
-    Ui::Dialog *ui;
+    Ui::pin *ui;
 };
 
-#endif // DIALOG_H
+#endif // PIN_H

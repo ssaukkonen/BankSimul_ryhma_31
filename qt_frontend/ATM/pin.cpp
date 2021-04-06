@@ -1,14 +1,14 @@
 #include "pin.h"
-#include "ui_dialog.h"
+#include "ui_pin.h"
 
-Dialog::Dialog(QWidget *parent) :
+pin::pin(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Dialog)
+    ui(new Ui::pin)
 {
     ui->setupUi(this);
 }
 
-Dialog::~Dialog()
+pin::~pin()
 {
     delete ui;
 }
