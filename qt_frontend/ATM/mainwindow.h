@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "engineatm.h"
+#include "pin.h"
+#include <QObject>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,5 +20,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    engineatm *ptestengine;
+    pin * ppin;
+
+public slots:
+    void SignalFromEngineRfidToExe();
 };
 #endif // MAINWINDOW_H
