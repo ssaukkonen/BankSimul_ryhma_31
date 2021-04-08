@@ -2,15 +2,15 @@
 
 engineatm::engineatm(QObject *parent):QObject(parent)
 {
-    pDllrfid = new Dllrfid;
+    pDLLSerialPort = new DLLSerialPort;
 //    connect(this,SIGNAL(sendSignalToRfid()),pDllrfid,SLOT(receiveSignalFromExe()),Qt::QueuedConnection);
-    connect(pDllrfid,SIGNAL(sendSignalToExeFromRfid()),this,SLOT(receiveSignalFromRfid()),Qt::QueuedConnection);
+    connect(pDLLSerialPort,SIGNAL(sendSignalToExeFromRfid()),this,SLOT(receiveSignalFromRfid()),Qt::QueuedConnection);
 //  connect(pDllrfid,SIGNAL(),this,SLOT(),Qt::QueuedConnection);
 }
 
 engineatm::~engineatm()
 {
-    delete pDllrfid;
+    delete pDLLSerialPort;
 }
 
 void engineatm::receiveSignalFromRfid()

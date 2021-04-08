@@ -51,7 +51,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 
-win32: LIBS += -L$$PWD/../DLLrfid/build-dllrfid-Desktop_Qt_5_15_0_MinGW_32_bit-Debug/debug/ -ldllrfid
 
-INCLUDEPATH += $$PWD/../DLLrfid/dllrfid
-DEPENDPATH += $$PWD/../DLLrfid/dllrfid
+win32: LIBS += -L$$PWD/../build-DLLSerialPort-Desktop_Qt_5_15_0_MinGW_32_bit-Debug/debug/ -lDLLSerialPort
+
+INCLUDEPATH += $$PWD/../DLLSerialPort
+DEPENDPATH += $$PWD/../DLLSerialPort

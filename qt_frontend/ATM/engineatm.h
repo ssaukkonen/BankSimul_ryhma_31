@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QWidget>
-#include "dllrfid.h"
+#include "dllserialport.h"
 
 class engineatm : public QObject
 {
@@ -20,7 +20,8 @@ public slots:
     void receiveSignalFromRfid();
 
 private:
-    Dllrfid * pDllrfid;
+    DLLSerialPort * pDLLSerialPort;
+
 };
 
 #endif // ENGINEATM_H

@@ -2,7 +2,7 @@ QT -= gui
 QT += serialport
 
 TEMPLATE = lib
-DEFINES += DLLRFID_LIBRARY
+DEFINES += DLLSERIALPORT_LIBRARY
 
 CONFIG += c++11
 
@@ -18,12 +18,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    dllrfid.cpp \
+    dllserialport.cpp \
     enginerfid.cpp
 
 HEADERS += \
-    dllrfid_global.h \
-    dllrfid.h \
+    DLLSerialPort_global.h \
+    dllserialport.h \
     enginerfid.h
 
 # Default rules for deployment.
