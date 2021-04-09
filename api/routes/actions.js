@@ -59,4 +59,16 @@ function(request, response) {
   });
 });
 
+
+router.post('/money_action', 
+function(request, response) {
+  actions.money_action(request.body, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult.affectedRows);
+    }
+  });
+});
+
 module.exports = router;
