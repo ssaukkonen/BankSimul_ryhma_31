@@ -4,9 +4,11 @@ engineatm::engineatm(QObject *parent):QObject(parent)
 {
     pDLLSerialPort = new DLLSerialPort;
     pDLLRestAPI = new DLLRestAPI;
+    ppinengine = new pin;
 //    connect(this,SIGNAL(sendSignalToRfid()),pDllrfid,SLOT(receiveSignalFromExe()),Qt::QueuedConnection);
-    connect(pDLLSerialPort,SIGNAL(sendSignalToExeFromRfid()),this,SLOT(receiveSignalFromRfid()),Qt::QueuedConnection);
+    connect(pDLLSerialPort,SIGNAL(sendSignalToExeFromRfid(long long)),this,SLOT(receiveSignalFromRfid(long long)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendSignalToDllRestApi(QString)),pDLLRestAPI,SLOT(SignalFromEngineNosto(QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendKorttiToPin(long long)),ppinengine,SLOT(receiveKorttiFromEngine(long long)),Qt::QueuedConnection);
 }
 
 engineatm::~engineatm()
@@ -15,9 +17,10 @@ engineatm::~engineatm()
     delete pDLLRestAPI;
 }
 
-void engineatm::receiveSignalFromRfid()
+void engineatm::receiveSignalFromRfid(long long kortti)
 {
     emit sendSignalToExeFromEngineRfid();
+    emit sendKorttiToPin(kortti);
 }
 
 void engineatm::receiveSignalfromNosto(QString amount)

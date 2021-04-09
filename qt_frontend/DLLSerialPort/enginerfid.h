@@ -18,7 +18,7 @@ public slots:
     void signalReceivedFromCard();
 
 signals:
-    void sendSignalToInterface();
+    void sendSignalToInterface(long long);
 
 private:
     QSerialPort *pQSerialPort;

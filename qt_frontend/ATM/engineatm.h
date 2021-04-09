@@ -6,6 +6,7 @@
 #include "dllserialport.h"
 #include "dllrestapi.h"
 #include <QDebug>
+#include "pin.h"
 
 class engineatm : public QObject
 {
@@ -19,14 +20,16 @@ signals:
     void sendSignalToExeFromEngineRfid();
 //    void sendSignalToNosto();
     void sendSignalToDllRestApi(QString);
+    void sendKorttiToPin(long long);
 
 public slots:
-    void receiveSignalFromRfid();
+    void receiveSignalFromRfid(long long);
     void receiveSignalfromNosto(QString);
 
 private:
     DLLSerialPort * pDLLSerialPort;
     DLLRestAPI * pDLLRestAPI;
+    pin * ppinengine;
 };
 
 #endif // ENGINEATM_H

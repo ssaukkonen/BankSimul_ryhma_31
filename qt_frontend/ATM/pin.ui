@@ -31,10 +31,14 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QLineEdit" name="linePin">
+      <property name="maxLength">
+       <number>4</number>
+      </property>
+     </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="buttonPinOk">
       <property name="text">
        <string>OK</string>
       </property>
