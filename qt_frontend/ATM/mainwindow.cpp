@@ -6,14 +6,14 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ptestengine = new engineatm;
-    connect(ptestengine,SIGNAL(sendSignalToExeFromEngineRfid()),this,SLOT(SignalFromEngineRfidToExe()),Qt::QueuedConnection);
+    pengineatm = new engineatm;
+    connect(pengineatm,SIGNAL(sendSignalToExeFromEngineRfid()),this,SLOT(SignalFromEngineRfidToExe()),Qt::QueuedConnection);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete ptestengine;
+    delete pengineatm;
 }
 
 void MainWindow::SignalFromEngineRfidToExe()
@@ -25,3 +25,12 @@ void MainWindow::SignalFromEngineRfidToExe()
     ppin = nullptr;
 }
 
+
+void MainWindow::on_pushButton_clicked()
+{
+    pnosto = new nosto;
+    pnosto->exec();
+    pnosto->show();
+    delete pnosto;
+    pnosto = nullptr;
+}

@@ -56,3 +56,8 @@ win32: LIBS += -L$$PWD/../build-DLLSerialPort-Desktop_Qt_5_15_0_MinGW_32_bit-Deb
 
 INCLUDEPATH += $$PWD/../DLLSerialPort
 DEPENDPATH += $$PWD/../DLLSerialPort
+
+win32: LIBS += -L$$PWD/../build-DLLRestAPI-Desktop_Qt_5_15_0_MinGW_32_bit-Debug/debug/ -lDLLRestAPI
+
+INCLUDEPATH += $$PWD/../DLLRestAPI
+DEPENDPATH += $$PWD/../DLLRestAPI

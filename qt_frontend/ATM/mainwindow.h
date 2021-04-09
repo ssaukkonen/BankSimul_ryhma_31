@@ -5,6 +5,7 @@
 #include "engineatm.h"
 #include "pin.h"
 #include <QObject>
+#include "nosto.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,10 +21,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    engineatm *ptestengine;
+    engineatm *pengineatm;
     pin * ppin;
+    nosto * pnosto;
 
 public slots:
     void SignalFromEngineRfidToExe();
+private slots:
+    void on_pushButton_clicked();
 };
 #endif // MAINWINDOW_H
