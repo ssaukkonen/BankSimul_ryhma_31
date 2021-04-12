@@ -24,7 +24,13 @@ const actions = {
       callback
     );
   },
-
+  balance_action: function(procedure_params, callback) {
+    return db.query(
+      'CALL balance_action(?,?)',
+      [procedure_params.id, procedure_params.amount],
+      callback
+    );
+  },
   money_action: function(procedure_params, callback) {
     return db.query(
       'CALL money_action(?,?,?,?,?)',
