@@ -23,6 +23,20 @@ const actions = {
       [actions.id_account, actions.amount, actions.date, actions.action_type, actions.ref_num, actions.message, actions.acc_sender, id],
       callback
     );
+  },
+  balance_action: function(procedure_params, callback) {
+    return db.query(
+      'CALL balance_action(?,?)',
+      [procedure_params.id, procedure_params.amount],
+      callback
+    );
+  },
+  money_action: function(procedure_params, callback) {
+    return db.query(
+      'CALL money_action(?,?,?,?,?)',
+      [procedure_params.first_id, procedure_params.second_id, procedure_params.amount, procedure_params.ref_num, procedure_params.message],
+      callback
+    );
   }
 };
 module.exports = actions;
