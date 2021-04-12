@@ -13,8 +13,8 @@ const card = {
   add: function(card, callback) {
     bcrypt.hash(card.pin, saltRounds, function(err, hash) {
     return db.query(
-      'insert into card (id_customer,id_account,pin) values(?,?,?)',
-      [card.id_customer, card.id_account, hash],
+      'insert into card (id_customer,id_account,pin,card_number) values(?,?,?,?)',
+      [card.id_customer, card.id_account, hash, card.card_number],
       callback)
     });
   },
@@ -22,10 +22,10 @@ const card = {
     return db.query('delete from card where id_card=?', [id], callback);
   },
   update: function(id, card, callback) {
-    bcrypt.hash(user.pin, saltRounds, function(err, hash) {
+    bcrypt.hash(card.pin, saltRounds, function(err, hash) {
     return db.query(
-      'update card set id_customer=?,id_account=?,pin=? where id_card=?',
-      [card.id_customer, card.id_account, hash, id],
+      'update card set id_customer=?,id_account=?,pin=?,card_number=? where id_card=?',
+      [card.id_customer, card.id_account, hash, card.card_number, id],
       callback)
     });
   }
