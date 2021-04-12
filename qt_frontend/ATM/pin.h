@@ -21,6 +21,7 @@ private:
     long long kortti;
     int pinNumber;
 
+
 public slots:
     void receiveKorttiFromEngine(long long);
 private slots:

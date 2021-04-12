@@ -18,11 +18,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::SignalFromEngineRfidToExe()
 {
-    ppin = new pin;
-    ppin->exec();
-    ppin->show();
-    delete ppin;
-    ppin = nullptr;
+//    ppin = new pin;
+    this->close();
+//    ppin->exec();
+//    ppin->show();
+//    delete ppin;
+//    ppin = nullptr;
 }
 
 
