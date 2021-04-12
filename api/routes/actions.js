@@ -62,7 +62,7 @@ function(request, response) {
 
 router.post('/balance_action', 
 function(request, response) {
-  actions.money_action(request.body, function(err, dbResult) {
+  actions.balance_action(request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
