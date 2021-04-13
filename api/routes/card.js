@@ -12,12 +12,13 @@ router.get('/:id?',
         response.json(dbResult);
       }
     });
-  } else {
-    card.getAll(function(err, dbResult) {
-      if (err) {
-        response.json(err);
-      } else {
-        response.json(dbResult);
+  }
+  else {
+       card.getAll(function(err, dbResult) {
+     if (err) {
+       response.json(err);
+     } else {
+       response.json(dbResult);
       }
     });
   }
@@ -31,6 +32,17 @@ function(request, response) {
       response.json(err);
     } else {
       response.json(request.body);
+    }
+  });
+});
+
+router.post('/card_number', 
+function(request, response) {
+  card.card_number(request.body.card_number, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult[0]);
     }
   });
 });

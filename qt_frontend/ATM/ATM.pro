@@ -1,5 +1,5 @@
 QT       += core gui
-
+QT       += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -61,3 +61,8 @@ win32: LIBS += -L$$PWD/../build-DLLRestAPI-Desktop_Qt_5_15_0_MinGW_32_bit-Debug/
 
 INCLUDEPATH += $$PWD/../DLLRestAPI
 DEPENDPATH += $$PWD/../DLLRestAPI
+
+win32: LIBS += -L$$PWD/../build-DLLPinCode-Desktop_Qt_5_15_0_MinGW_32_bit-Debug/debug/ -lDLLPinCode
+
+INCLUDEPATH += $$PWD/../DLLPinCode
+DEPENDPATH += $$PWD/../DLLPinCode

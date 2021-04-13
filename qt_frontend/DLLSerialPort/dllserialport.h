@@ -13,11 +13,11 @@ public:
     ~DLLSerialPort();
 
 public slots:
-    void receiveSignalFromEngine();
+    void receiveSignalFromEngine(long long);
 //    void signalReceivedFromCard();
 
 signals:
-    void sendSignalToExeFromRfid();
+    void sendSignalToExeFromRfid(long long);
     void sendSignalToEngine();
 
 private:
