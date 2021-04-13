@@ -15,9 +15,17 @@ public:
 
 public slots:
     void SignalFromEngineNosto(QString);
+    void KorttiPinFromEngine(QString, QString);
+    void receiveWrongPinFromEngineRestApi();
+    void receiveCorrectPinFromEngineRestApi();
+    void receiveIdFnameLnameFromEngineRestApi(int, QString, QString);
 
 signals:
     void SignalToEngineRestApi(QString);
+    void KorttiPinToRestApiEngine(QString, QString);
+    void sendWrongPinToEngineATM();
+    void sendCorrectPinToEngineATM();
+    void sendIdFnameLnameToEngineATM(int, QString, QString);
 
 private:
     enginerestapi * pengineretsapi;

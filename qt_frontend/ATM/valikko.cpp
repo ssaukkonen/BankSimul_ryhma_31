@@ -12,3 +12,10 @@ Valikko::~Valikko()
 {
     delete ui;
 }
+
+void Valikko::receiveFnameLnameFromEngineATM(QString fname, QString lname)
+{
+    qDebug() << "nimet";
+    ui->labelFnameLname->setText(fname+" "+lname);
+}
+

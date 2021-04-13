@@ -19,6 +19,10 @@ public:
 private slots:
     void on_pushButtonOK_clicked();
 
+public slots:
+    void receiveWrongPinFromDLLPinCode();
+    void receiveClosePinDialog();
+
 signals:
     void sendSignalToDllPinInterface(int);
 

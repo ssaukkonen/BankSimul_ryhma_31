@@ -21,3 +21,13 @@ void pindialog::on_pushButtonOK_clicked()
     qDebug() << pinnumber;
     emit sendSignalToDllPinInterface(pinnumber);
 }
+
+void pindialog::receiveWrongPinFromDLLPinCode()
+{
+    ui->labelWrongPin->setText("Väärä PIN");
+}
+
+void pindialog::receiveClosePinDialog()
+{
+    this->close();
+}

@@ -88,7 +88,7 @@
     </spacer>
    </item>
    <item row="2" column="1">
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="labelWrongPin">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -100,7 +100,7 @@
       </font>
      </property>
      <property name="text">
-      <string>PIN väärin</string>
+      <string/>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
