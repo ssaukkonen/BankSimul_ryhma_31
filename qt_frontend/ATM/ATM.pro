@@ -24,6 +24,7 @@ SOURCES += \
     saldo.cpp \
     tilisiirto.cpp \
     tilitapahtumat.cpp \
+    timerevent.cpp \
     valikko.cpp
 
 HEADERS += \
@@ -34,6 +35,7 @@ HEADERS += \
     saldo.h \
     tilisiirto.h \
     tilitapahtumat.h \
+    timerevent.h \
     valikko.h
 
 FORMS += \

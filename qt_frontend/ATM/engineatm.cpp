@@ -2,11 +2,13 @@
 
 engineatm::engineatm(QObject *parent):QObject(parent)
 {
+    ptimerEventATM = new class timerEvent;
     pDLLSerialPort = new DLLSerialPort;
     pDLLRestAPI = new DLLRestAPI;
     pDLLPinCode = new DLLPinCode;
     pValikko = new Valikko;
-//    connect(this,SIGNAL(sendSignalToRfid()),pDllrfid,SLOT(receiveSignalFromExe()),Qt::QueuedConnection);
+
+    connect(this,SIGNAL(sendStartToTimer()),ptimerEventATM,SLOT(receiveStartFromEngineATM()),Qt::QueuedConnection);
     connect(pDLLSerialPort,SIGNAL(sendSignalToExeFromRfid(long long)),this,SLOT(receiveSignalFromRfid(long long)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendSignalToDllRestApi(QString)),pDLLRestAPI,SLOT(SignalFromEngineNosto(QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendSignalPinToDLL()),pDLLPinCode,SLOT(receiveSignalPinFromEngine()),Qt::QueuedConnection);
@@ -22,13 +24,16 @@ engineatm::engineatm(QObject *parent):QObject(parent)
 
 engineatm::~engineatm()
 {
+    delete ptimerEventATM;
     delete pDLLSerialPort;
     delete pDLLRestAPI;
     delete pDLLPinCode;
+    delete pValikko;
 }
 
 void engineatm::receiveSignalFromRfid(long long kortti2)
 {
+    emit sendStartToTimer();
     emit sendSignalToExeFromEngineRfid();
     kortti=kortti2;
     emit sendSignalPinToDLL();
@@ -69,3 +74,4 @@ void engineatm::receiveIdFnameLnameFromDllRestApi(int id, QString fname, QString
     idAccount=id;
     emit sendFnameLnameToValikko(fname, lname);
 }
+

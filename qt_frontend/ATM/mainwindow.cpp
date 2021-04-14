@@ -19,13 +19,12 @@ MainWindow::~MainWindow()
 void MainWindow::SignalFromEngineRfidToExe()
 {
 //    ppin = new pin;
-    this->close();
+    this->hide();
 //    ppin->exec();
 //    ppin->show();
 //    delete ppin;
-//    ppin = nullptr;
+    //    ppin = nullptr;
 }
-
 
 void MainWindow::on_pushButton_clicked()
 {

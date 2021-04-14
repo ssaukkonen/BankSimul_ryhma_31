@@ -22,12 +22,14 @@ public:
 private:
     Ui::MainWindow *ui;
     engineatm *pengineatm;
-    pin * ppin;
+//    pin * ppin;
     nosto * pnosto;
 
 public slots:
     void SignalFromEngineRfidToExe();
+
 private slots:
     void on_pushButton_clicked();
+
 };
 #endif // MAINWINDOW_H

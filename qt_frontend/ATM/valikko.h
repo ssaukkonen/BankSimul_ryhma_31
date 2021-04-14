@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QDebug>
+#include <QTimer>
 
 namespace Ui {
 class Valikko;
@@ -21,7 +22,6 @@ public slots:
 
 private:
     Ui::Valikko *ui;
-
 };
 
 #endif // VALIKKO_H

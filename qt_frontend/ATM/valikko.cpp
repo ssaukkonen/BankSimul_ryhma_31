@@ -19,3 +19,5 @@ void Valikko::receiveFnameLnameFromEngineATM(QString fname, QString lname)
     ui->labelFnameLname->setText(fname+" "+lname);
 }
 
+
+

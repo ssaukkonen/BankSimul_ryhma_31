@@ -9,6 +9,7 @@
 //#include "pin.h"
 #include "dllpincode.h"
 #include "valikko.h"
+#include "timerevent.h"
 
 class engineatm : public QObject
 {
@@ -19,6 +20,7 @@ public:
 
 
 signals:
+    void sendStartToTimer();
     void sendSignalToRfid();
     void sendSignalToExeFromEngineRfid();
 //    void sendSignalToNosto();
@@ -38,12 +40,14 @@ public slots:
     void receiveIdFnameLnameFromDllRestApi(int, QString, QString);
 
 private:
+    class timerEvent * ptimerEventATM;
     DLLSerialPort * pDLLSerialPort;
     DLLRestAPI * pDLLRestAPI;
     DLLPinCode * pDLLPinCode;
     Valikko * pValikko;
     long long kortti;
     int idAccount;
+
 };
 
 #endif // ENGINEATM_H

@@ -16,6 +16,7 @@ DLLPinCode::~DLLPinCode()
 
 void DLLPinCode::receiveSignalPinFromEngine()
 {
+//    ppindialog->startTimerPin();
     ppindialog->exec();
     ppindialog->show();
     delete ppindialog;
