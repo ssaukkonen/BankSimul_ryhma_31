@@ -8,6 +8,8 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
     connect(pengineretsapi,SIGNAL(sendWrongPinToDllRestApi()),this,SLOT(receiveWrongPinFromEngineRestApi()),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendCorrectPinToDllRestApi()),this,SLOT(receiveCorrectPinFromEngineRestApi()),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendIdFnameLnameToDllRestApi(int, QString, QString)),this,SLOT(receiveIdFnameLnameFromEngineRestApi(int, QString, QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(BalanceRequestFromEngine(int)),pengineretsapi,SLOT(BalanceRequestFromEngine(int)));
+    connect(pengineretsapi,SIGNAL(sendBalanceToDllRestApi(QString)),this,SLOT(receiveBalanceFromEngineRestApi(QString)),Qt::QueuedConnection);
 }
 
 DLLRestAPI::~DLLRestAPI()
@@ -40,4 +42,14 @@ void DLLRestAPI::receiveCorrectPinFromEngineRestApi()
 void DLLRestAPI::receiveIdFnameLnameFromEngineRestApi(int idAccount, QString fname, QString lname)
 {
     emit sendIdFnameLnameToEngineATM(idAccount, fname, lname);
+}
+
+void DLLRestAPI::receiveBalanceFromEngineRestApi(QString balance)
+{
+    emit sendBalanceToEngineATM(balance);
+}
+
+void DLLRestAPI::requestBalanceFromATMEngine(int balance)
+{
+    emit BalanceRequestFromEngine(balance);
 }

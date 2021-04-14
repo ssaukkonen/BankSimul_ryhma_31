@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::saldo *ui;
+
+public slots:
+    void receiveBalanceFromEngineATM(QString);
 };
 
 #endif // SALDO_H

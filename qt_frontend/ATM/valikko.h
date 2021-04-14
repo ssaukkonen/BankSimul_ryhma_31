@@ -19,8 +19,14 @@ public:
 public slots:
     void receiveFnameLnameFromEngineATM(QString, QString);
 
+private slots:
+    void on_SaldoButton_clicked();
+
 private:
     Ui::Valikko *ui;
+
+signals:
+    void SaldoMenu();
 
 };
 

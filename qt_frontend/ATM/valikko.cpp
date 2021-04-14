@@ -19,3 +19,8 @@ void Valikko::receiveFnameLnameFromEngineATM(QString fname, QString lname)
     ui->labelFnameLname->setText(fname+" "+lname);
 }
 
+
+void Valikko::on_SaldoButton_clicked()
+{
+    emit SaldoMenu();
+}

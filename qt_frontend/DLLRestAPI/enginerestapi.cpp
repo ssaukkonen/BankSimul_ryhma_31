@@ -131,3 +131,43 @@ void enginerestapi::receiveIdAccount()
     connect(idAccountManager, SIGNAL(finished (QNetworkReply*)),this, SLOT(idAccountSlot(QNetworkReply*)));
     idAccountReply=idAccountManager->post(request,QJsonDocument(json_obj).toJson());
 }
+
+void enginerestapi::BalanceFromEngine(int id2)
+{
+//    qDebug() << balance;
+    QString id = QString::number(id2);
+    qDebug() << "balance tarkistus";
+    QString site_url="http://localhost:3000/account/"+id;
+    QString credentials="automat123:pass123";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+    request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
+    balanceManager = new QNetworkAccessManager(this);
+    connect(balanceManager, SIGNAL(finished (QNetworkReply*)),this, SLOT(balanceSlot(QNetworkReply*)));
+    balanceReply=balanceManager->get(request);
+}
+
+void enginerestapi::balanceSlot(QNetworkReply *reply)
+{
+    QByteArray response_data=reply->readAll();
+    qDebug()<<response_data;
+    if(response_data.compare("-4078")==0){
+        qDebug() << "Virhe tietokantayhteydessä";
+    }
+    else if(response_data.compare("0")==0){
+        qDebug() << "Ei saldoa";
+    }
+    else
+    {
+        QJsonDocument json_doc=QJsonDocument::fromJson(response_data);
+        QJsonObject json_obj=json_doc.object();
+        QString balance=QString::number(json_obj["balance"].toDouble())+"\r\n";
+        qDebug() << balance;
+        emit sendBalanceToDllRestApi(balance);
+    }
+    balanceReply->deleteLater();
+    reply->deleteLater();
+    balanceManager->deleteLater();
+}

@@ -53,7 +53,7 @@
     <string>Automaatti</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="SaldoLabel">
    <property name="geometry">
     <rect>
      <x>310</x>

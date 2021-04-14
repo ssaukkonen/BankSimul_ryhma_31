@@ -29,9 +29,5 @@ void MainWindow::SignalFromEngineRfidToExe()
 
 void MainWindow::on_pushButton_clicked()
 {
-    pnosto = new nosto;
-    pnosto->exec();
-    pnosto->show();
-    delete pnosto;
-    pnosto = nullptr;
+    pengineatm ->testfunction();
 }

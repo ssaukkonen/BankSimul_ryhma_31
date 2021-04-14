@@ -19,6 +19,8 @@ public slots:
     void receiveWrongPinFromEngineRestApi();
     void receiveCorrectPinFromEngineRestApi();
     void receiveIdFnameLnameFromEngineRestApi(int, QString, QString);
+    void receiveBalanceFromEngineRestApi(QString);
+    void requestBalanceFromATMEngine(int);
 
 signals:
     void SignalToEngineRestApi(QString);
@@ -26,6 +28,8 @@ signals:
     void sendWrongPinToEngineATM();
     void sendCorrectPinToEngineATM();
     void sendIdFnameLnameToEngineATM(int, QString, QString);
+    void sendBalanceToEngineATM(QString);
+    void BalanceRequestFromEngine(int);
 
 private:
     enginerestapi * pengineretsapi;

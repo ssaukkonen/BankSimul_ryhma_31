@@ -12,3 +12,8 @@ saldo::~saldo()
 {
     delete ui;
 }
+
+void saldo::receiveBalanceFromEngineATM(QString balance)
+{
+    ui->SaldoLabel->setText(balance);
+}

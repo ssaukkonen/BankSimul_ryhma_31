@@ -6,6 +6,7 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     pDLLRestAPI = new DLLRestAPI;
     pDLLPinCode = new DLLPinCode;
     pValikko = new Valikko;
+    psaldo = new saldo;
 //    connect(this,SIGNAL(sendSignalToRfid()),pDllrfid,SLOT(receiveSignalFromExe()),Qt::QueuedConnection);
     connect(pDLLSerialPort,SIGNAL(sendSignalToExeFromRfid(long long)),this,SLOT(receiveSignalFromRfid(long long)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendSignalToDllRestApi(QString)),pDLLRestAPI,SLOT(SignalFromEngineNosto(QString)),Qt::QueuedConnection);
@@ -18,6 +19,9 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(pDLLRestAPI,SIGNAL(sendIdFnameLnameToEngineATM(int, QString, QString)),this,SLOT(receiveIdFnameLnameFromDllRestApi(int, QString, QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendFnameLnameToValikko(QString, QString)),pValikko,SLOT(receiveFnameLnameFromEngineATM(QString, QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendClosePin()),pDLLPinCode,SLOT(receiveClosePin()),Qt::QueuedConnection);
+    connect(pValikko,SIGNAL(SaldoMenu()),this,SLOT(receiveSaldoMenu()),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendBalanceToEngineATM(QString)),this,SLOT(receiveBalanceDllRestApi(QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(requestBalance(int)),pDLLRestAPI,SLOT(requestBalanceFromATMEngine(int)),Qt::QueuedConnection);
 }
 
 engineatm::~engineatm()
@@ -25,6 +29,14 @@ engineatm::~engineatm()
     delete pDLLSerialPort;
     delete pDLLRestAPI;
     delete pDLLPinCode;
+}
+
+void engineatm::testfunction()
+{
+    pValikko->exec();
+    pValikko->show();
+    delete pValikko;
+    pValikko = nullptr;
 }
 
 void engineatm::receiveSignalFromRfid(long long kortti2)
@@ -68,4 +80,20 @@ void engineatm::receiveIdFnameLnameFromDllRestApi(int id, QString fname, QString
     qDebug() << "received id, fname, lname from dllrestapi";
     idAccount=id;
     emit sendFnameLnameToValikko(fname, lname);
+}
+
+void engineatm::receiveBalanceFromDllRestApi(QString balance)
+{
+    qDebug() << "balance from dllrestapi";
+    emit sendBalanceToSaldo(balance);
+}
+
+void engineatm::receiveSaldoMenu()
+{
+    emit requestBalance(idAccount);
+    pValikko -> hide();
+    psaldo -> exec();
+    psaldo -> show();
+    delete psaldo;
+    psaldo = nullptr;
 }
