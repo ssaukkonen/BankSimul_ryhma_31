@@ -4,6 +4,9 @@ const actions = {
   getById: function(id, callback) {
     return db.query('select * from actions where id_actions=?', [id], callback);
   },
+  getActions5: function(id, callback) {
+    return db.query('select amount,date,action_type,ref_num,message,acc_sender from actions where id_account=? order by date desc limit 5', [id], callback);
+  },
   getAll: function(callback) {
     return db.query('select * from actions', callback);
   },

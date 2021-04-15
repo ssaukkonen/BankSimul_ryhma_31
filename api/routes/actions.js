@@ -23,6 +23,16 @@ router.get('/:id?',
   }
 });
 
+router.get('/actions5/:id?', 
+function(request, response) {
+  actions.getActions5(request.params.id, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult);
+    }
+  });
+});
 
 router.post('/', 
 function(request, response) {
