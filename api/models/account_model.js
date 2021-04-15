@@ -4,6 +4,9 @@ const account = {
   getById: function(id, callback) {
     return db.query('select * from account where id_account=?', [id], callback);
   },
+  getBalance: function(id, callback) {
+    return db.query('select balance from account where id_account=?', [id], callback);
+  },
   getAll: function(callback) {
     return db.query('select * from account', callback);
   },

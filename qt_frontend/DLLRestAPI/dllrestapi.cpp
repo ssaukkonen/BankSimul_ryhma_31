@@ -8,7 +8,7 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
     connect(pengineretsapi,SIGNAL(sendWrongPinToDllRestApi()),this,SLOT(receiveWrongPinFromEngineRestApi()),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendCorrectPinToDllRestApi()),this,SLOT(receiveCorrectPinFromEngineRestApi()),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendIdFnameLnameToDllRestApi(int, QString, QString)),this,SLOT(receiveIdFnameLnameFromEngineRestApi(int, QString, QString)),Qt::QueuedConnection);
-    connect(this,SIGNAL(BalanceRequestFromEngine(int)),pengineretsapi,SLOT(BalanceRequestFromEngine(int)));
+    connect(this,SIGNAL(sendBalanceRequestToEngine(int)),pengineretsapi,SLOT(BalanceFromEngine(int)));
     connect(pengineretsapi,SIGNAL(sendBalanceToDllRestApi(QString)),this,SLOT(receiveBalanceFromEngineRestApi(QString)),Qt::QueuedConnection);
 }
 
@@ -49,7 +49,7 @@ void DLLRestAPI::receiveBalanceFromEngineRestApi(QString balance)
     emit sendBalanceToEngineATM(balance);
 }
 
-void DLLRestAPI::requestBalanceFromATMEngine(int balance)
+void DLLRestAPI::requestBalanceFromATMEngine(int id)
 {
-    emit BalanceRequestFromEngine(balance);
+    emit sendBalanceRequestToEngine(id);
 }

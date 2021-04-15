@@ -29,7 +29,7 @@ signals:
     void sendCorrectPinToEngineATM();
     void sendIdFnameLnameToEngineATM(int, QString, QString);
     void sendBalanceToEngineATM(QString);
-    void BalanceRequestFromEngine(int);
+    void sendBalanceRequestToEngine(int);
 
 private:
     enginerestapi * pengineretsapi;

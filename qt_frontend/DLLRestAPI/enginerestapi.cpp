@@ -135,9 +135,10 @@ void enginerestapi::receiveIdAccount()
 void enginerestapi::BalanceFromEngine(int id2)
 {
 //    qDebug() << balance;
-    QString id = QString::number(id2);
+//    QString id = QString::number(id2);
+    QString id = "1"; //väliaikainen
     qDebug() << "balance tarkistus";
-    QString site_url="http://localhost:3000/account/"+id;
+    QString site_url="http://localhost:3000/account/balance/"+id;
     QString credentials="automat123:pass123";
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -153,7 +154,7 @@ void enginerestapi::balanceSlot(QNetworkReply *reply)
 {
     QByteArray response_data=reply->readAll();
     qDebug()<<response_data;
-    if(response_data.compare("-4078")==0){
+    if(response_data.compare("")==0){
         qDebug() << "Virhe tietokantayhteydessä";
     }
     else if(response_data.compare("0")==0){
@@ -161,9 +162,7 @@ void enginerestapi::balanceSlot(QNetworkReply *reply)
     }
     else
     {
-        QJsonDocument json_doc=QJsonDocument::fromJson(response_data);
-        QJsonObject json_obj=json_doc.object();
-        QString balance=QString::number(json_obj["balance"].toDouble())+"\r\n";
+        QString balance = response_data;
         qDebug() << balance;
         emit sendBalanceToDllRestApi(balance);
     }
