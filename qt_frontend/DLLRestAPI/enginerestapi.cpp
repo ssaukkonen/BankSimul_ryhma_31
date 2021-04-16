@@ -10,6 +10,11 @@ enginerestapi::~enginerestapi()
 
 }
 
+void enginerestapi::cleanVariablesEngineRestApi()
+{
+    korttiToId="0";
+}
+
 void enginerestapi::SignalFromDllRestApi(QString amount)
 {
     qDebug() << amount;

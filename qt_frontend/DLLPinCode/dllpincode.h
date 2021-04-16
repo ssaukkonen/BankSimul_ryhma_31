@@ -18,11 +18,14 @@ public slots:
     void receiveSignalFromPinDialog(int);
     void receiveWrongPinFromEngineATM();
     void receiveClosePin();
+    void receiveTimerResetFromPinDialog();
+    void receiveClosePinWindow();
 
 signals:
     void sendPinCodeToEngineAtm(int);
     void sendWrongPinToPinDialog();
     void sendClosePinDialog();
+    void sendTimerResetFromDllPincode();
 
 private:
     pindialog * ppindialog;

@@ -27,6 +27,7 @@ private:
 
 public slots:
     void SignalFromEngineRfidToExe();
+    void receiveShowFromEngineATM();
 
 private slots:
     void on_pushButton_clicked();

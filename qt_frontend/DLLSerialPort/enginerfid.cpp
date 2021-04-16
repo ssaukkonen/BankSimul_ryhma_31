@@ -22,6 +22,11 @@ enginerfid::~enginerfid()
     delete pQSerialPortInfo;
 }
 
+void enginerfid::restartRfid()
+{
+    pQSerialPort->open(QIODevice::ReadWrite);
+}
+
 void enginerfid::signalReceivedFromCard()
 {
     QByteArray koodi = pQSerialPort->readAll();

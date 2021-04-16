@@ -3,7 +3,8 @@
 
 #include <QDialog>
 #include <QDebug>
-#include <QTimer>
+#include <QKeyEvent>
+#include <QMouseEvent>
 
 namespace Ui {
 class pindialog;
@@ -16,26 +17,26 @@ class pindialog : public QDialog
 public:
     explicit pindialog(QWidget *parent = nullptr);
     ~pindialog();
-//    void startTimerPin();
 
 private slots:
     void on_pushButtonOK_clicked();
 
+    void on_lineEditPin_textEdited(const QString &arg1);
+
 public slots:
     void receiveWrongPinFromDLLPinCode();
     void receiveClosePinDialog();
-//    void timerslotPin();
 
 signals:
     void sendSignalToDllPinInterface(int);
+    void sendTimerResetToDllPinCode();
 
 private:
     Ui::pindialog *ui;
-//    QTimer * timerPin;
 
-//protected:
-//    void keyPressEvent(QKeyEvent *eventKey);
-//    void mousePressEvent(QMouseEvent *eventMouse);
+protected:
+    void keyPressEvent(QKeyEvent *eventKey);
+    void mousePressEvent(QMouseEvent *eventMouse);
 };
 
 #endif // PINDIALOG_H

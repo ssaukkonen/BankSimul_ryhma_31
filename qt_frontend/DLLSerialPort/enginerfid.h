@@ -13,6 +13,7 @@ class enginerfid : public QObject
 public:
     enginerfid(QObject *parent = nullptr);
     ~enginerfid();
+    void restartRfid();
 
 public slots:
     void signalReceivedFromCard();

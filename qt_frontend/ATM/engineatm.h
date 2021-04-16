@@ -30,6 +30,12 @@ signals:
     void sendWrongPinToDLLPinCode();
     void sendFnameLnameToValikko(QString, QString);
     void sendClosePin();
+    void sendCleanVariablesToDllRestApi();
+    void sendReStartToDllSerialPort();
+    void sendShowToMainWindow();
+    void sendClosePinWindow();
+    void sendCloseValikko();
+    void sendTimerStop();
 
 public slots:
     void receiveSignalFromRfid(long long);
@@ -38,6 +44,8 @@ public slots:
     void receiveWrongPinFromDllRestApi();
     void receiveCorrectPinFromDllRestApi();
     void receiveIdFnameLnameFromDllRestApi(int, QString, QString);
+    void receiveTimerReset();
+    void logout();
 
 private:
     class timerEvent * ptimerEventATM;

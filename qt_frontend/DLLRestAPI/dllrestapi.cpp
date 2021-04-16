@@ -41,3 +41,8 @@ void DLLRestAPI::receiveIdFnameLnameFromEngineRestApi(int idAccount, QString fna
 {
     emit sendIdFnameLnameToEngineATM(idAccount, fname, lname);
 }
+
+void DLLRestAPI::receiveCleanVariablesFromEngineATM()
+{
+    pengineretsapi->cleanVariablesEngineRestApi();
+}

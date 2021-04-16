@@ -20,6 +20,14 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(pDLLRestAPI,SIGNAL(sendIdFnameLnameToEngineATM(int, QString, QString)),this,SLOT(receiveIdFnameLnameFromDllRestApi(int, QString, QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendFnameLnameToValikko(QString, QString)),pValikko,SLOT(receiveFnameLnameFromEngineATM(QString, QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendClosePin()),pDLLPinCode,SLOT(receiveClosePin()),Qt::QueuedConnection);
+    connect(pDLLPinCode,SIGNAL(sendTimerResetFromDllPincode()),this,SLOT(receiveTimerReset()),Qt::QueuedConnection);
+    connect(ptimerEventATM,SIGNAL(sendLogout()),this,SLOT(logout()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendCleanVariablesToDllRestApi()),pDLLRestAPI,SLOT(receiveCleanVariablesFromEngineATM()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendReStartToDllSerialPort()),pDLLSerialPort,SLOT(receiveReStartFromEngineAtm()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendClosePinWindow()),pDLLPinCode,SLOT(receiveClosePinWindow()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendCloseValikko()),pValikko,SLOT(receiveCloseValikko()),Qt::QueuedConnection);
+    connect(pValikko,SIGNAL(logoutValikko()),this,SLOT(logout()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendTimerStop()),ptimerEventATM,SLOT(receiveTimerStop()),Qt::QueuedConnection);
 }
 
 engineatm::~engineatm()
@@ -63,9 +71,9 @@ void engineatm::receiveCorrectPinFromDllRestApi()
 {
     emit sendClosePin();
     pValikko->exec();
-    pValikko->show();
-    delete pValikko;
-    pValikko = nullptr;
+//    pValikko->show();
+//    delete pValikko;
+//    pValikko = nullptr;
 }
 
 void engineatm::receiveIdFnameLnameFromDllRestApi(int id, QString fname, QString lname)
@@ -73,5 +81,24 @@ void engineatm::receiveIdFnameLnameFromDllRestApi(int id, QString fname, QString
     qDebug() << "received id, fname, lname from dllrestapi";
     idAccount=id;
     emit sendFnameLnameToValikko(fname, lname);
+}
+
+void engineatm::receiveTimerReset()
+{
+    ptimerEventATM->resetMyTimer();
+}
+
+void engineatm::logout()
+{
+    qDebug() << "logoutSlot";
+
+    emit sendTimerStop();
+    idAccount=0;
+    kortti=0;
+    emit sendClosePinWindow();
+    emit sendCloseValikko();
+    emit sendCleanVariablesToDllRestApi();
+    emit sendReStartToDllSerialPort();
+    emit sendShowToMainWindow();
 }
 

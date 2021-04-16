@@ -19,6 +19,7 @@ public slots:
     void receiveWrongPinFromEngineRestApi();
     void receiveCorrectPinFromEngineRestApi();
     void receiveIdFnameLnameFromEngineRestApi(int, QString, QString);
+    void receiveCleanVariablesFromEngineATM();
 
 signals:
     void SignalToEngineRestApi(QString);

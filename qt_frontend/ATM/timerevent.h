@@ -4,8 +4,8 @@
 #include <QObject>
 #include <QDebug>
 #include <QTimer>
-#include <QKeyEvent>
-#include <QMouseEvent>
+//#include <QKeyEvent>
+//#include <QMouseEvent>
 #include <QEvent>
 
 class timerEvent : public QObject
@@ -14,26 +14,30 @@ class timerEvent : public QObject
 public:
     timerEvent();
     ~timerEvent();
+    void resetMyTimer();
 
 public slots:
     void timerslot();
     void receiveStartFromEngineATM();
+    void receiveTimerStop();
+
+signals:
+    void sendLogout();
 
 protected:
-    bool eventFilter(QObject *obj, QEvent *ev)
-    {
-      if(ev->KeyPress ||
-         ev->MouseButtonPress){
-           // now reset your timer, for example
-           resetMyTimer();
-      }
-      else return QObject::eventFilter(obj, ev);
-      return true;
-    }
+//    bool eventFilter(QObject *obj, QEvent *ev)
+//    {
+//      if(ev->type() == QEvent::KeyPress ||
+//         ev->type() == QEvent::MouseButtonPress){
+//           // now reset your timer, for example
+//           resetMyTimer();
+//      }
+//      else return QObject::eventFilter(obj, ev);
+//      return true;
+//    }
 
 private:
     QTimer *timer;
-    void resetMyTimer();
 };
 
 #endif // TIMEREVENT_H

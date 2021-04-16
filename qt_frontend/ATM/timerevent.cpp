@@ -13,14 +13,20 @@ timerEvent::~timerEvent()
 
 void timerEvent::timerslot()
 {
-    timer->stop();
-    qDebug() << "exit";
+    qDebug() << "timerslot";
+    emit sendLogout();
 }
 
 void timerEvent::receiveStartFromEngineATM()
 {
     timer->start(5000);
     qDebug() << "timer start";
+}
+
+void timerEvent::receiveTimerStop()
+{
+    qDebug() << "receiveTimerStop";
+    timer->stop();
 }
 
 void timerEvent::resetMyTimer()

@@ -15,6 +15,7 @@ public:
 public slots:
     void receiveSignalFromEngine(long long);
 //    void signalReceivedFromCard();
+    void receiveReStartFromEngineAtm();
 
 signals:
     void sendSignalToExeFromRfid(long long);

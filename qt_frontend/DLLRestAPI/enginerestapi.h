@@ -13,6 +13,7 @@ class enginerestapi : public QObject
 public:
     enginerestapi(QObject *parent = nullptr);
     ~enginerestapi();
+    void cleanVariablesEngineRestApi();
 
 public slots:
     void SignalFromDllRestApi(QString);
