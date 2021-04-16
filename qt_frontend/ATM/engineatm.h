@@ -36,6 +36,8 @@ signals:
     void sendClosePinWindow();
     void sendCloseValikko();
     void sendTimerStop();
+    void sendLockedPinToDllPinCode();
+    void sendStartLockedPinTimer();
 
 public slots:
     void receiveSignalFromRfid(long long);
@@ -46,6 +48,7 @@ public slots:
     void receiveIdFnameLnameFromDllRestApi(int, QString, QString);
     void receiveTimerReset();
     void logout();
+    void receiveLockedPinFromDllRestApi();
 
 private:
     class timerEvent * ptimerEventATM;

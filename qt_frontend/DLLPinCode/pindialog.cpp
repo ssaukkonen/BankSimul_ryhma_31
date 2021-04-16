@@ -24,6 +24,8 @@ void pindialog::on_pushButtonOK_clicked()
 
 void pindialog::receiveWrongPinFromDLLPinCode()
 {
+    ui->lineEditPin->clear();
+    ui->labelWrongPin->setStyleSheet("color: red");
     ui->labelWrongPin->setText("Väärä PIN");
 }
 
@@ -31,6 +33,17 @@ void pindialog::receiveClosePinDialog()
 {
     this->close();
     ui->lineEditPin->clear();
+    ui->labelWrongPin->clear();
+    ui->lineEditPin->setDisabled(0);
+    ui->pushButtonOK->setDisabled(0);
+}
+
+void pindialog::receiveLockedPinFromDllPinCode()
+{
+    ui->lineEditPin->setDisabled(1);
+    ui->pushButtonOK->setDisabled(1);
+    ui->labelWrongPin->setStyleSheet("color: red");
+    ui->labelWrongPin->setText("PIN lukittu");
 }
 
 void pindialog::keyPressEvent(QKeyEvent *eventKey)

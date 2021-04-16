@@ -20,12 +20,14 @@ public slots:
     void receiveClosePin();
     void receiveTimerResetFromPinDialog();
     void receiveClosePinWindow();
+    void receiveLockedPinFromEngineATM();
 
 signals:
     void sendPinCodeToEngineAtm(int);
     void sendWrongPinToPinDialog();
     void sendClosePinDialog();
     void sendTimerResetFromDllPincode();
+    void sendLockedPinFromDllPinCode();
 
 private:
     pindialog * ppindialog;

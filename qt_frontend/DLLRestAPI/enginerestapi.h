@@ -26,6 +26,7 @@ signals:
     void sendWrongPinToDllRestApi();
     void sendCorrectPinToDllRestApi();
     void sendIdFnameLnameToDllRestApi(int, QString, QString);
+    void sendLockedPinToDllRestApi();
 
 private:
     QNetworkAccessManager *nostoManager;

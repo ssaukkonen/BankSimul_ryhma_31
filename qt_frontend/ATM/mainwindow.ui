@@ -74,8 +74,16 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(200, 200, 200);</string>
+          <string notr="true">background-color: rgb(200, 200, 200);
+color: rgb(100, 100, 100);</string>
          </property>
          <property name="text">
           <string>testinappula</string>

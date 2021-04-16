@@ -26,6 +26,7 @@ private slots:
 public slots:
     void receiveWrongPinFromDLLPinCode();
     void receiveClosePinDialog();
+    void receiveLockedPinFromDllPinCode();
 
 signals:
     void sendSignalToDllPinInterface(int);

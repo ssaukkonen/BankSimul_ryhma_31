@@ -20,6 +20,7 @@ public slots:
     void timerslot();
     void receiveStartFromEngineATM();
     void receiveTimerStop();
+    void receiveStartLockedPinTimer();
 
 signals:
     void sendLogout();
@@ -38,6 +39,7 @@ protected:
 
 private:
     QTimer *timer;
+    QTimer *timer2;
 };
 
 #endif // TIMEREVENT_H

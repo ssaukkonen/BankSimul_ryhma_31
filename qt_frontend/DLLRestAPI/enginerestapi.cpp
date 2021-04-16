@@ -91,6 +91,10 @@ void enginerestapi::pinSlot(QNetworkReply *reply)
         emit sendCorrectPinToDllRestApi();
         receiveIdAccount();
     }
+    else if(response_data.compare("locked")==0){
+        qDebug() << "PIN lukittu";
+        emit sendLockedPinToDllRestApi();
+    }
     else{
         qDebug() << "Virhe";
     }

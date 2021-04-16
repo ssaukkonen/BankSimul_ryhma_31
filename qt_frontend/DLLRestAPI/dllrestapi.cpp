@@ -8,6 +8,7 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
     connect(pengineretsapi,SIGNAL(sendWrongPinToDllRestApi()),this,SLOT(receiveWrongPinFromEngineRestApi()),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendCorrectPinToDllRestApi()),this,SLOT(receiveCorrectPinFromEngineRestApi()),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendIdFnameLnameToDllRestApi(int, QString, QString)),this,SLOT(receiveIdFnameLnameFromEngineRestApi(int, QString, QString)),Qt::QueuedConnection);
+    connect(pengineretsapi,SIGNAL(sendLockedPinToDllRestApi()),this,SLOT(receiveLockedPinFromEngineRestApi()),Qt::QueuedConnection);
 }
 
 DLLRestAPI::~DLLRestAPI()
@@ -45,4 +46,9 @@ void DLLRestAPI::receiveIdFnameLnameFromEngineRestApi(int idAccount, QString fna
 void DLLRestAPI::receiveCleanVariablesFromEngineATM()
 {
     pengineretsapi->cleanVariablesEngineRestApi();
+}
+
+void DLLRestAPI::receiveLockedPinFromEngineRestApi()
+{
+    emit sendLockedPinToEngineATM();
 }

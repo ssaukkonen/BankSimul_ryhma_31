@@ -28,6 +28,9 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(this,SIGNAL(sendCloseValikko()),pValikko,SLOT(receiveCloseValikko()),Qt::QueuedConnection);
     connect(pValikko,SIGNAL(logoutValikko()),this,SLOT(logout()),Qt::QueuedConnection);
     connect(this,SIGNAL(sendTimerStop()),ptimerEventATM,SLOT(receiveTimerStop()),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendLockedPinToEngineATM()),this,SLOT(receiveLockedPinFromDllRestApi()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendLockedPinToDllPinCode()),pDLLPinCode,SLOT(receiveLockedPinFromEngineATM()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendStartLockedPinTimer()),ptimerEventATM,SLOT(receiveStartLockedPinTimer()),Qt::QueuedConnection);
 }
 
 engineatm::~engineatm()
@@ -100,5 +103,11 @@ void engineatm::logout()
     emit sendCleanVariablesToDllRestApi();
     emit sendReStartToDllSerialPort();
     emit sendShowToMainWindow();
+}
+
+void engineatm::receiveLockedPinFromDllRestApi()
+{
+    emit sendLockedPinToDllPinCode();
+    emit sendStartLockedPinTimer();
 }
 
