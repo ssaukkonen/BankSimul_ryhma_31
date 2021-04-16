@@ -20,6 +20,7 @@ private:
 
 public slots:
     void receiveBalanceFromEngineATM(QString);
+    void receiveActions5FromEngineATM(QString);
 };
 
 #endif // SALDO_H

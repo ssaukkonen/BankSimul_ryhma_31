@@ -24,3 +24,8 @@ void Valikko::on_SaldoButton_clicked()
 {
     emit SaldoMenu();
 }
+
+void Valikko::on_TilitapahtumatButton_clicked()
+{
+    emit TilitapahtumatMenu();
+}

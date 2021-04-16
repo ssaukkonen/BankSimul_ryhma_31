@@ -21,12 +21,14 @@ public slots:
 
 private slots:
     void on_SaldoButton_clicked();
+    void on_TilitapahtumatButton_clicked();
 
 private:
     Ui::Valikko *ui;
 
 signals:
     void SaldoMenu();
+    void TilitapahtumatMenu();
 
 };
 

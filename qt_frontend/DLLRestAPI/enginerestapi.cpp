@@ -14,7 +14,7 @@ void enginerestapi::SignalFromDllRestApi(QString amount)
 {
     qDebug() << amount;
     qDebug() << "enginerestapi";
-    QString id="1";
+    id="1";
 
     QJsonObject json_obj;
     json_obj.insert("acc_number",3333);
@@ -132,11 +132,105 @@ void enginerestapi::receiveIdAccount()
     idAccountReply=idAccountManager->post(request,QJsonDocument(json_obj).toJson());
 }
 
+void enginerestapi::actions5(QString id2)
+{
+    //    QString id = QString::number(id2);
+    id = "1"; //väliaikainen
+    qDebug() << "balance tarkistus";
+    QString site_url="http://localhost:3000/actions/actions5/"+id;
+    QString credentials="automat123:pass123";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+    request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
+    actions5Manager = new QNetworkAccessManager(this);
+    connect(actions5Manager, SIGNAL(finished (QNetworkReply*)),this, SLOT(actions5Slot(QNetworkReply*)));
+    actions5Reply=actions5Manager->get(request);
+}
+
+void enginerestapi::actions5Slot(QNetworkReply *reply)
+{
+    QByteArray response_data=reply->readAll();
+//    qDebug()<<response_data;
+    if(response_data.compare("")==0){
+        qDebug() << "Virhe tietokantayhteydessä";
+    }
+    else
+    {
+        QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+        QJsonArray json_array = json_doc.array();
+        QString listActions5;
+        foreach(const QJsonValue &value, json_array)
+        {
+            QJsonObject json_obj = value.toObject();
+            listActions5+=QString::number(json_obj["amount"].toDouble())+" €\t"+json_obj["date"].toString()+"\t"+json_obj["action_type"].toString()+"\t"+QString::number(json_obj["ref_num"].toDouble())+"\t"+json_obj["message"].toString()+"\t"+QString::number(json_obj["acc_sender"].toInt())+"\r\n";
+            qDebug() << listActions5;
+        }
+        emit sendActions5ToDllRestApi(listActions5);
+    }
+    actions5Reply->deleteLater();
+    reply->deleteLater();
+    actions5Manager->deleteLater();
+}
+
+void enginerestapi::receiveActionsRequestToEngineRestApi(int id2)
+{
+    //    QString id = QString::number(id2);
+    id = "1"; //väliaikainen
+    qDebug() << "balance tarkistus";
+    QString site_url="http://localhost:3000/actions/actions5/"+id;
+    QString credentials="automat123:pass123";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+    request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
+    actionsManager = new QNetworkAccessManager(this);
+    connect(actionsManager, SIGNAL(finished (QNetworkReply*)),this, SLOT(actionsSlot(QNetworkReply*)));
+    actionsReply=actionsManager->get(request);
+}
+
+void enginerestapi::actionsSlot(QNetworkReply *reply)
+{
+    QByteArray response_data=reply->readAll();
+//    qDebug()<<response_data;
+    if(response_data.compare("")==0){
+        qDebug() << "Virhe tietokantayhteydessä";
+    }
+    else
+    {
+        QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+        QJsonArray json_array = json_doc.array();
+        QString listActions10;
+        foreach(const QJsonValue &value, json_array)
+        {
+            QJsonObject json_obj = value.toObject();
+            listActions10+=QString::number(json_obj["amount"].toDouble())+" €\t"+json_obj["date"].toString()+"\t"+json_obj["action_type"].toString()+"\t"+QString::number(json_obj["ref_num"].toDouble())+"\t"+json_obj["message"].toString()+"\t"+QString::number(json_obj["acc_sender"].toInt())+"\r\n";
+            qDebug() << listActions10;
+        }
+        emit sendActionsToDllRestApi(listActions10);
+    }
+    actionsReply->deleteLater();
+    reply->deleteLater();
+    actionsManager->deleteLater();
+}
+
+void enginerestapi::receiveNextTilitapFromRestApi(int id2)
+{
+
+}
+
+void enginerestapi::receivePreviousTilitapFromRestApi(int id2)
+{
+
+}
+
 void enginerestapi::BalanceFromEngine(int id2)
 {
 //    qDebug() << balance;
 //    QString id = QString::number(id2);
-    QString id = "1"; //väliaikainen
+    id = "1"; //väliaikainen
     qDebug() << "balance tarkistus";
     QString site_url="http://localhost:3000/account/balance/"+id;
     QString credentials="automat123:pass123";
@@ -165,6 +259,7 @@ void enginerestapi::balanceSlot(QNetworkReply *reply)
         QString balance = response_data;
         qDebug() << balance;
         emit sendBalanceToDllRestApi(balance);
+            actions5(id);
     }
     balanceReply->deleteLater();
     reply->deleteLater();

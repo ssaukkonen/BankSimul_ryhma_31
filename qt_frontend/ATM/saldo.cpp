@@ -17,3 +17,8 @@ void saldo::receiveBalanceFromEngineATM(QString balance)
 {
     ui->SaldoLabel->setText(balance+" €");
 }
+
+void saldo::receiveActions5FromEngineATM(QString actions5x)
+{
+    ui->Actions5Label->setText(actions5x);
+}

@@ -67,7 +67,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="PushButton">
          <property name="font">
           <font>
            <pointsize>10</pointsize>
@@ -95,7 +95,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="TilitapahtumatButton">
          <property name="font">
           <font>
            <pointsize>10</pointsize>

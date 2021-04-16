@@ -34,6 +34,17 @@ function(request, response) {
   });
 });
 
+router.get('/actions10/:id?', 
+function(request, response) {
+  actions.getActions10(request.params.id, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult);
+    }
+  });
+});
+
 router.post('/', 
 function(request, response) {
   actions.add(request.body, function(err, dbResult) {

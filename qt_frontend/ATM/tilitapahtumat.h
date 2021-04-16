@@ -2,6 +2,7 @@
 #define TILITAPAHTUMAT_H
 
 #include <QDialog>
+#include <QDebug>
 
 namespace Ui {
 class tilitapahtumat;
@@ -17,6 +18,15 @@ public:
 
 private:
     Ui::tilitapahtumat *ui;
+
+public slots:
+    void receiveActionsFromEngineATM(QString);
+private slots:
+    void on_NextButton_clicked();
+    void on_PreviousButton_clicked();
+signals:
+    void NextTilitap();
+    void PreviousTilitap();
 };
 
 #endif // TILITAPAHTUMAT_H

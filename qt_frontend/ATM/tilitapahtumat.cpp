@@ -12,3 +12,18 @@ tilitapahtumat::~tilitapahtumat()
 {
     delete ui;
 }
+
+void tilitapahtumat::receiveActionsFromEngineATM(QString actions10)
+{
+    ui->ActionsLabel->setText(actions10);
+}
+
+void tilitapahtumat::on_NextButton_clicked()
+{
+    emit NextTilitap();
+}
+
+void tilitapahtumat::on_PreviousButton_clicked()
+{
+    emit PreviousTilitap();
+}

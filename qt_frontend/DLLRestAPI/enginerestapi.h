@@ -22,13 +22,19 @@ public slots:
     void BalanceFromEngine(int);
     void balanceSlot(QNetworkReply *reply);
     void idAccountSlot(QNetworkReply *reply);
+    void actions5Slot(QNetworkReply *reply);
+    void receiveActionsRequestToEngineRestApi(int);
+    void actionsSlot(QNetworkReply *reply);
+    void receiveNextTilitapFromRestApi(int);
+    void receivePreviousTilitapFromRestApi(int);
 
 signals:
     void sendWrongPinToDllRestApi();
     void sendCorrectPinToDllRestApi();
     void sendIdFnameLnameToDllRestApi(int, QString, QString);
     void sendBalanceToDllRestApi(QString);
-
+    void sendActions5ToDllRestApi(QString);
+    void sendActionsToDllRestApi(QString);
 private:
     QNetworkAccessManager *nostoManager;
     QNetworkReply *nostoReply;
@@ -40,6 +46,16 @@ private:
     QNetworkReply *idAccountReply;
     QNetworkAccessManager *balanceManager;
     QNetworkReply *balanceReply;
+    void actions5(QString);
+    QNetworkAccessManager *actions5Manager;
+    QNetworkReply *actions5Reply;
+    QString id;
+    QNetworkAccessManager *actionsManager;
+    QNetworkReply *actionsReply;
+    QNetworkAccessManager *actionsNextManager;
+    QNetworkReply *actionsNextReply;
+    QNetworkAccessManager *actionsPreviousManager;
+    QNetworkReply *actionsPreviousReply;
 };
 
 #endif // ENGINERESTAPI_H

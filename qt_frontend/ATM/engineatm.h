@@ -10,6 +10,7 @@
 #include "dllpincode.h"
 #include "valikko.h"
 #include "saldo.h"
+#include "tilitapahtumat.h"
 
 class engineatm : public QObject
 {
@@ -32,6 +33,11 @@ signals:
     void sendClosePin();
     void sendBalanceToSaldo(QString);
     void requestBalance(int);
+    void sendActions5ToSaldo(QString);
+    void requestActions(int);
+    void sendActionsToTilitapahtumat(QString);
+    void NextTilitapFromEngineATM(int);
+    void PreviousTilitapFromEngineATM(int);
 
 public slots:
     void receiveSignalFromRfid(long long);
@@ -42,6 +48,11 @@ public slots:
     void receiveIdFnameLnameFromDllRestApi(int, QString, QString);
     void receiveBalanceFromDllRestApi(QString);
     void receiveSaldoMenu();
+    void receiveActions5FromRestApi(QString);
+    void receiveTilitapahtumatMenu();
+    void receiveActionsFromRestApi(QString);
+    void receiveNextTilitap();
+    void reveivePreviousTilitap();
 
 private:
     DLLSerialPort * pDLLSerialPort;
@@ -49,6 +60,7 @@ private:
     DLLPinCode * pDLLPinCode;
     Valikko * pValikko;
     saldo * psaldo;
+    tilitapahtumat * ptilitapahtumat;
     long long kortti;
     int idAccount;
 };
