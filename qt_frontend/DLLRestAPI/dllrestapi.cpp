@@ -16,7 +16,7 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
     connect(pengineretsapi,SIGNAL(sendActionsToDllRestApi(QByteArray)),this,SLOT(receiveActionsToDllRestApi(QByteArray)),Qt::QueuedConnection);
 //    connect(pengineretsapi,SIGNAL(NextTilitapFromEngineATM(int,int)),this,SLOT(receiveNextTilitapFromEngineATM(int,int)),Qt::QueuedConnection);
 //    connect(pengineretsapi,SIGNAL(PreviousTilitapFromEngineATM(int,int)),this,SLOT(receivePreviousTilitapFromEngineATM(int,int)),Qt::QueuedConnection);
-=======
+
     connect(pengineretsapi,SIGNAL(sendLockedPinToDllRestApi()),this,SLOT(receiveLockedPinFromEngineRestApi()),Qt::QueuedConnection);
 }
 

@@ -24,7 +24,7 @@
 //void pin::on_buttonPinOk_clicked()
 //{
 //    pinNumber = QString (ui->linePin->text()).toInt();
-////            ui->linePin->text();
+//            ui->linePin->text();
 //    qDebug() << pinNumber;
 
 //}

@@ -22,7 +22,7 @@ public slots:
     void receiveCloseValikko();
 
 private slots:
-    void on_buttonValikkoLogout_clicked();
+
 
 signals:
     void logoutValikko();
@@ -30,6 +30,7 @@ signals:
 private slots:
     void on_SaldoButton_clicked();
     void on_TilitapahtumatButton_clicked();
+    void on_buttonValikkoLogout_clicked();
 
 private:
     Ui::Valikko *ui;
