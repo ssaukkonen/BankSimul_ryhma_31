@@ -34,9 +34,9 @@ function(request, response) {
   });
 });
 
-router.get('/actions10/:id?', 
+router.post('/actions10/:id?', 
 function(request, response) {
-  actions.getActions10(request.params.id, function(err, dbResult) {
+  actions.postActions10(request.params.id, request.body.pagenumber, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
