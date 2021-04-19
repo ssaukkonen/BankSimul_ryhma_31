@@ -158,16 +158,16 @@ void enginerestapi::actions5Slot(QNetworkReply *reply)
     }
     else
     {
-        QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
-        QJsonArray json_array = json_doc.array();
-        QString listActions5;
-        foreach(const QJsonValue &value, json_array)
-        {
-            QJsonObject json_obj = value.toObject();
-            listActions5+=QString::number(json_obj["amount"].toDouble())+" €\t"+json_obj["date"].toString()+"\t"+json_obj["action_type"].toString()+"\t"+QString::number(json_obj["ref_num"].toDouble())+"\t"+json_obj["message"].toString()+"\t"+QString::number(json_obj["acc_sender"].toInt())+"\r\n";
-            qDebug() << listActions5;
-        }
-        emit sendActions5ToDllRestApi(listActions5);
+//        QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+//        QJsonArray json_array = json_doc.array();
+//        QString listActions5;
+//        foreach(const QJsonValue &value, json_array)
+//        {
+//            QJsonObject json_obj = value.toObject();
+//            listActions5+=QString::number(json_obj["amount"].toDouble())+" €\t"+json_obj["date"].toString()+"\t"+json_obj["action_type"].toString()+"\t"+QString::number(json_obj["ref_num"].toDouble())+"\t"+json_obj["message"].toString()+"\t"+QString::number(json_obj["acc_sender"].toInt())+"\r\n";
+//            qDebug() << listActions5;
+//        }
+        emit sendActions5ToDllRestApi(response_data);
     }
     actions5Reply->deleteLater();
     reply->deleteLater();

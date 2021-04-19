@@ -10,7 +10,7 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
     connect(pengineretsapi,SIGNAL(sendIdFnameLnameToDllRestApi(int, QString, QString)),this,SLOT(receiveIdFnameLnameFromEngineRestApi(int, QString, QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendBalanceRequestToEngine(int)),pengineretsapi,SLOT(BalanceFromEngine(int)));
     connect(pengineretsapi,SIGNAL(sendBalanceToDllRestApi(QString)),this,SLOT(receiveBalanceFromEngineRestApi(QString)),Qt::QueuedConnection);
-    connect(pengineretsapi,SIGNAL(sendActions5ToDllRestApi(QString)),this,SLOT(receiveActions5FromEngineRestApi(QString)),Qt::QueuedConnection);
+    connect(pengineretsapi,SIGNAL(sendActions5ToDllRestApi(QByteArray)),this,SLOT(receiveActions5FromEngineRestApi(QByteArray)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendActionsRequestToEngineRestApi(int)),pengineretsapi,SLOT(receiveActionsRequestToEngineRestApi(int)),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendActionsToDllRestApi(QString)),this,SLOT(receiveActionsToDllRestApi(QString)),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(NextTilitapFromEngineATM(int)),this,SLOT(receiveNextTilitapFromEngineATM(int)),Qt::QueuedConnection);
@@ -59,7 +59,7 @@ void DLLRestAPI::requestBalanceFromATMEngine(int id)
     emit sendBalanceRequestToEngine(id);
 }
 
-void DLLRestAPI::receiveActions5FromEngineRestApi(QString actions5)
+void DLLRestAPI::receiveActions5FromEngineRestApi(QByteArray actions5)
 {
     emit sendActions5FromRestApi(actions5);
 }

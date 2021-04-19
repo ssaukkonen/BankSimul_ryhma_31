@@ -33,7 +33,7 @@ signals:
     void sendCorrectPinToDllRestApi();
     void sendIdFnameLnameToDllRestApi(int, QString, QString);
     void sendBalanceToDllRestApi(QString);
-    void sendActions5ToDllRestApi(QString);
+    void sendActions5ToDllRestApi(QByteArray);
     void sendActionsToDllRestApi(QString);
 private:
     QNetworkAccessManager *nostoManager;

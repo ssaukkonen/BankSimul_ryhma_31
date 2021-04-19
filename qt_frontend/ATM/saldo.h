@@ -2,6 +2,10 @@
 #define SALDO_H
 
 #include <QDialog>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QtNetwork>
+#include <QNetworkAccessManager>
 
 namespace Ui {
 class saldo;
@@ -20,7 +24,7 @@ private:
 
 public slots:
     void receiveBalanceFromEngineATM(QString);
-    void receiveActions5FromEngineATM(QString);
+    void receiveActions5FromEngineATM(QByteArray);
 };
 
 #endif // SALDO_H

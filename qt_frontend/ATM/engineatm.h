@@ -33,7 +33,7 @@ signals:
     void sendClosePin();
     void sendBalanceToSaldo(QString);
     void requestBalance(int);
-    void sendActions5ToSaldo(QString);
+    void sendActions5ToSaldo(QByteArray);
     void requestActions(int);
     void sendActionsToTilitapahtumat(QString);
     void NextTilitapFromEngineATM(int);
@@ -48,7 +48,7 @@ public slots:
     void receiveIdFnameLnameFromDllRestApi(int, QString, QString);
     void receiveBalanceFromDllRestApi(QString);
     void receiveSaldoMenu();
-    void receiveActions5FromRestApi(QString);
+    void receiveActions5FromRestApi(QByteArray);
     void receiveTilitapahtumatMenu();
     void receiveActionsFromRestApi(QString);
     void receiveNextTilitap();

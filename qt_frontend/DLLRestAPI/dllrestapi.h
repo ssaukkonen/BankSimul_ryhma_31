@@ -21,7 +21,7 @@ public slots:
     void receiveIdFnameLnameFromEngineRestApi(int, QString, QString);
     void receiveBalanceFromEngineRestApi(QString);
     void requestBalanceFromATMEngine(int);
-    void receiveActions5FromEngineRestApi(QString);
+    void receiveActions5FromEngineRestApi(QByteArray);
     void requestActionsFromATMEngine(int);
     void receiveActionsToDllRestApi(QString);
     void receiveNextTilitapFromEngineATM(int);
@@ -35,7 +35,7 @@ signals:
     void sendIdFnameLnameToEngineATM(int, QString, QString);
     void sendBalanceToEngineATM(QString);
     void sendBalanceRequestToEngine(int);
-    void sendActions5FromRestApi(QString);
+    void sendActions5FromRestApi(QByteArray);
     void sendActionsRequestToEngineRestApi(int);
     void sendActionsFromRestApi(QString);
     void sendNextTilitapFromRestApi(int);

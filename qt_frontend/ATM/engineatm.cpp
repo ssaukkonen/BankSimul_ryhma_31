@@ -24,8 +24,8 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(pDLLRestAPI,SIGNAL(sendBalanceToEngineATM(QString)),this,SLOT(receiveBalanceFromDllRestApi(QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(requestBalance(int)),pDLLRestAPI,SLOT(requestBalanceFromATMEngine(int)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendBalanceToSaldo(QString)),psaldo,SLOT(receiveBalanceFromEngineATM(QString)),Qt::QueuedConnection);
-    connect(pDLLRestAPI,SIGNAL(sendActions5FromRestApi(QString)),this,SLOT(receiveActions5FromRestApi(QString)),Qt::QueuedConnection);
-    connect(this,SIGNAL(sendActions5ToSaldo(QString)),psaldo,SLOT(receiveActions5FromEngineATM(QString)),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendActions5FromRestApi(QByteArray)),this,SLOT(receiveActions5FromRestApi(QByteArray)),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendActions5ToSaldo(QByteArray)),psaldo,SLOT(receiveActions5FromEngineATM(QByteArray)),Qt::QueuedConnection);
     connect(pValikko,SIGNAL(TilitapahtumatMenu()),this,SLOT(receiveTilitapahtumatMenu()),Qt::QueuedConnection);
     connect(this,SIGNAL(requestActions(int)),pDLLRestAPI,SLOT(requestActionsFromATMEngine(int)),Qt::QueuedConnection);
     connect(pDLLRestAPI,SIGNAL(sendActionsFromRestApi(QString)),this,SLOT(receiveActionsFromRestApi(QString)),Qt::QueuedConnection);
@@ -111,7 +111,7 @@ void engineatm::receiveSaldoMenu()
     psaldo = nullptr;
 }
 
-void engineatm::receiveActions5FromRestApi(QString actions5)
+void engineatm::receiveActions5FromRestApi(QByteArray actions5)
 {
     emit sendActions5ToSaldo(actions5);
 }
