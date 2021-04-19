@@ -52,6 +52,8 @@ signals:
     void sendTimerStop();
     void sendLockedPinToDllPinCode();
     void sendStartLockedPinTimer();
+    void sendCloseSaldo();
+    void sendCloseTilitapahtumat();
 
 
 public slots:
@@ -73,6 +75,8 @@ public slots:
     void receiveTimerReset();
     void logout();
     void receiveLockedPinFromDllRestApi();
+    void receiveCloseFromSaldo();
+    void receiveCloseFromTilitapahtumat();
 
 
 private:

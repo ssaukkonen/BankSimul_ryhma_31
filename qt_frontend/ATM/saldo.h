@@ -25,6 +25,15 @@ private:
 public slots:
     void receiveBalanceFromEngineATM(QString);
     void receiveActions5FromEngineATM(QByteArray);
+    void receiveCloseSaldo();
+private slots:
+    void on_buttonTakaisinSaldo_clicked();
+
+    void on_buttonLogoutSaldo_clicked();
+
+signals:
+    void sendCloseFromSaldo();
+    void logoutSaldo();
 };
 
 #endif // SALDO_H
