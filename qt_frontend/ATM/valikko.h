@@ -21,11 +21,11 @@ public slots:
     void receiveFnameLnameFromEngineATM(QString, QString);
     void receiveCloseValikko();
 
-private slots:
-
-
 signals:
     void logoutValikko();
+    void SaldoMenu();
+    void TilitapahtumatMenu();
+
 
 private slots:
     void on_SaldoButton_clicked();
@@ -34,14 +34,6 @@ private slots:
 
 private:
     Ui::Valikko *ui;
-
-
-signals:
-    void SaldoMenu();
-    void TilitapahtumatMenu();
-
-
-
 };
 
 #endif // VALIKKO_H

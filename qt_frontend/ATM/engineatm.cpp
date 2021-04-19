@@ -53,6 +53,13 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(pDLLRestAPI,SIGNAL(sendLockedPinToEngineATM()),this,SLOT(receiveLockedPinFromDllRestApi()),Qt::QueuedConnection);
     connect(this,SIGNAL(sendLockedPinToDllPinCode()),pDLLPinCode,SLOT(receiveLockedPinFromEngineATM()),Qt::QueuedConnection);
     connect(this,SIGNAL(sendStartLockedPinTimer()),ptimerEventATM,SLOT(receiveStartLockedPinTimer()),Qt::QueuedConnection);
+    connect(psaldo,SIGNAL(sendCloseFromSaldo()),this,SLOT(receiveCloseFromSaldo()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendCloseSaldo()),psaldo,SLOT(receiveCloseSaldo()),Qt::QueuedConnection);
+    connect(ptilitapahtumat,SIGNAL(sendCloseFromTilitapahtumat()),this,SLOT(receiveCloseFromTilitapahtumat()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendCloseTilitapahtumat()),ptilitapahtumat,SLOT(receiveCloseTilitapahtumat()),Qt::QueuedConnection);
+    connect(psaldo,SIGNAL(logoutSaldo()),this,SLOT(logout()),Qt::QueuedConnection);
+    connect(ptilitapahtumat,SIGNAL(logoutTilitapahtumat()),this,SLOT(logout()),Qt::QueuedConnection);
+    connect(ptilitapahtumat,SIGNAL(sendTimerResetFromTilitapahtumat()),this,SLOT(receiveTimerReset()),Qt::QueuedConnection);
 }
 
 engineatm::~engineatm()
@@ -62,14 +69,16 @@ engineatm::~engineatm()
     delete pDLLRestAPI;
     delete pDLLPinCode;
     delete pValikko;
+    delete psaldo;
+    delete ptilitapahtumat;
 }
 
 void engineatm::testfunction()
 {
-    pValikko->exec();
+    emit sendStartToTimer();
+    emit sendSignalToExeFromEngineRfid();
     pValikko->show();
-    delete pValikko;
-    pValikko = nullptr;
+    ptimerEventATM->resetMyTimer();
 }
 
 void engineatm::receiveSignalFromRfid(long long kortti2)
@@ -103,7 +112,8 @@ void engineatm::receiveWrongPinFromDllRestApi()
 void engineatm::receiveCorrectPinFromDllRestApi()
 {
     emit sendClosePin();
-    pValikko->exec();
+    pValikko->show();
+    ptimerEventATM->resetMyTimer();
 //    pValikko->show();
 //    delete pValikko;
 //    pValikko = nullptr;
@@ -126,10 +136,11 @@ void engineatm::receiveSaldoMenu()
 {
     emit requestBalance(idAccount);
     pValikko -> hide();
-    psaldo -> exec();
     psaldo -> show();
-    delete psaldo;
-    psaldo = nullptr;
+    ptimerEventATM->resetMyTimer();
+//    psaldo -> show();
+//    delete psaldo;
+//    psaldo = nullptr;
 }
 
 void engineatm::receiveActions5FromRestApi(QByteArray actions5)
@@ -141,10 +152,11 @@ void engineatm::receiveTilitapahtumatMenu()
 {
     emit requestActions(idAccount,0);
     pValikko -> hide();
-    ptilitapahtumat -> exec();
     ptilitapahtumat -> show();
-    delete ptilitapahtumat;
-    ptilitapahtumat = nullptr;
+    ptimerEventATM->resetMyTimer();
+//    ptilitapahtumat -> show();
+//    delete ptilitapahtumat;
+//    ptilitapahtumat = nullptr;
 }
 
 void engineatm::receiveActionsFromRestApi(QByteArray actions10)
@@ -179,7 +191,9 @@ void engineatm::logout()
     idAccount=0;
     kortti=0;
     emit sendClosePinWindow();
+    emit sendCloseSaldo();
     emit sendCloseValikko();
+    emit sendCloseTilitapahtumat();
     emit sendCleanVariablesToDllRestApi();
     emit sendReStartToDllSerialPort();
     emit sendShowToMainWindow();
@@ -189,5 +203,17 @@ void engineatm::receiveLockedPinFromDllRestApi()
 {
     emit sendLockedPinToDllPinCode();
     emit sendStartLockedPinTimer();
+}
+
+void engineatm::receiveCloseFromSaldo()
+{
+    emit sendCloseSaldo();
+    pValikko->show();
+}
+
+void engineatm::receiveCloseFromTilitapahtumat()
+{
+    emit sendCloseTilitapahtumat();
+    pValikko->show();
 }
 

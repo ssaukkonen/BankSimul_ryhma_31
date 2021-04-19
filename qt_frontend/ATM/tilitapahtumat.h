@@ -22,15 +22,26 @@ public:
 private:
     Ui::tilitapahtumat *ui;
     int pagenumber = 0;
+    int tapahtuma = 0;
 
 public slots:
     void receiveActionsFromEngineATM(QByteArray);
 private slots:
     void on_NextButton_clicked();
     void on_PreviousButton_clicked();
+    void on_buttonTakaisinTilitapahtumat_clicked();
+    void receiveCloseTilitapahtumat();
+
+    void on_buttonLogoutTilitapahtumat_clicked();
+
+    void on_buttonTulevat_clicked();
+
 signals:
     void NextTilitap(int);
     void PreviousTilitap(int);
+    void sendCloseFromTilitapahtumat();
+    void logoutTilitapahtumat();
+    void sendTimerResetFromTilitapahtumat();
 };
 
 #endif // TILITAPAHTUMAT_H

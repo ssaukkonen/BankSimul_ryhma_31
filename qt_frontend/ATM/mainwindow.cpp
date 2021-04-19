@@ -20,7 +20,7 @@ MainWindow::~MainWindow()
 void MainWindow::SignalFromEngineRfidToExe()
 {
 //    ppin = new pin;
-    this->hide();
+    this->close();
 //    ppin->exec();
 //    ppin->show();
 //    delete ppin;
@@ -34,5 +34,5 @@ void MainWindow::receiveShowFromEngineATM()
 
 void MainWindow::on_pushButton_clicked()
 {
-    pengineatm ->testfunction();
+    pengineatm->testfunction();
 }
