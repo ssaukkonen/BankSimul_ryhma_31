@@ -10,6 +10,7 @@
 #include "dllpincode.h"
 #include "valikko.h"
 #include "timerevent.h"
+#include "nosto.h"
 
 class engineatm : public QObject
 {
@@ -23,7 +24,7 @@ signals:
     void sendStartToTimer();
     void sendSignalToRfid();
     void sendSignalToExeFromEngineRfid();
-//    void sendSignalToNosto();
+    void sendSignalToNosto();
     void sendSignalToDllRestApi(QString);
     void sendSignalPinToDLL();
     void sendKorttiPinToRestApi(QString, QString);
@@ -38,6 +39,9 @@ signals:
     void sendTimerStop();
     void sendLockedPinToDllPinCode();
     void sendStartLockedPinTimer();
+    void sendNostoNotWorkingToNostoFromEngine();
+    void sendNostoWorkingToNostoFromEngine();
+
 
 public slots:
     void receiveSignalFromRfid(long long);
@@ -49,6 +53,9 @@ public slots:
     void receiveTimerReset();
     void logout();
     void receiveLockedPinFromDllRestApi();
+    void receiveNostoNotWorkingFromDllRestApi();
+    void receiveNostoWorkingFromDllRestApi();
+    void receiveOpenNostoFromValikko();
 
 private:
     class timerEvent * ptimerEventATM;
@@ -56,6 +63,7 @@ private:
     DLLRestAPI * pDLLRestAPI;
     DLLPinCode * pDLLPinCode;
     Valikko * pValikko;
+    nosto * pnosto;
     long long kortti;
     int idAccount;
 

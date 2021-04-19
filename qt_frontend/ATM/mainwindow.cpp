@@ -34,9 +34,11 @@ void MainWindow::receiveShowFromEngineATM()
 
 void MainWindow::on_pushButton_clicked()
 {
-    pnosto = new nosto;
-    pnosto->exec();
-    pnosto->show();
-    delete pnosto;
-    pnosto = nullptr;
+
+    pValikkoMain = new Valikko;
+    pValikkoMain->exec();
+//    pValikkoMain->show();
+    delete pValikkoMain;
+    pValikkoMain = nullptr;
+
 }

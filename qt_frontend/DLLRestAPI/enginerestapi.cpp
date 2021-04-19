@@ -13,18 +13,20 @@ enginerestapi::~enginerestapi()
 void enginerestapi::cleanVariablesEngineRestApi()
 {
     korttiToId="0";
+    AccountID=0;
 }
 
 void enginerestapi::SignalFromDllRestApi(QString amount)
 {
     qDebug() << amount;
     qDebug() << "enginerestapi";
-    QString id="1";
+    QString id = "1";
 
     QJsonObject json_obj;
-    json_obj.insert("acc_number",3333);
-    json_obj.insert("balance",amount);
-    QString site_url="http://localhost:3000/account/"+id;
+//    json_obj.insert("id",QString::number(AccountID));
+    json_obj.insert("id",id);
+    json_obj.insert("amount",amount);
+    QString site_url="http://localhost:3000/actions/balance_action";
     QString credentials="automat123:pass123";
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -33,7 +35,7 @@ void enginerestapi::SignalFromDllRestApi(QString amount)
     request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
     nostoManager = new QNetworkAccessManager(this);
     connect(nostoManager, SIGNAL(finished (QNetworkReply*)),this, SLOT(nostoSlot(QNetworkReply*)));
-    nostoReply=nostoManager->put(request,QJsonDocument(json_obj).toJson());
+    nostoReply=nostoManager->post(request,QJsonDocument(json_obj).toJson());
 }
 
 void enginerestapi::nostoSlot(QNetworkReply *reply)
@@ -45,9 +47,11 @@ void enginerestapi::nostoSlot(QNetworkReply *reply)
     }
     else if(response_data.compare("0")==0){
         qDebug() << "Nosto ei onnistu";
+        emit sendNostoNotWorking();
     }
     else{
         qDebug() << "Nosto onnistui";
+        emit sendNostoWorking();
     }
 
     nostoReply->deleteLater();

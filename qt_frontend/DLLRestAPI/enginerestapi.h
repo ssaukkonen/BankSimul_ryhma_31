@@ -27,8 +27,11 @@ signals:
     void sendCorrectPinToDllRestApi();
     void sendIdFnameLnameToDllRestApi(int, QString, QString);
     void sendLockedPinToDllRestApi();
+    void sendNostoNotWorking();
+    void sendNostoWorking();
 
 private:
+    int AccountID;
     QNetworkAccessManager *nostoManager;
     QNetworkReply *nostoReply;
     QNetworkAccessManager *pinManager;

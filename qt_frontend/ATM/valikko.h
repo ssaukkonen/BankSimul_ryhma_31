@@ -24,8 +24,11 @@ public slots:
 private slots:
     void on_buttonValikkoLogout_clicked();
 
+    void on_buttonNosto_clicked();
+
 signals:
     void logoutValikko();
+    void sendOpenNostoToEngine();
 
 private:
     Ui::Valikko *ui;

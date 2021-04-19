@@ -21,6 +21,9 @@ public slots:
     void receiveIdFnameLnameFromEngineRestApi(int, QString, QString);
     void receiveCleanVariablesFromEngineATM();
     void receiveLockedPinFromEngineRestApi();
+    void receiveNostoNotWorking();
+    void receiveNostoWorking();
+
 
 signals:
     void SignalToEngineRestApi(QString);
@@ -29,6 +32,8 @@ signals:
     void sendCorrectPinToEngineATM();
     void sendIdFnameLnameToEngineATM(int, QString, QString);
     void sendLockedPinToEngineATM();
+    void sendNostoNotWorkingToEngineATM();
+    void sendNostoWorkingToEngineATM();
 
 private:
     enginerestapi * pengineretsapi;

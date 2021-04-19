@@ -33,7 +33,7 @@
     <string>Automaatti</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="buttonLogOut">
    <property name="geometry">
     <rect>
      <x>380</x>
@@ -73,7 +73,7 @@
     <string>Nosta rahaa</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="buttonMainMenu">
    <property name="geometry">
     <rect>
      <x>240</x>
@@ -93,7 +93,7 @@
     <string>Edellinen</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="statusLabel">
    <property name="geometry">
     <rect>
      <x>290</x>
@@ -103,10 +103,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>Tapahtuma OK</string>
+    <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_9">
+  <widget class="QPushButton" name="buttonSaldo">
    <property name="geometry">
     <rect>
      <x>310</x>
@@ -131,8 +131,8 @@
     <rect>
      <x>270</x>
      <y>240</y>
-     <width>170</width>
-     <height>106</height>
+     <width>197</width>
+     <height>108</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
@@ -153,7 +153,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_4">
+       <widget class="QPushButton" name="button40">
         <property name="font">
          <font>
           <pointsize>10</pointsize>
@@ -169,7 +169,7 @@
      </layout>
     </item>
     <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton_5">
+     <widget class="QPushButton" name="button60">
       <property name="font">
        <font>
         <pointsize>10</pointsize>
@@ -183,7 +183,7 @@
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QPushButton" name="pushButton_6">
+     <widget class="QPushButton" name="button100">
       <property name="font">
        <font>
         <pointsize>10</pointsize>
@@ -197,7 +197,7 @@
      </widget>
     </item>
     <item row="2" column="0">
-     <widget class="QPushButton" name="pushButton_7">
+     <widget class="QPushButton" name="button200">
       <property name="font">
        <font>
         <pointsize>10</pointsize>
@@ -211,7 +211,7 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QPushButton" name="pushButton_8">
+     <widget class="QPushButton" name="button500">
       <property name="font">
        <font>
         <pointsize>10</pointsize>

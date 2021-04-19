@@ -33,3 +33,9 @@ void Valikko::on_buttonValikkoLogout_clicked()
 {
     emit logoutValikko();
 }
+
+void Valikko::on_buttonNosto_clicked()
+{
+    qDebug()<<"OpenNostoTest";
+    emit sendOpenNostoToEngine();
+}

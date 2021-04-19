@@ -3,9 +3,10 @@
 
 #include <QMainWindow>
 #include "engineatm.h"
-#include "pin.h"
+//#include "pin.h"
 #include <QObject>
-#include "nosto.h"
+//#include "nosto.h"
+#include "valikko.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,7 +24,8 @@ private:
     Ui::MainWindow *ui;
     engineatm *pengineatm;
 //    pin * ppin;
-    nosto * pnosto;
+   // nosto * pnostoMain;
+    Valikko *pValikkoMain;
 
 public slots:
     void SignalFromEngineRfidToExe();

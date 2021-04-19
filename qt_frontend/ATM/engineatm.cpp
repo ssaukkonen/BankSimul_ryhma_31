@@ -7,9 +7,11 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     pDLLRestAPI = new DLLRestAPI;
     pDLLPinCode = new DLLPinCode;
     pValikko = new Valikko;
+    pnosto = new nosto;
 
     connect(this,SIGNAL(sendStartToTimer()),ptimerEventATM,SLOT(receiveStartFromEngineATM()),Qt::QueuedConnection);
     connect(pDLLSerialPort,SIGNAL(sendSignalToExeFromRfid(long long)),this,SLOT(receiveSignalFromRfid(long long)),Qt::QueuedConnection);
+    connect(pnosto,SIGNAL(SignalToEngineFromNosto(QString)),this,SLOT(receiveSignalfromNosto(QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendSignalToDllRestApi(QString)),pDLLRestAPI,SLOT(SignalFromEngineNosto(QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendSignalPinToDLL()),pDLLPinCode,SLOT(receiveSignalPinFromEngine()),Qt::QueuedConnection);
     connect(pDLLPinCode,SIGNAL(sendPinCodeToEngineAtm(int)),this,SLOT(receiveSignalFromDllPin(int)),Qt::QueuedConnection);
@@ -31,6 +33,14 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(pDLLRestAPI,SIGNAL(sendLockedPinToEngineATM()),this,SLOT(receiveLockedPinFromDllRestApi()),Qt::QueuedConnection);
     connect(this,SIGNAL(sendLockedPinToDllPinCode()),pDLLPinCode,SLOT(receiveLockedPinFromEngineATM()),Qt::QueuedConnection);
     connect(this,SIGNAL(sendStartLockedPinTimer()),ptimerEventATM,SLOT(receiveStartLockedPinTimer()),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendNostoNotWorkingToEngineATM()),this,SLOT(receiveNostoNotWorkingFromDllRestApi()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendNostoNotWorkingToNostoFromEngine()),pnosto,SLOT(receiveNostoNotWorkingFromEngine()),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendNostoWorkingToEngineATM()),this,SLOT(receiveNostoWorkingFromDllRestApi()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendNostoWorkingToNostoFromEngine()),pnosto,SLOT(receiveNostoWorkingFromEngine()),Qt::QueuedConnection);
+    connect(pnosto,SIGNAL(logoutNosto()),this,SLOT(logout()),Qt::QueuedConnection);
+    connect(pValikko,SIGNAL(sendOpenNostoToEngine()),this,SLOT(receiveOpenNostoFromValikko()),Qt::QueuedConnection);
+
+
 }
 
 engineatm::~engineatm()
@@ -40,6 +50,7 @@ engineatm::~engineatm()
     delete pDLLRestAPI;
     delete pDLLPinCode;
     delete pValikko;
+    delete pnosto;
 }
 
 void engineatm::receiveSignalFromRfid(long long kortti2)
@@ -53,7 +64,7 @@ void engineatm::receiveSignalFromRfid(long long kortti2)
 
 void engineatm::receiveSignalfromNosto(QString amount)
 {
-    qDebug() << amount;
+    qDebug() << "testi";
     emit sendSignalToDllRestApi(amount);
 }
 
@@ -109,5 +120,21 @@ void engineatm::receiveLockedPinFromDllRestApi()
 {
     emit sendLockedPinToDllPinCode();
     emit sendStartLockedPinTimer();
+}
+
+void engineatm::receiveNostoNotWorkingFromDllRestApi()
+{
+    emit sendNostoNotWorkingToNostoFromEngine();
+}
+
+void engineatm::receiveNostoWorkingFromDllRestApi()
+{
+    emit sendNostoWorkingToNostoFromEngine();
+}
+
+void engineatm::receiveOpenNostoFromValikko()
+{
+    qDebug()<<"OpenNostoTestFromValikko";
+    pnosto->exec();
 }
 

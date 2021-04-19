@@ -9,6 +9,8 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
     connect(pengineretsapi,SIGNAL(sendCorrectPinToDllRestApi()),this,SLOT(receiveCorrectPinFromEngineRestApi()),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendIdFnameLnameToDllRestApi(int, QString, QString)),this,SLOT(receiveIdFnameLnameFromEngineRestApi(int, QString, QString)),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendLockedPinToDllRestApi()),this,SLOT(receiveLockedPinFromEngineRestApi()),Qt::QueuedConnection);
+    connect(pengineretsapi,SIGNAL(sendNostoNotWorking()),this,SLOT(receiveNostoNotWorking()),Qt::QueuedConnection);
+    connect(pengineretsapi,SIGNAL(sendNostoWorking()),this,SLOT(receiveNostoWorking()),Qt::QueuedConnection);
 }
 
 DLLRestAPI::~DLLRestAPI()
@@ -51,4 +53,14 @@ void DLLRestAPI::receiveCleanVariablesFromEngineATM()
 void DLLRestAPI::receiveLockedPinFromEngineRestApi()
 {
     emit sendLockedPinToEngineATM();
+}
+
+void DLLRestAPI::receiveNostoNotWorking()
+{
+    emit sendNostoNotWorkingToEngineATM();
+}
+
+void DLLRestAPI::receiveNostoWorking()
+{
+    emit sendNostoWorkingToEngineATM();
 }

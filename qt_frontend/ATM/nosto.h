@@ -2,7 +2,8 @@
 #define NOSTO_H
 
 #include <QDialog>
-#include "engineatm.h"
+#include <QDebug>
+//#include "engineatm.h"
 
 namespace Ui {
 class nosto;
@@ -19,13 +20,34 @@ public:
 private slots:
     void on_button20_clicked();
 
+    void on_button40_clicked();
+
+    void on_button60_clicked();
+
+    void on_button100_clicked();
+
+    void on_button200_clicked();
+
+    void on_button500_clicked();
+
+    void on_buttonSaldo_clicked();
+
+    void on_buttonMainMenu_clicked();
+
+    void on_buttonLogOut_clicked();
+
+public slots:
+    void receiveNostoNotWorkingFromEngine();
+    void receiveNostoWorkingFromEngine();
+
 private:
     Ui::nosto *ui;
     QString amount;
-    engineatm * pengineAtmNosto;
+
 
 signals:
     void SignalToEngineFromNosto(QString);
+    void logoutNosto();
 };
 
 #endif // NOSTO_H
