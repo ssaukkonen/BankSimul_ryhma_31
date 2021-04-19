@@ -10,6 +10,11 @@ enginerestapi::~enginerestapi()
 
 }
 
+void enginerestapi::cleanVariablesEngineRestApi()
+{
+    korttiToId="0";
+}
+
 void enginerestapi::SignalFromDllRestApi(QString amount)
 {
     qDebug() << amount;
@@ -85,6 +90,10 @@ void enginerestapi::pinSlot(QNetworkReply *reply)
         qDebug() << "Oikea PIN";
         emit sendCorrectPinToDllRestApi();
         receiveIdAccount();
+    }
+    else if(response_data.compare("locked")==0){
+        qDebug() << "PIN lukittu";
+        emit sendLockedPinToDllRestApi();
     }
     else{
         qDebug() << "Virhe";

@@ -13,6 +13,7 @@ class enginerestapi : public QObject
 public:
     enginerestapi(QObject *parent = nullptr);
     ~enginerestapi();
+    void cleanVariablesEngineRestApi();
 
 public slots:
     void SignalFromDllRestApi(QString);
@@ -32,9 +33,14 @@ signals:
     void sendWrongPinToDllRestApi();
     void sendCorrectPinToDllRestApi();
     void sendIdFnameLnameToDllRestApi(int, QString, QString);
+
     void sendBalanceToDllRestApi(QString);
     void sendActions5ToDllRestApi(QByteArray);
     void sendActionsToDllRestApi(QByteArray);
+
+    void sendLockedPinToDllRestApi();
+
+
 private:
     QNetworkAccessManager *nostoManager;
     QNetworkReply *nostoReply;

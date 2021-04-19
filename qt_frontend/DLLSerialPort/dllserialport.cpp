@@ -15,3 +15,8 @@ void DLLSerialPort::receiveSignalFromEngine(long long kortti)
 {
     emit sendSignalToExeFromRfid(kortti);
 }
+
+void DLLSerialPort::receiveReStartFromEngineAtm()
+{
+    penginerfid->restartRfid();
+}

@@ -6,6 +6,8 @@ DLLPinCode::DLLPinCode(QObject *parent):QObject(parent)
     connect(ppindialog,SIGNAL(sendSignalToDllPinInterface(int)),this,SLOT(receiveSignalFromPinDialog(int)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendWrongPinToPinDialog()),ppindialog,SLOT(receiveWrongPinFromDLLPinCode()),Qt::QueuedConnection);
     connect(this,SIGNAL(sendClosePinDialog()),ppindialog,SLOT(receiveClosePinDialog()),Qt::QueuedConnection);
+    connect(ppindialog,SIGNAL(sendTimerResetToDllPinCode()),this,SLOT(receiveTimerResetFromPinDialog()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendLockedPinFromDllPinCode()),ppindialog,SLOT(receiveLockedPinFromDllPinCode()),Qt::QueuedConnection);
 }
 
 DLLPinCode::~DLLPinCode()
@@ -16,10 +18,11 @@ DLLPinCode::~DLLPinCode()
 
 void DLLPinCode::receiveSignalPinFromEngine()
 {
+//    ppindialog->startTimerPin();
     ppindialog->exec();
-    ppindialog->show();
-    delete ppindialog;
-    ppindialog = nullptr;
+//    ppindialog->show();
+//    delete ppindialog;
+//    ppindialog = nullptr;
 }
 
 void DLLPinCode::receiveSignalFromPinDialog(int pinnumber)
@@ -36,4 +39,19 @@ void DLLPinCode::receiveWrongPinFromEngineATM()
 void DLLPinCode::receiveClosePin()
 {
     emit sendClosePinDialog();
+}
+
+void DLLPinCode::receiveTimerResetFromPinDialog()
+{
+    emit sendTimerResetFromDllPincode();
+}
+
+void DLLPinCode::receiveClosePinWindow()
+{
+    emit sendClosePinDialog();;
+}
+
+void DLLPinCode::receiveLockedPinFromEngineATM()
+{
+    emit sendLockedPinFromDllPinCode();
 }

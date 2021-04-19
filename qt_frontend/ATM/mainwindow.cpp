@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     pengineatm = new engineatm;
     connect(pengineatm,SIGNAL(sendSignalToExeFromEngineRfid()),this,SLOT(SignalFromEngineRfidToExe()),Qt::QueuedConnection);
+    connect(pengineatm,SIGNAL(sendShowToMainWindow()),this,SLOT(receiveShowFromEngineATM()),Qt::QueuedConnection);
 }
 
 MainWindow::~MainWindow()
@@ -19,13 +20,17 @@ MainWindow::~MainWindow()
 void MainWindow::SignalFromEngineRfidToExe()
 {
 //    ppin = new pin;
-    this->close();
+    this->hide();
 //    ppin->exec();
 //    ppin->show();
 //    delete ppin;
-//    ppin = nullptr;
+    //    ppin = nullptr;
 }
 
+void MainWindow::receiveShowFromEngineATM()
+{
+    this->show();
+}
 
 void MainWindow::on_pushButton_clicked()
 {

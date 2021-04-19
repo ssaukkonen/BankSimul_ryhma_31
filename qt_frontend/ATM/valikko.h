@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QDebug>
+#include <QTimer>
 
 namespace Ui {
 class Valikko;
@@ -18,6 +19,13 @@ public:
 
 public slots:
     void receiveFnameLnameFromEngineATM(QString, QString);
+    void receiveCloseValikko();
+
+private slots:
+    void on_buttonValikkoLogout_clicked();
+
+signals:
+    void logoutValikko();
 
 private slots:
     void on_SaldoButton_clicked();
@@ -26,9 +34,12 @@ private slots:
 private:
     Ui::Valikko *ui;
 
+
 signals:
     void SaldoMenu();
     void TilitapahtumatMenu();
+
+
 
 };
 

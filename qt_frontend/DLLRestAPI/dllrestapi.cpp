@@ -8,6 +8,7 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
     connect(pengineretsapi,SIGNAL(sendWrongPinToDllRestApi()),this,SLOT(receiveWrongPinFromEngineRestApi()),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendCorrectPinToDllRestApi()),this,SLOT(receiveCorrectPinFromEngineRestApi()),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendIdFnameLnameToDllRestApi(int, QString, QString)),this,SLOT(receiveIdFnameLnameFromEngineRestApi(int, QString, QString)),Qt::QueuedConnection);
+
     connect(this,SIGNAL(sendBalanceRequestToEngine(int)),pengineretsapi,SLOT(BalanceFromEngine(int)));
     connect(pengineretsapi,SIGNAL(sendBalanceToDllRestApi(QString)),this,SLOT(receiveBalanceFromEngineRestApi(QString)),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendActions5ToDllRestApi(QByteArray)),this,SLOT(receiveActions5FromEngineRestApi(QByteArray)),Qt::QueuedConnection);
@@ -15,6 +16,8 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
     connect(pengineretsapi,SIGNAL(sendActionsToDllRestApi(QByteArray)),this,SLOT(receiveActionsToDllRestApi(QByteArray)),Qt::QueuedConnection);
 //    connect(pengineretsapi,SIGNAL(NextTilitapFromEngineATM(int,int)),this,SLOT(receiveNextTilitapFromEngineATM(int,int)),Qt::QueuedConnection);
 //    connect(pengineretsapi,SIGNAL(PreviousTilitapFromEngineATM(int,int)),this,SLOT(receivePreviousTilitapFromEngineATM(int,int)),Qt::QueuedConnection);
+=======
+    connect(pengineretsapi,SIGNAL(sendLockedPinToDllRestApi()),this,SLOT(receiveLockedPinFromEngineRestApi()),Qt::QueuedConnection);
 }
 
 DLLRestAPI::~DLLRestAPI()
@@ -48,6 +51,7 @@ void DLLRestAPI::receiveIdFnameLnameFromEngineRestApi(int idAccount, QString fna
 {
     emit sendIdFnameLnameToEngineATM(idAccount, fname, lname);
 }
+
 
 void DLLRestAPI::receiveBalanceFromEngineRestApi(QString balance)
 {
@@ -83,3 +87,14 @@ void DLLRestAPI::receiveActionsToDllRestApi(QByteArray actions10)
 //{
 //    emit sendPreviousTilitapFromRestApi(id);
 //}
+
+void DLLRestAPI::receiveCleanVariablesFromEngineATM()
+{
+    pengineretsapi->cleanVariablesEngineRestApi();
+}
+
+void DLLRestAPI::receiveLockedPinFromEngineRestApi()
+{
+    emit sendLockedPinToEngineATM();
+}
+
