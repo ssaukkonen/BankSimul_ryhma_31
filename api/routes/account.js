@@ -23,6 +23,16 @@ router.get('/:id?',
   }
 });
 
+router.get('/balance/:id?', 
+function(request, response) {
+  account.getBalance(request.params.id, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult[0].balance);
+    }
+  });
+});
 
 router.post('/', 
 function(request, response) {

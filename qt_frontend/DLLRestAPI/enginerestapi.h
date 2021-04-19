@@ -20,13 +20,26 @@ public slots:
     void nostoSlot(QNetworkReply *reply);
     void KorttiPinFromEngine(QString, QString);
     void pinSlot(QNetworkReply *reply);
+    void BalanceFromEngine(int);
+    void balanceSlot(QNetworkReply *reply);
     void idAccountSlot(QNetworkReply *reply);
+    void actions5Slot(QNetworkReply *reply);
+    void receiveActionsRequestToEngineRestApi(int,int);
+    void actionsSlot(QNetworkReply *reply);
+//    void receiveNextTilitapFromRestApi(int);
+//    void receivePreviousTilitapFromRestApi(int);
 
 signals:
     void sendWrongPinToDllRestApi();
     void sendCorrectPinToDllRestApi();
     void sendIdFnameLnameToDllRestApi(int, QString, QString);
+
+    void sendBalanceToDllRestApi(QString);
+    void sendActions5ToDllRestApi(QByteArray);
+    void sendActionsToDllRestApi(QByteArray);
+
     void sendLockedPinToDllRestApi();
+
 
 private:
     QNetworkAccessManager *nostoManager;
@@ -37,6 +50,18 @@ private:
     QString korttiToId;
     QNetworkAccessManager *idAccountManager;
     QNetworkReply *idAccountReply;
+    QNetworkAccessManager *balanceManager;
+    QNetworkReply *balanceReply;
+    void actions5(QString);
+    QNetworkAccessManager *actions5Manager;
+    QNetworkReply *actions5Reply;
+    QString id;
+    QNetworkAccessManager *actionsManager;
+    QNetworkReply *actionsReply;
+    QNetworkAccessManager *actionsNextManager;
+    QNetworkReply *actionsNextReply;
+    QNetworkAccessManager *actionsPreviousManager;
+    QNetworkReply *actionsPreviousReply;
 };
 
 #endif // ENGINERESTAPI_H

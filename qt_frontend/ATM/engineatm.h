@@ -9,7 +9,11 @@
 //#include "pin.h"
 #include "dllpincode.h"
 #include "valikko.h"
+
+#include "saldo.h"
+#include "tilitapahtumat.h"
 #include "timerevent.h"
+
 
 class engineatm : public QObject
 {
@@ -17,6 +21,7 @@ class engineatm : public QObject
 public:
     engineatm(QObject *parent = nullptr);
     ~engineatm();
+    void testfunction();
 
 
 signals:
@@ -30,6 +35,15 @@ signals:
     void sendWrongPinToDLLPinCode();
     void sendFnameLnameToValikko(QString, QString);
     void sendClosePin();
+
+    void sendBalanceToSaldo(QString);
+    void requestBalance(int);
+    void sendActions5ToSaldo(QByteArray);
+    void requestActions(int,int);
+    void sendActionsToTilitapahtumat(QByteArray);
+    void NextTilitapFromEngineATM(int);
+    void PreviousTilitapFromEngineATM(int);
+
     void sendCleanVariablesToDllRestApi();
     void sendReStartToDllSerialPort();
     void sendShowToMainWindow();
@@ -39,6 +53,7 @@ signals:
     void sendLockedPinToDllPinCode();
     void sendStartLockedPinTimer();
 
+
 public slots:
     void receiveSignalFromRfid(long long);
     void receiveSignalfromNosto(QString);
@@ -46,9 +61,19 @@ public slots:
     void receiveWrongPinFromDllRestApi();
     void receiveCorrectPinFromDllRestApi();
     void receiveIdFnameLnameFromDllRestApi(int, QString, QString);
+
+    void receiveBalanceFromDllRestApi(QString);
+    void receiveSaldoMenu();
+    void receiveActions5FromRestApi(QByteArray);
+    void receiveTilitapahtumatMenu();
+    void receiveActionsFromRestApi(QByteArray);
+    void receiveNextTilitap(int);
+    void reveivePreviousTilitap(int);
+
     void receiveTimerReset();
     void logout();
     void receiveLockedPinFromDllRestApi();
+
 
 private:
     class timerEvent * ptimerEventATM;
@@ -56,6 +81,8 @@ private:
     DLLRestAPI * pDLLRestAPI;
     DLLPinCode * pDLLPinCode;
     Valikko * pValikko;
+    saldo * psaldo;
+    tilitapahtumat * ptilitapahtumat;
     long long kortti;
     int idAccount;
 

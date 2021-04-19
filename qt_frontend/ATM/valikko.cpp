@@ -19,6 +19,17 @@ void Valikko::receiveFnameLnameFromEngineATM(QString fname, QString lname)
     ui->labelFnameLname->setText(fname+" "+lname);
 }
 
+
+
+void Valikko::on_SaldoButton_clicked()
+{
+    emit SaldoMenu();
+}
+
+void Valikko::on_TilitapahtumatButton_clicked()
+{
+    emit TilitapahtumatMenu();
+
 void Valikko::receiveCloseValikko()
 {
     qDebug() << "closevalikko";
@@ -32,4 +43,5 @@ void Valikko::receiveCloseValikko()
 void Valikko::on_buttonValikkoLogout_clicked()
 {
     emit logoutValikko();
+
 }

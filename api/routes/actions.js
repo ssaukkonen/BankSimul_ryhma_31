@@ -23,6 +23,27 @@ router.get('/:id?',
   }
 });
 
+router.get('/actions5/:id?', 
+function(request, response) {
+  actions.getActions5(request.params.id, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult);
+    }
+  });
+});
+
+router.post('/actions10',
+function(request, response) {
+  actions.actions10(parseInt(request.body.idaccount),parseInt(request.body.pagenumber), function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult);
+    }
+  });
+});
 
 router.post('/', 
 function(request, response) {
