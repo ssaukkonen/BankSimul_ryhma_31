@@ -34,8 +34,8 @@ signals:
     void sendBalanceToSaldo(QString);
     void requestBalance(int);
     void sendActions5ToSaldo(QByteArray);
-    void requestActions(int);
-    void sendActionsToTilitapahtumat(QString);
+    void requestActions(int,int);
+    void sendActionsToTilitapahtumat(QByteArray);
     void NextTilitapFromEngineATM(int);
     void PreviousTilitapFromEngineATM(int);
 
@@ -50,9 +50,9 @@ public slots:
     void receiveSaldoMenu();
     void receiveActions5FromRestApi(QByteArray);
     void receiveTilitapahtumatMenu();
-    void receiveActionsFromRestApi(QString);
-    void receiveNextTilitap();
-    void reveivePreviousTilitap();
+    void receiveActionsFromRestApi(QByteArray);
+    void receiveNextTilitap(int);
+    void reveivePreviousTilitap(int);
 
 private:
     DLLSerialPort * pDLLSerialPort;

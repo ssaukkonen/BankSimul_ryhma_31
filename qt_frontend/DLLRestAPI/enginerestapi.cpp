@@ -174,12 +174,15 @@ void enginerestapi::actions5Slot(QNetworkReply *reply)
     actions5Manager->deleteLater();
 }
 
-void enginerestapi::receiveActionsRequestToEngineRestApi(int id2)
+void enginerestapi::receiveActionsRequestToEngineRestApi(int id2, int pagenumber)
 {
     //    QString id = QString::number(id2);
-    id = "1"; //väliaikainen
-    qDebug() << "balance tarkistus";
-    QString site_url="http://localhost:3000/actions/actions5/"+id;
+    QString idaccount = "1"; //väliaikainen
+    qDebug() << "tilitapahtuma tarkistus";
+    QJsonObject json_obj;
+    json_obj.insert("idaccount",idaccount);
+    json_obj.insert("pagenumber",pagenumber);
+    QString site_url="http://localhost:3000/actions/actions10/";
     QString credentials="automat123:pass123";
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -188,7 +191,7 @@ void enginerestapi::receiveActionsRequestToEngineRestApi(int id2)
     request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
     actionsManager = new QNetworkAccessManager(this);
     connect(actionsManager, SIGNAL(finished (QNetworkReply*)),this, SLOT(actionsSlot(QNetworkReply*)));
-    actionsReply=actionsManager->get(request);
+    actionsReply=actionsManager->post(request,QJsonDocument(json_obj).toJson());
 }
 
 void enginerestapi::actionsSlot(QNetworkReply *reply)
@@ -200,31 +203,31 @@ void enginerestapi::actionsSlot(QNetworkReply *reply)
     }
     else
     {
-        QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
-        QJsonArray json_array = json_doc.array();
-        QString listActions10;
-        foreach(const QJsonValue &value, json_array)
-        {
-            QJsonObject json_obj = value.toObject();
-            listActions10+=QString::number(json_obj["amount"].toDouble())+" €\t"+json_obj["date"].toString()+"\t"+json_obj["action_type"].toString()+"\t"+QString::number(json_obj["ref_num"].toDouble())+"\t"+json_obj["message"].toString()+"\t"+QString::number(json_obj["acc_sender"].toInt())+"\r\n";
-            qDebug() << listActions10;
-        }
-        emit sendActionsToDllRestApi(listActions10);
+//        QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+//        QJsonArray json_array = json_doc.array();
+//        QString listActions10;
+//        foreach(const QJsonValue &value, json_array)
+//        {
+//            QJsonObject json_obj = value.toObject();
+//            listActions10+=QString::number(json_obj["amount"].toDouble())+" €\t"+json_obj["date"].toString()+"\t"+json_obj["action_type"].toString()+"\t"+QString::number(json_obj["ref_num"].toDouble())+"\t"+json_obj["message"].toString()+"\t"+QString::number(json_obj["acc_sender"].toInt())+"\r\n";
+//            qDebug() << listActions10;
+//        }
+        emit sendActionsToDllRestApi(response_data);
     }
     actionsReply->deleteLater();
     reply->deleteLater();
     actionsManager->deleteLater();
 }
 
-void enginerestapi::receiveNextTilitapFromRestApi(int id2)
-{
+//void enginerestapi::receiveNextTilitapFromRestApi(int id2)
+//{
 
-}
+//}
 
-void enginerestapi::receivePreviousTilitapFromRestApi(int id2)
-{
+//void enginerestapi::receivePreviousTilitapFromRestApi(int id2)
+//{
 
-}
+//}
 
 void enginerestapi::BalanceFromEngine(int id2)
 {

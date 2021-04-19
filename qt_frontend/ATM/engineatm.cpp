@@ -27,13 +27,13 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(pDLLRestAPI,SIGNAL(sendActions5FromRestApi(QByteArray)),this,SLOT(receiveActions5FromRestApi(QByteArray)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendActions5ToSaldo(QByteArray)),psaldo,SLOT(receiveActions5FromEngineATM(QByteArray)),Qt::QueuedConnection);
     connect(pValikko,SIGNAL(TilitapahtumatMenu()),this,SLOT(receiveTilitapahtumatMenu()),Qt::QueuedConnection);
-    connect(this,SIGNAL(requestActions(int)),pDLLRestAPI,SLOT(requestActionsFromATMEngine(int)),Qt::QueuedConnection);
-    connect(pDLLRestAPI,SIGNAL(sendActionsFromRestApi(QString)),this,SLOT(receiveActionsFromRestApi(QString)),Qt::QueuedConnection);
-    connect(this,SIGNAL(sendActionsToTilitapahtumat(QString)),ptilitapahtumat,SLOT(receiveActionsFromEngineATM(QString)),Qt::QueuedConnection);
-    connect(ptilitapahtumat,SIGNAL(NextTilitap()),this,SLOT(receiveNextTilitap()),Qt::QueuedConnection);
-    connect(this,SIGNAL(NextTilitapFromEngineATM(int)),pDLLRestAPI,SLOT(receiveNextTilitapFromEngineATM(int)),Qt::QueuedConnection);
-    connect(ptilitapahtumat,SIGNAL(PreviousTilitap()),this,SLOT(receivePreviousTilitap()),Qt::QueuedConnection);
-    connect(this,SIGNAL(PreviousTilitapFromEngineATM(int)),pDLLRestAPI,SLOT(receivePreviousTilitapFromEngineATM(int)),Qt::QueuedConnection);
+    connect(this,SIGNAL(requestActions(int,int)),pDLLRestAPI,SLOT(requestActionsFromATMEngine(int,int)),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendActionsFromRestApi(QByteArray)),this,SLOT(receiveActionsFromRestApi(QByteArray)),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendActionsToTilitapahtumat(QByteArray)),ptilitapahtumat,SLOT(receiveActionsFromEngineATM(QByteArray)),Qt::QueuedConnection);
+    connect(ptilitapahtumat,SIGNAL(NextTilitap(int)),this,SLOT(receiveNextTilitap(int)),Qt::QueuedConnection);
+//    connect(this,SIGNAL(NextTilitapFromEngineATM(int)),pDLLRestAPI,SLOT(receiveNextTilitapFromEngineATM(int)),Qt::QueuedConnection);
+    connect(ptilitapahtumat,SIGNAL(PreviousTilitap(int)),this,SLOT(reveivePreviousTilitap(int)),Qt::QueuedConnection);
+//    connect(this,SIGNAL(PreviousTilitapFromEngineATM(int)),pDLLRestAPI,SLOT(receivePreviousTilitapFromEngineATM(int)),Qt::QueuedConnection);
 
 }
 
@@ -118,7 +118,7 @@ void engineatm::receiveActions5FromRestApi(QByteArray actions5)
 
 void engineatm::receiveTilitapahtumatMenu()
 {
-    emit requestActions(idAccount);
+    emit requestActions(idAccount,0);
     pValikko -> hide();
     ptilitapahtumat -> exec();
     ptilitapahtumat -> show();
@@ -126,17 +126,21 @@ void engineatm::receiveTilitapahtumatMenu()
     ptilitapahtumat = nullptr;
 }
 
-void engineatm::receiveActionsFromRestApi(QString actions10)
+void engineatm::receiveActionsFromRestApi(QByteArray actions10)
 {
     emit sendActionsToTilitapahtumat(actions10);
 }
 
-void engineatm::receiveNextTilitap()
+void engineatm::receiveNextTilitap(int pagenumber)
 {
-    emit NextTilitapFromEngineATM(idAccount);
+//    emit NextTilitapFromEngineATM(idAccount);
+    qDebug() << "Next saatu";
+    emit requestActions(idAccount,pagenumber);
 }
 
-void engineatm::reveivePreviousTilitap()
+void engineatm::reveivePreviousTilitap(int pagenumber)
 {
-    emit PreviousTilitapFromEngineATM(idAccount);
+//    emit PreviousTilitapFromEngineATM(idAccount);
+    qDebug() << "Previous saatu";
+    emit requestActions(idAccount,pagenumber);
 }

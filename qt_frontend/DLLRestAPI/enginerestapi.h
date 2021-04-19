@@ -23,10 +23,10 @@ public slots:
     void balanceSlot(QNetworkReply *reply);
     void idAccountSlot(QNetworkReply *reply);
     void actions5Slot(QNetworkReply *reply);
-    void receiveActionsRequestToEngineRestApi(int);
+    void receiveActionsRequestToEngineRestApi(int,int);
     void actionsSlot(QNetworkReply *reply);
-    void receiveNextTilitapFromRestApi(int);
-    void receivePreviousTilitapFromRestApi(int);
+//    void receiveNextTilitapFromRestApi(int);
+//    void receivePreviousTilitapFromRestApi(int);
 
 signals:
     void sendWrongPinToDllRestApi();
@@ -34,7 +34,7 @@ signals:
     void sendIdFnameLnameToDllRestApi(int, QString, QString);
     void sendBalanceToDllRestApi(QString);
     void sendActions5ToDllRestApi(QByteArray);
-    void sendActionsToDllRestApi(QString);
+    void sendActionsToDllRestApi(QByteArray);
 private:
     QNetworkAccessManager *nostoManager;
     QNetworkReply *nostoReply;
