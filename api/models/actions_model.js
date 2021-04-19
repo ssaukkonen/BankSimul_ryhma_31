@@ -7,8 +7,9 @@ const actions = {
   getActions5: function(id, callback) {
     return db.query('select amount,date,action_type,ref_num,message,acc_sender from actions where id_account=? order by date desc limit 5', [id], callback);
   },
-  postActions10: function(id, pagenumber, callback) {
-    return db.query('select amount,date,action_type,ref_num,message,acc_sender from actions where id_account=? order by date desc limit ?,10', [id,pagenumber], callback);
+  actions10: function(idaccount,pagenumber, callback) {
+    console.log("actions10 model");
+    return db.query('select amount,date,action_type,ref_num,message,acc_sender from actions where id_account=? order by date desc limit ?,10',[idaccount, pagenumber], callback); 
   },
   getAll: function(callback) {
     return db.query('select * from actions', callback);

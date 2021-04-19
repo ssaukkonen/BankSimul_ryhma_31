@@ -34,9 +34,9 @@ function(request, response) {
   });
 });
 
-router.post('/actions10/:id?', 
+router.post('/actions10',
 function(request, response) {
-  actions.postActions10(request.params.id, request.body.pagenumber, function(err, dbResult) {
+  actions.actions10(parseInt(request.body.idaccount),parseInt(request.body.pagenumber), function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
