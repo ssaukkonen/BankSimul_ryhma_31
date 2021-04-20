@@ -24,7 +24,7 @@ signals:
     void sendStartToTimer();
     void sendSignalToRfid();
     void sendSignalToExeFromEngineRfid();
-    void sendSignalToNosto();
+   // void sendSignalToNosto();
     void sendSignalToDllRestApi(QString);
     void sendSignalPinToDLL();
     void sendKorttiPinToRestApi(QString, QString);
