@@ -36,8 +36,7 @@ private slots:
     void on_buttonTulevat_clicked();
 
 signals:
-    void NextTilitap(int);
-    void PreviousTilitap(int);
+    void requestActionsFromTilitapahtumat(int);
     void sendCloseFromTilitapahtumat();
     void logoutTilitapahtumat();
     void sendTimerResetFromTilitapahtumat();

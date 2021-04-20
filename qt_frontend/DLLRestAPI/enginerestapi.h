@@ -26,8 +26,6 @@ public slots:
     void actions5Slot(QNetworkReply *reply);
     void receiveActionsRequestToEngineRestApi(int,int);
     void actionsSlot(QNetworkReply *reply);
-//    void receiveNextTilitapFromRestApi(int);
-//    void receivePreviousTilitapFromRestApi(int);
     void receiveRequestFutureActionsFromRestApi(int,int);
     void futureActionsSlot(QNetworkReply *reply);
 

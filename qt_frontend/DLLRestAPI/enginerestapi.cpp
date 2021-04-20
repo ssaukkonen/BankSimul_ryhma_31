@@ -264,16 +264,6 @@ void enginerestapi::futureActionsSlot(QNetworkReply *reply)
     futureActionsManager->deleteLater();
 }
 
-//void enginerestapi::receiveNextTilitapFromRestApi(int id2)
-//{
-
-//}
-
-//void enginerestapi::receivePreviousTilitapFromRestApi(int id2)
-//{
-
-//}
-
 void enginerestapi::BalanceFromEngine(int id2)
 {
 //    qDebug() << balance;

@@ -25,9 +25,6 @@ public slots:
     void receiveActions5FromEngineRestApi(QByteArray);
     void requestActionsFromATMEngine(int,int);
     void receiveActionsToDllRestApi(QByteArray);
-//    void receiveNextTilitapFromEngineATM(int);
-//    void receivePreviousTilitapFromEngineATM(int);
-
     void receiveCleanVariablesFromEngineATM();
     void receiveLockedPinFromEngineRestApi();
     void receiveRequestFutureActionsFromEngineATM(int,int);
@@ -46,9 +43,6 @@ signals:
     void sendActions5FromRestApi(QByteArray);
     void sendActionsRequestToEngineRestApi(int,int);
     void sendActionsFromRestApi(QByteArray);
-//    void sendNextTilitapFromRestApi(int);
-//    void sendPreviousTilitapFromRestApi(int);
-
     void sendLockedPinToEngineATM();
     void sendRequestFutureActionsFromRestApi(int,int);
     void sendFutureActionsToEngineATM(QByteArray);
