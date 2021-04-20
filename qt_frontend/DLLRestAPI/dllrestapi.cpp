@@ -14,10 +14,9 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
     connect(pengineretsapi,SIGNAL(sendActions5ToDllRestApi(QByteArray)),this,SLOT(receiveActions5FromEngineRestApi(QByteArray)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendActionsRequestToEngineRestApi(int,int)),pengineretsapi,SLOT(receiveActionsRequestToEngineRestApi(int,int)),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendActionsToDllRestApi(QByteArray)),this,SLOT(receiveActionsToDllRestApi(QByteArray)),Qt::QueuedConnection);
-//    connect(pengineretsapi,SIGNAL(NextTilitapFromEngineATM(int,int)),this,SLOT(receiveNextTilitapFromEngineATM(int,int)),Qt::QueuedConnection);
-//    connect(pengineretsapi,SIGNAL(PreviousTilitapFromEngineATM(int,int)),this,SLOT(receivePreviousTilitapFromEngineATM(int,int)),Qt::QueuedConnection);
-
     connect(pengineretsapi,SIGNAL(sendLockedPinToDllRestApi()),this,SLOT(receiveLockedPinFromEngineRestApi()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendRequestFutureActionsFromRestApi(int,int)),pengineretsapi,SLOT(receiveRequestFutureActionsFromRestApi(int,int)),Qt::QueuedConnection);
+    connect(pengineretsapi,SIGNAL(sendFutureActionsToDllRestApi(QByteArray)),this,SLOT(receiveFutureActionsToDllRestApi(QByteArray)),Qt::QueuedConnection);
 }
 
 DLLRestAPI::~DLLRestAPI()
@@ -78,16 +77,6 @@ void DLLRestAPI::receiveActionsToDllRestApi(QByteArray actions10)
     emit sendActionsFromRestApi(actions10);
 }
 
-//void DLLRestAPI::receiveNextTilitapFromEngineATM(int id)
-//{
-//    emit sendNextTilitapFromRestApi(id);
-//}
-
-//void DLLRestAPI::receivePreviousTilitapFromEngineATM(int id)
-//{
-//    emit sendPreviousTilitapFromRestApi(id);
-//}
-
 void DLLRestAPI::receiveCleanVariablesFromEngineATM()
 {
     pengineretsapi->cleanVariablesEngineRestApi();
@@ -96,5 +85,15 @@ void DLLRestAPI::receiveCleanVariablesFromEngineATM()
 void DLLRestAPI::receiveLockedPinFromEngineRestApi()
 {
     emit sendLockedPinToEngineATM();
+}
+
+void DLLRestAPI::receiveRequestFutureActionsFromEngineATM(int id, int pagenumber) //tulevat tapahtumat
+{
+    emit sendRequestFutureActionsFromRestApi(id, pagenumber);
+}
+
+void DLLRestAPI::receiveFutureActionsToDllRestApi(QByteArray futureActions10)
+{
+    emit sendFutureActionsToEngineATM(futureActions10);
 }
 
