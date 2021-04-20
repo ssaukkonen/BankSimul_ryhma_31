@@ -18,6 +18,7 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
 //    connect(pengineretsapi,SIGNAL(PreviousTilitapFromEngineATM(int,int)),this,SLOT(receivePreviousTilitapFromEngineATM(int,int)),Qt::QueuedConnection);
 
     connect(pengineretsapi,SIGNAL(sendLockedPinToDllRestApi()),this,SLOT(receiveLockedPinFromEngineRestApi()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendMoneyTodayFromDllRestApi(int, QString, QString, QString, QString, QString)),pengineretsapi,SLOT(receiveMoneyTodayFromDllRestApi(int, QString, QString, QString, QString, QString)),Qt::QueuedConnection);
 }
 
 DLLRestAPI::~DLLRestAPI()
@@ -96,5 +97,10 @@ void DLLRestAPI::receiveCleanVariablesFromEngineATM()
 void DLLRestAPI::receiveLockedPinFromEngineRestApi()
 {
     emit sendLockedPinToEngineATM();
+}
+
+void DLLRestAPI::receiveMoneyTodayFromEngine(int idaccount, QString summa, QString viite, QString viesti, QString tilinumero, QString date)
+{
+    emit sendMoneyTodayFromDllRestApi(idaccount, summa, viite, viesti, tilinumero, date);
 }
 

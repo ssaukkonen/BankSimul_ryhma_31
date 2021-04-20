@@ -1,6 +1,10 @@
 const db = require('../database');
 
 const actions = {
+  getResult: function(callback) {
+    console.log("kysely result");
+    return db.query('select @tulos', callback);
+  },
   getById: function(id, callback) {
     return db.query('select * from actions where id_actions=?', [id], callback);
   },
@@ -40,7 +44,7 @@ const actions = {
   },
   money_action: function(procedure_params, callback) {
     return db.query(
-      'CALL money_action(?,?,?,?,?)',
+      'CALL money_action(?,?,?,?,?,@result)',
       [procedure_params.first_id, procedure_params.second_id, procedure_params.amount, procedure_params.ref_num, procedure_params.message],
       callback
     );

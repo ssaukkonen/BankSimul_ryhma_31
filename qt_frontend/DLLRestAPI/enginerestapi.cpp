@@ -228,6 +228,57 @@ void enginerestapi::actionsSlot(QNetworkReply *reply)
     actionsManager->deleteLater();
 }
 
+void enginerestapi::receiveMoneyTodayFromDllRestApi(int idaccount2, QString summa, QString viite, QString viesti, QString tilinumero, QString date)
+{
+    qDebug() << "moneytodayenginerestapi";
+    //QString idaccount = QString::number(idaccount2);
+    QString idaccount = "1"; //väliaikainen
+    qDebug() << "tilitapahtuma tarkistus";
+    QJsonObject json_obj;
+    json_obj.insert("first_id",idaccount);
+    json_obj.insert("second_id",tilinumero);
+    json_obj.insert("amount",summa);
+    if (viite != ""){
+        json_obj.insert("ref_num",viite);
+    }
+    if (viesti != ""){
+    json_obj.insert("message",viesti);
+    }
+    QString site_url="http://localhost:3000/actions/money_action/";
+    QString credentials="automat123:pass123";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+    request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
+    moneyTodayManager = new QNetworkAccessManager(this);
+    connect(moneyTodayManager, SIGNAL(finished (QNetworkReply*)),this, SLOT(moneyTodaySlot(QNetworkReply*)));
+    moneyTodayReply=moneyTodayManager->post(request,QJsonDocument(json_obj).toJson());
+}
+
+void enginerestapi::moneyTodaySlot(QNetworkReply *reply)
+{
+    QByteArray response_data=reply->readAll();
+    qDebug() << response_data;
+    if(response_data.compare("")==0){
+        qDebug() << "Virhe tietokantayhteydessä";
+    }
+    else if(response_data.compare("0")==1){
+        qDebug() << "money_action meni läpi";
+    }
+    else if (response_data.compare("1")==1){
+        qDebug() << "ei katetta";
+    }
+    else if (response_data.compare("2")==1){
+        qDebug() << "väärä tili";
+    }
+    else if (response_data.compare("3")==1){
+        qDebug() << "error";
+    }
+    moneyTodayReply->deleteLater();
+    reply->deleteLater();
+    moneyTodayManager->deleteLater();
+}
 //void enginerestapi::receiveNextTilitapFromRestApi(int id2)
 //{
 

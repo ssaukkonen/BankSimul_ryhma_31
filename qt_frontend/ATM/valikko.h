@@ -25,12 +25,15 @@ signals:
     void logoutValikko();
     void SaldoMenu();
     void TilitapahtumatMenu();
+    void TilisiirtoMenu();
 
 
 private slots:
     void on_SaldoButton_clicked();
     void on_TilitapahtumatButton_clicked();
     void on_buttonValikkoLogout_clicked();
+
+    void on_buttonTilisiirto_clicked();
 
 private:
     Ui::Valikko *ui;

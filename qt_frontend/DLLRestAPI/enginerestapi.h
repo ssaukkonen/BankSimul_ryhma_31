@@ -28,6 +28,8 @@ public slots:
     void actionsSlot(QNetworkReply *reply);
 //    void receiveNextTilitapFromRestApi(int);
 //    void receivePreviousTilitapFromRestApi(int);
+    void receiveMoneyTodayFromDllRestApi(int, QString, QString, QString, QString, QString);
+    void moneyTodaySlot(QNetworkReply *reply);
 
 signals:
     void sendWrongPinToDllRestApi();
@@ -62,6 +64,8 @@ private:
     QNetworkReply *actionsNextReply;
     QNetworkAccessManager *actionsPreviousManager;
     QNetworkReply *actionsPreviousReply;
+    QNetworkAccessManager *moneyTodayManager;
+    QNetworkReply *moneyTodayReply;
 };
 
 #endif // ENGINERESTAPI_H

@@ -30,6 +30,7 @@ public slots:
 
     void receiveCleanVariablesFromEngineATM();
     void receiveLockedPinFromEngineRestApi();
+    void receiveMoneyTodayFromEngine(int, QString, QString, QString, QString, QString);
 
 
 signals:
@@ -46,6 +47,7 @@ signals:
     void sendActionsFromRestApi(QByteArray);
 //    void sendNextTilitapFromRestApi(int);
 //    void sendPreviousTilitapFromRestApi(int);
+    void sendMoneyTodayFromDllRestApi(int, QString, QString, QString, QString, QString);
 
     void sendLockedPinToEngineATM();
 
