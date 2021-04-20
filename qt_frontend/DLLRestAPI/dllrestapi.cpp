@@ -18,6 +18,8 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
 //    connect(pengineretsapi,SIGNAL(PreviousTilitapFromEngineATM(int,int)),this,SLOT(receivePreviousTilitapFromEngineATM(int,int)),Qt::QueuedConnection);
 
     connect(pengineretsapi,SIGNAL(sendLockedPinToDllRestApi()),this,SLOT(receiveLockedPinFromEngineRestApi()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendRequestFutureActionsFromRestApi(int,int)),pengineretsapi,SLOT(receiveRequestFutureActionsFromRestApi(int,int)),Qt::QueuedConnection);
+    connect(pengineretsapi,SIGNAL(sendFutureActionsToDllRestApi(QByteArray)),this,SLOT(receiveFutureActionsToDllRestApi(QByteArray)),Qt::QueuedConnection);
 }
 
 DLLRestAPI::~DLLRestAPI()
@@ -96,5 +98,15 @@ void DLLRestAPI::receiveCleanVariablesFromEngineATM()
 void DLLRestAPI::receiveLockedPinFromEngineRestApi()
 {
     emit sendLockedPinToEngineATM();
+}
+
+void DLLRestAPI::receiveRequestFutureActionsFromEngineATM(int id, int pagenumber) //tulevat tapahtumat
+{
+    emit sendRequestFutureActionsFromRestApi(id, pagenumber);
+}
+
+void DLLRestAPI::receiveFutureActionsToDllRestApi(QByteArray futureActions10)
+{
+    emit sendFutureActionsToEngineATM(futureActions10);
 }
 

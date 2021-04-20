@@ -50,6 +50,40 @@ void tilitapahtumat::receiveActionsFromEngineATM(QByteArray actions10)
 
 }
 
+void tilitapahtumat::receiveFutureActionsToTilitapahtumat(QByteArray futureActions10)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(futureActions10);
+    QJsonArray array_doc = doc.array();
+    int r=0;
+    foreach(const QJsonValue &value, array_doc){
+        QJsonObject json_obj = value.toObject();
+        auto *it = new QTableWidgetItem(QString::number(json_obj["amount"].toDouble()));
+        ui->tableWidget1->setItem(r, 0, it);
+        QString date = json_obj["action_date"].toString() ;
+        int pos = date.lastIndexOf(QChar('T'));
+        ui->tableWidget1->setItem(r, 1, new QTableWidgetItem(date.left(pos)));
+        auto *it3 = new QTableWidgetItem(json_obj["action_type"].toString());
+        ui->tableWidget1->setItem(r, 2, it3);
+        if (QString::number(json_obj["ref_num"].toInt())=="0"){
+            ui->tableWidget1->setItem(r, 3, new QTableWidgetItem(""));
+        }
+        else{
+            auto *it4 = new QTableWidgetItem(QString::number(json_obj["ref_num"].toInt()));
+            ui->tableWidget1->setItem(r, 3, it4);
+        }
+        auto *it5 = new QTableWidgetItem(json_obj["message"].toString());
+        ui->tableWidget1->setItem(r, 4, it5);
+        if (QString::number(json_obj["recipient_number"].toInt())=="0"){
+            ui->tableWidget1->setItem(r, 5, new QTableWidgetItem(""));
+        }
+        else{
+            auto *it6 = new QTableWidgetItem(QString::number(json_obj["recipient_number"].toInt()));
+            ui->tableWidget1->setItem(r, 5, it6);
+        }
+        r++;
+    }
+}
+
 void tilitapahtumat::on_NextButton_clicked()
 {
     switch (tapahtuma){
@@ -59,7 +93,7 @@ void tilitapahtumat::on_NextButton_clicked()
         ui ->PreviousButton ->setDisabled(0);
         qDebug() << pagenumber;
         emit NextTilitap(pagenumber);
-        ui ->tableWidget1 ->clear();
+        ui ->tableWidget1->clearContents();
         break;
     case 1:
         //emit futuresignaali
@@ -79,7 +113,7 @@ void tilitapahtumat::on_PreviousButton_clicked()
         }
         qDebug() << pagenumber;
         emit PreviousTilitap(pagenumber);
-        ui ->tableWidget1 ->clear();
+        ui ->tableWidget1->clearContents();
         break;
     case 1:
         //emit futuresignaali
@@ -112,12 +146,18 @@ void tilitapahtumat::on_buttonTulevat_clicked()
         ui->label_2->setText("Tulevat maksut");
         ui->buttonTulevat->setText("Menneet tapahtumat");
         tapahtuma = 1;
+        pagenumber = 0;
+        emit requestFutureActionsFromTilitapahtumat(pagenumber);
+        ui ->tableWidget1->clearContents();
         break;
     case 1:
         qDebug() << "1";
         ui->label_2->setText("Tilitapahtumat");
         ui->buttonTulevat->setText("Tulevat maksut");
         tapahtuma = 0;
+        pagenumber = 0;
+        emit NextTilitap(pagenumber);
+        ui ->tableWidget1->clearContents();
         break;
     }
 }

@@ -228,6 +228,42 @@ void enginerestapi::actionsSlot(QNetworkReply *reply)
     actionsManager->deleteLater();
 }
 
+void enginerestapi::receiveRequestFutureActionsFromRestApi(int id2, int pagenumber)
+{
+    //    QString id = QString::number(id2);
+    QString idaccount = "1"; //väliaikainen
+    qDebug() << "tilitapahtuma tarkistus";
+    QJsonObject json_obj;
+    json_obj.insert("idaccount",idaccount);
+    json_obj.insert("pagenumber",pagenumber);
+    QString site_url="http://localhost:3000/future_actions/futureActions10/";
+    QString credentials="automat123:pass123";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+    request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
+    futureActionsManager = new QNetworkAccessManager(this);
+    connect(futureActionsManager, SIGNAL(finished (QNetworkReply*)),this, SLOT(futureActionsSlot(QNetworkReply*)));
+    futureActionsReply=futureActionsManager->post(request,QJsonDocument(json_obj).toJson());
+}
+
+void enginerestapi::futureActionsSlot(QNetworkReply *reply)
+{
+    QByteArray response_data=reply->readAll();
+//    qDebug()<<response_data;
+    if(response_data.compare("")==0){
+        qDebug() << "Virhe tietokantayhteydessä";
+    }
+    else
+    {
+        emit sendFutureActionsToDllRestApi(response_data);
+    }
+    futureActionsReply->deleteLater();
+    reply->deleteLater();
+    futureActionsManager->deleteLater();
+}
+
 //void enginerestapi::receiveNextTilitapFromRestApi(int id2)
 //{
 

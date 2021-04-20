@@ -54,6 +54,8 @@ signals:
     void sendStartLockedPinTimer();
     void sendCloseSaldo();
     void sendCloseTilitapahtumat();
+    void sendRequestFutureActionsFromEngineATM(int,int);
+    void sendFutureActionsToTilitapahtumat(QByteArray);
 
 
 public slots:
@@ -77,6 +79,8 @@ public slots:
     void receiveLockedPinFromDllRestApi();
     void receiveCloseFromSaldo();
     void receiveCloseFromTilitapahtumat();
+    void receiveRequestFutureActionsFromTilitapahtumat(int);
+    void receiveFutureActionsToEngineATM(QByteArray);
 
 
 private:

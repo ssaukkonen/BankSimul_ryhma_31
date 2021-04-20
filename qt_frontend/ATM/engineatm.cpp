@@ -60,6 +60,10 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(psaldo,SIGNAL(logoutSaldo()),this,SLOT(logout()),Qt::QueuedConnection);
     connect(ptilitapahtumat,SIGNAL(logoutTilitapahtumat()),this,SLOT(logout()),Qt::QueuedConnection);
     connect(ptilitapahtumat,SIGNAL(sendTimerResetFromTilitapahtumat()),this,SLOT(receiveTimerReset()),Qt::QueuedConnection);
+    connect(ptilitapahtumat,SIGNAL(requestFutureActionsFromTilitapahtumat(int)),this,SLOT(receiveRequestFutureActionsFromTilitapahtumat(int)),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendRequestFutureActionsFromEngineATM(int,int)),pDLLRestAPI,SLOT(receiveRequestFutureActionsFromEngineATM(int,int)),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendFutureActionsToEngineATM(QByteArray)),this,SLOT(receiveFutureActionsToEngineATM(QByteArray)),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendFutureActionsToTilitapahtumat(QByteArray)),ptilitapahtumat,SLOT(receiveFutureActionsToTilitapahtumat(QByteArray)),Qt::QueuedConnection);
 }
 
 engineatm::~engineatm()
@@ -215,5 +219,15 @@ void engineatm::receiveCloseFromTilitapahtumat()
 {
     emit sendCloseTilitapahtumat();
     pValikko->show();
+}
+
+void engineatm::receiveRequestFutureActionsFromTilitapahtumat(int pagenumber)
+{
+    emit sendRequestFutureActionsFromEngineATM(idAccount,pagenumber);
+}
+
+void engineatm::receiveFutureActionsToEngineATM(QByteArray futureActions10)
+{
+    emit sendFutureActionsToTilitapahtumat(futureActions10);
 }
 

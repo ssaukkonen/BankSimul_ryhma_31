@@ -30,6 +30,8 @@ public slots:
 
     void receiveCleanVariablesFromEngineATM();
     void receiveLockedPinFromEngineRestApi();
+    void receiveRequestFutureActionsFromEngineATM(int,int);
+    void receiveFutureActionsToDllRestApi(QByteArray);
 
 
 signals:
@@ -48,6 +50,8 @@ signals:
 //    void sendPreviousTilitapFromRestApi(int);
 
     void sendLockedPinToEngineATM();
+    void sendRequestFutureActionsFromRestApi(int,int);
+    void sendFutureActionsToEngineATM(QByteArray);
 
 
 private:
