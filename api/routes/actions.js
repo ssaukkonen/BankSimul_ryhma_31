@@ -1,3 +1,4 @@
+const { json } = require('express');
 const express = require('express');
 const router = express.Router();
 const actions = require('../models/actions_model');
@@ -98,9 +99,27 @@ function(request, response) {
   actions.money_action(request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
-    } else {
-      response.json(dbResult.affectedRows);
-    }
+    } 
+    else {
+      var json=JSON.parse(JSON.stringify(dbResult[0]));
+      // var tulos=JSON.parse(json[0].tulos);
+      // console.log(tulos);
+      //console.log(json[0].tulos);
+      response.json(json[0].tulos);
+
+      // if (tulos == 0){
+      //   response.send("ok");
+      // }
+      // else if (tulos == 1){
+      //   response.send("noMoney");
+      // }
+      // else if (tulos == 2){
+      //   response.send("wronAcc");
+      // }
+      // else {
+      //   response.send("error");
+      // }
+     }
   });
 });
 

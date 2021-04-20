@@ -13,6 +13,7 @@
 #include "saldo.h"
 #include "tilitapahtumat.h"
 #include "timerevent.h"
+#include "tilisiirto.h"
 
 
 class engineatm : public QObject
@@ -54,8 +55,14 @@ signals:
     void sendStartLockedPinTimer();
     void sendCloseSaldo();
     void sendCloseTilitapahtumat();
+
+    void sendCloseTilisiirto();
+    void sendMoneyTodayFromEngine(int, QString, QString, QString, QString, QString);
+    void sendMoneyActionResultFromEngineATM(QString);
+
     void sendRequestFutureActionsFromEngineATM(int,int);
     void sendFutureActionsToTilitapahtumat(QByteArray);
+
 
 
 public slots:
@@ -78,8 +85,15 @@ public slots:
     void receiveLockedPinFromDllRestApi();
     void receiveCloseFromSaldo();
     void receiveCloseFromTilitapahtumat();
+
+    void receiveTilisiirtoMenu();
+    void receiveCloseFromTilisiirto();
+    void receiveMoneyTodayFromTilisiirto(QString, QString, QString, QString, QString);
+    void receiveMoneyActionResultFromDllRestApi(QString);
+
     void receiveRequestFutureActionsFromTilitapahtumat(int);
     void receiveFutureActionsToEngineATM(QByteArray);
+
 
 
 private:
@@ -90,6 +104,7 @@ private:
     Valikko * pValikko;
     saldo * psaldo;
     tilitapahtumat * ptilitapahtumat;
+    tilisiirto * ptilisiirto;
     long long kortti;
     int idAccount;
 

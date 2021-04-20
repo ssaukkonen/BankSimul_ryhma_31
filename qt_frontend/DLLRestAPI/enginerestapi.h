@@ -26,8 +26,13 @@ public slots:
     void actions5Slot(QNetworkReply *reply);
     void receiveActionsRequestToEngineRestApi(int,int);
     void actionsSlot(QNetworkReply *reply);
+
+    void receiveMoneyTodayFromDllRestApi(int, QString, QString, QString, QString, QString);
+    void moneyTodaySlot(QNetworkReply *reply);
+
     void receiveRequestFutureActionsFromRestApi(int,int);
     void futureActionsSlot(QNetworkReply *reply);
+
 
 signals:
     void sendWrongPinToDllRestApi();
@@ -37,7 +42,11 @@ signals:
     void sendActions5ToDllRestApi(QByteArray);
     void sendActionsToDllRestApi(QByteArray);
     void sendLockedPinToDllRestApi();
+
+    void sendMoneyActionResultFromEngineRestApi(QString);
+
     void sendFutureActionsToDllRestApi(QByteArray);
+
 
 
 private:
@@ -61,8 +70,13 @@ private:
     QNetworkReply *actionsNextReply;
     QNetworkAccessManager *actionsPreviousManager;
     QNetworkReply *actionsPreviousReply;
+
+    QNetworkAccessManager *moneyTodayManager;
+    QNetworkReply *moneyTodayReply;
+
     QNetworkAccessManager *futureActionsManager;
     QNetworkReply *futureActionsReply;
+
 
 };
 

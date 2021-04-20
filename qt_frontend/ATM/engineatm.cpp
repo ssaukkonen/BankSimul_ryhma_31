@@ -7,7 +7,7 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     pDLLRestAPI = new DLLRestAPI;
     pDLLPinCode = new DLLPinCode;
     pValikko = new Valikko;
-
+    ptilisiirto = new tilisiirto;
     psaldo = new saldo;
     ptilitapahtumat = new tilitapahtumat;
 //    connect(this,SIGNAL(sendSignalToRfid()),pDllrfid,SLOT(receiveSignalFromExe()),Qt::QueuedConnection);
@@ -53,10 +53,22 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(psaldo,SIGNAL(logoutSaldo()),this,SLOT(logout()),Qt::QueuedConnection);
     connect(ptilitapahtumat,SIGNAL(logoutTilitapahtumat()),this,SLOT(logout()),Qt::QueuedConnection);
     connect(ptilitapahtumat,SIGNAL(sendTimerResetFromTilitapahtumat()),this,SLOT(receiveTimerReset()),Qt::QueuedConnection);
+
+    connect(pValikko,SIGNAL(TilisiirtoMenu()),this,SLOT(receiveTilisiirtoMenu()),Qt::QueuedConnection);
+    connect(ptilisiirto,SIGNAL(sendCloseFromTilisiirto()),this,SLOT(receiveCloseFromTilisiirto()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendCloseTilisiirto()),ptilisiirto,SLOT(receiveCloseTilisiirto()),Qt::QueuedConnection);
+    connect(ptilisiirto,SIGNAL(logoutTilisiirto()),this,SLOT(logout()),Qt::QueuedConnection);
+    connect(ptilisiirto,SIGNAL(sendTimerResetToEngineATMFromTilisiirto()),this,SLOT(receiveTimerReset()),Qt::QueuedConnection);
+    connect(ptilisiirto,SIGNAL(sendMoneyTodayFromTilisiirto(QString, QString, QString, QString, QString)),this,SLOT(receiveMoneyTodayFromTilisiirto(QString, QString, QString, QString, QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendMoneyTodayFromEngine(int, QString, QString, QString, QString, QString)),pDLLRestAPI,SLOT(receiveMoneyTodayFromEngine(int, QString, QString, QString, QString, QString)),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendMoneyActionResultFromDllRestApi(QString)),this,SLOT(receiveMoneyActionResultFromDllRestApi(QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendMoneyActionResultFromEngineATM(QString)),ptilisiirto,SLOT(receiveMoneyActionResultFromEngineATM(QString)),Qt::QueuedConnection);
+
     connect(ptilitapahtumat,SIGNAL(requestFutureActionsFromTilitapahtumat(int)),this,SLOT(receiveRequestFutureActionsFromTilitapahtumat(int)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendRequestFutureActionsFromEngineATM(int,int)),pDLLRestAPI,SLOT(receiveRequestFutureActionsFromEngineATM(int,int)),Qt::QueuedConnection);
     connect(pDLLRestAPI,SIGNAL(sendFutureActionsToEngineATM(QByteArray)),this,SLOT(receiveFutureActionsToEngineATM(QByteArray)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendFutureActionsToTilitapahtumat(QByteArray)),ptilitapahtumat,SLOT(receiveFutureActionsToTilitapahtumat(QByteArray)),Qt::QueuedConnection);
+
 }
 
 engineatm::~engineatm()
@@ -68,6 +80,7 @@ engineatm::~engineatm()
     delete pValikko;
     delete psaldo;
     delete ptilitapahtumat;
+    delete ptilisiirto;
 }
 
 void engineatm::testfunction()
@@ -183,6 +196,7 @@ void engineatm::logout()
     emit sendCloseSaldo();
     emit sendCloseValikko();
     emit sendCloseTilitapahtumat();
+    emit sendCloseTilisiirto();
     emit sendCleanVariablesToDllRestApi();
     emit sendReStartToDllSerialPort();
     emit sendShowToMainWindow();
@@ -206,6 +220,30 @@ void engineatm::receiveCloseFromTilitapahtumat()
     pValikko->show();
 }
 
+
+void engineatm::receiveTilisiirtoMenu()
+{
+    pValikko->hide();
+    ptilisiirto->setDefaults();
+    ptilisiirto->show();
+    ptimerEventATM->resetMyTimer();
+}
+
+void engineatm::receiveCloseFromTilisiirto()
+{
+    emit sendCloseTilisiirto();
+    pValikko->show();
+}
+
+void engineatm::receiveMoneyTodayFromTilisiirto(QString summa, QString viite, QString viesti, QString tilinumero, QString date)
+{
+    emit sendMoneyTodayFromEngine(idAccount, summa, viite, viesti, tilinumero, date);
+}
+
+void engineatm::receiveMoneyActionResultFromDllRestApi(QString response_data)
+{
+    emit sendMoneyActionResultFromEngineATM(response_data);
+
 void engineatm::receiveRequestFutureActionsFromTilitapahtumat(int pagenumber)
 {
     emit sendRequestFutureActionsFromEngineATM(idAccount,pagenumber);
@@ -214,5 +252,6 @@ void engineatm::receiveRequestFutureActionsFromTilitapahtumat(int pagenumber)
 void engineatm::receiveFutureActionsToEngineATM(QByteArray futureActions10)
 {
     emit sendFutureActionsToTilitapahtumat(futureActions10);
+
 }
 

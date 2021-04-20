@@ -21,7 +21,7 @@ void timerEvent::timerslot()
 
 void timerEvent::receiveStartFromEngineATM()
 {
-    timer->start(10000);
+    timer->start(30000);
     qDebug() << "timer start";
 }
 
@@ -41,5 +41,5 @@ void timerEvent::resetMyTimer()
 {
     timer->stop();
     qDebug() << "timer reset";
-    timer->start(10000);
+    timer->start(30000);
 }
