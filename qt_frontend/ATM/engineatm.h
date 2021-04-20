@@ -55,9 +55,15 @@ signals:
     void sendStartLockedPinTimer();
     void sendCloseSaldo();
     void sendCloseTilitapahtumat();
+
     void sendCloseTilisiirto();
     void sendMoneyTodayFromEngine(int, QString, QString, QString, QString, QString);
     void sendMoneyActionResultFromEngineATM(QString);
+
+    void sendRequestFutureActionsFromEngineATM(int,int);
+    void sendFutureActionsToTilitapahtumat(QByteArray);
+
+
 
 public slots:
     void receiveSignalFromRfid(long long);
@@ -72,18 +78,23 @@ public slots:
     void receiveActions5FromRestApi(QByteArray);
     void receiveTilitapahtumatMenu();
     void receiveActionsFromRestApi(QByteArray);
-    void receiveNextTilitap(int);
-    void reveivePreviousTilitap(int);
+    void receiveTilitapahtumat(int);
 
     void receiveTimerReset();
     void logout();
     void receiveLockedPinFromDllRestApi();
     void receiveCloseFromSaldo();
     void receiveCloseFromTilitapahtumat();
+
     void receiveTilisiirtoMenu();
     void receiveCloseFromTilisiirto();
     void receiveMoneyTodayFromTilisiirto(QString, QString, QString, QString, QString);
     void receiveMoneyActionResultFromDllRestApi(QString);
+
+    void receiveRequestFutureActionsFromTilitapahtumat(int);
+    void receiveFutureActionsToEngineATM(QByteArray);
+
+
 
 private:
     class timerEvent * ptimerEventATM;
