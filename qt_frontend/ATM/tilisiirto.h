@@ -50,6 +50,7 @@ protected:
 
 public slots:
     void receiveCloseTilisiirto();
+    void receiveMoneyActionResultFromEngineATM(QString);
 };
 
 #endif // TILISIIRTO_H

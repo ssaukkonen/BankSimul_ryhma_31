@@ -298,7 +298,7 @@
        </layout>
       </item>
       <item alignment="Qt::AlignHCenter">
-       <widget class="QLabel" name="label_8">
+       <widget class="QLabel" name="labelIlmoitus">
         <property name="font">
          <font>
           <family>Arial</family>
@@ -309,7 +309,7 @@
          <string notr="true">color: rgb(100, 100, 100);</string>
         </property>
         <property name="text">
-         <string>Maksu lähtenyt</string>
+         <string/>
         </property>
        </widget>
       </item>

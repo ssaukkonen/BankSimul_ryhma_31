@@ -41,6 +41,7 @@ signals:
     void sendActionsToDllRestApi(QByteArray);
 
     void sendLockedPinToDllRestApi();
+    void sendMoneyActionResultFromEngineRestApi(QString);
 
 
 private:

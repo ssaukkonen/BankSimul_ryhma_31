@@ -258,23 +258,26 @@ void enginerestapi::receiveMoneyTodayFromDllRestApi(int idaccount2, QString summ
 
 void enginerestapi::moneyTodaySlot(QNetworkReply *reply)
 {
-    QByteArray response_data=reply->readAll();
+    QString response_data=reply->readAll();
     qDebug() << response_data;
     if(response_data.compare("")==0){
         qDebug() << "Virhe tietokantayhteydessä";
     }
-    else if(response_data.compare("0")==1){
-        qDebug() << "money_action meni läpi";
+    else{
+        emit sendMoneyActionResultFromEngineRestApi(response_data);
     }
-    else if (response_data.compare("1")==1){
-        qDebug() << "ei katetta";
-    }
-    else if (response_data.compare("2")==1){
-        qDebug() << "väärä tili";
-    }
-    else if (response_data.compare("3")==1){
-        qDebug() << "error";
-    }
+    //    else if(response_data.compare("0")==1){
+//        qDebug() << "money_action meni läpi";
+//    }
+//    else if (response_data.compare("1")==1){
+//        qDebug() << "ei katetta";
+//    }
+//    else if (response_data.compare("2")==1){
+//        qDebug() << "väärä tili";
+//    }
+//    else if (response_data.compare("3")==1){
+//        qDebug() << "error";
+//    }
     moneyTodayReply->deleteLater();
     reply->deleteLater();
     moneyTodayManager->deleteLater();

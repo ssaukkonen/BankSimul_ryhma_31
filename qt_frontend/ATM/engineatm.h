@@ -57,7 +57,7 @@ signals:
     void sendCloseTilitapahtumat();
     void sendCloseTilisiirto();
     void sendMoneyTodayFromEngine(int, QString, QString, QString, QString, QString);
-
+    void sendMoneyActionResultFromEngineATM(QString);
 
 public slots:
     void receiveSignalFromRfid(long long);
@@ -83,6 +83,7 @@ public slots:
     void receiveTilisiirtoMenu();
     void receiveCloseFromTilisiirto();
     void receiveMoneyTodayFromTilisiirto(QString, QString, QString, QString, QString);
+    void receiveMoneyActionResultFromDllRestApi(QString);
 
 private:
     class timerEvent * ptimerEventATM;

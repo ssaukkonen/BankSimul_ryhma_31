@@ -67,6 +67,8 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(ptilisiirto,SIGNAL(sendTimerResetToEngineATMFromTilisiirto()),this,SLOT(receiveTimerReset()),Qt::QueuedConnection);
     connect(ptilisiirto,SIGNAL(sendMoneyTodayFromTilisiirto(QString, QString, QString, QString, QString)),this,SLOT(receiveMoneyTodayFromTilisiirto(QString, QString, QString, QString, QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendMoneyTodayFromEngine(int, QString, QString, QString, QString, QString)),pDLLRestAPI,SLOT(receiveMoneyTodayFromEngine(int, QString, QString, QString, QString, QString)),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendMoneyActionResultFromDllRestApi(QString)),this,SLOT(receiveMoneyActionResultFromDllRestApi(QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendMoneyActionResultFromEngineATM(QString)),ptilisiirto,SLOT(receiveMoneyActionResultFromEngineATM(QString)),Qt::QueuedConnection);
 }
 
 engineatm::~engineatm()
@@ -243,5 +245,10 @@ void engineatm::receiveCloseFromTilisiirto()
 void engineatm::receiveMoneyTodayFromTilisiirto(QString summa, QString viite, QString viesti, QString tilinumero, QString date)
 {
     emit sendMoneyTodayFromEngine(idAccount, summa, viite, viesti, tilinumero, date);
+}
+
+void engineatm::receiveMoneyActionResultFromDllRestApi(QString response_data)
+{
+    emit sendMoneyActionResultFromEngineATM(response_data);
 }
 

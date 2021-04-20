@@ -21,6 +21,7 @@ void tilisiirto::setDefaults()
     ui->dateEditPaiva->setDate(QDate::currentDate());
     ui->dateEditPaiva->setMinimumDate(QDate::currentDate());
     ui->labelVirhe->clear();
+    ui->labelIlmoitus->clear();
 }
 
 void tilisiirto::on_lineEditTilinumero_textEdited(const QString &arg1)
@@ -63,7 +64,46 @@ void tilisiirto::receiveCloseTilisiirto()
     ui->lineEditViite->clear();
     ui->lineEditViesti->clear();
     ui->lineEditTilinumero->clear();
+    ui->labelVirhe->clear();
+    ui->labelIlmoitus->clear();
     this->close();
+}
+
+void tilisiirto::receiveMoneyActionResultFromEngineATM(QString response_data)
+{
+    qDebug() << "response_data " << response_data;
+    if(response_data == "0"){
+        qDebug() << "money_action meni läpi";
+        ui->labelIlmoitus->setText("Maksu onnistui");
+        ui->lineEditSumma->clear();
+        ui->lineEditViite->clear();
+        ui->lineEditViesti->clear();
+        ui->lineEditTilinumero->clear();
+    }
+    if (response_data == "1"){
+        qDebug() << "ei katetta";
+        ui->labelIlmoitus->setText("Tilillä ei katetta");
+        ui->lineEditSumma->clear();
+        ui->lineEditViite->clear();
+        ui->lineEditViesti->clear();
+        ui->lineEditTilinumero->clear();
+    }
+    if (response_data == "2"){
+        qDebug() << "väärä tili";
+        ui->labelIlmoitus->setText("Tilinumeroa ei löytynyt");
+        ui->lineEditSumma->clear();
+        ui->lineEditViite->clear();
+        ui->lineEditViesti->clear();
+        ui->lineEditTilinumero->clear();
+    }
+    if (response_data == "3"){
+        qDebug() << "error";
+        ui->labelIlmoitus->setText("Tapahtui virhe");
+        ui->lineEditSumma->clear();
+        ui->lineEditViite->clear();
+        ui->lineEditViesti->clear();
+        ui->lineEditTilinumero->clear();
+    }
 }
 
 void tilisiirto::on_buttonTakaisinTilisiirto_clicked()

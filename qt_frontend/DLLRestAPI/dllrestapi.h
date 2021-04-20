@@ -31,7 +31,7 @@ public slots:
     void receiveCleanVariablesFromEngineATM();
     void receiveLockedPinFromEngineRestApi();
     void receiveMoneyTodayFromEngine(int, QString, QString, QString, QString, QString);
-
+    void receiveMoneyActionResultFromEngineRestApi(QString);
 
 signals:
     void SignalToEngineRestApi(QString);
@@ -50,7 +50,7 @@ signals:
     void sendMoneyTodayFromDllRestApi(int, QString, QString, QString, QString, QString);
 
     void sendLockedPinToEngineATM();
-
+    void sendMoneyActionResultFromDllRestApi(QString);
 
 private:
     enginerestapi * pengineretsapi;
