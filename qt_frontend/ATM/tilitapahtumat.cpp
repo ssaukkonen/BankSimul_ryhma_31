@@ -96,7 +96,12 @@ void tilitapahtumat::on_NextButton_clicked()
         ui ->tableWidget1->clearContents();
         break;
     case 1:
-        //emit futuresignaali
+        emit sendTimerResetFromTilitapahtumat();
+        pagenumber+=10;
+        ui ->PreviousButton ->setDisabled(0);
+        qDebug() << pagenumber;
+        emit requestFutureActionsFromTilitapahtumat(pagenumber);
+        ui ->tableWidget1->clearContents();
         break;
     }
 }
@@ -116,7 +121,15 @@ void tilitapahtumat::on_PreviousButton_clicked()
         ui ->tableWidget1->clearContents();
         break;
     case 1:
-        //emit futuresignaali
+        emit sendTimerResetFromTilitapahtumat();
+        pagenumber-=10;
+        if(pagenumber == 0)
+        {
+            ui ->PreviousButton ->setDisabled(1);
+        }
+        qDebug() << pagenumber;
+        emit requestFutureActionsFromTilitapahtumat(pagenumber);
+        ui ->tableWidget1->clearContents();
         break;
     }
 }
