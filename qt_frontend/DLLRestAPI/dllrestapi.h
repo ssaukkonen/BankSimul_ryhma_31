@@ -51,7 +51,7 @@ signals:
 
     void sendMoneyTodayFromDllRestApi(int, QString, QString, QString, QString, QString);
 
-    void sendLockedPinToEngineATM();
+
     void sendMoneyActionResultFromDllRestApi(QString);
 
     void sendLockedPinToEngineATM();

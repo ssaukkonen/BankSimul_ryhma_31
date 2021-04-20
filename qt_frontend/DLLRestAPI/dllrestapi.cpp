@@ -101,7 +101,7 @@ void DLLRestAPI::receiveMoneyTodayFromEngine(int idaccount, QString summa, QStri
 void DLLRestAPI::receiveMoneyActionResultFromEngineRestApi(QString response_data)
 {
     emit sendMoneyActionResultFromDllRestApi(response_data);
-
+}
 void DLLRestAPI::receiveRequestFutureActionsFromEngineATM(int id, int pagenumber) //tulevat tapahtumat
 {
     emit sendRequestFutureActionsFromRestApi(id, pagenumber);

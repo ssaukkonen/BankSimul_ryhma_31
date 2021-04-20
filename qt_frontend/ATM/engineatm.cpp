@@ -243,7 +243,7 @@ void engineatm::receiveMoneyTodayFromTilisiirto(QString summa, QString viite, QS
 void engineatm::receiveMoneyActionResultFromDllRestApi(QString response_data)
 {
     emit sendMoneyActionResultFromEngineATM(response_data);
-
+}
 void engineatm::receiveRequestFutureActionsFromTilitapahtumat(int pagenumber)
 {
     emit sendRequestFutureActionsFromEngineATM(idAccount,pagenumber);

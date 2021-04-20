@@ -246,6 +246,16 @@ void enginerestapi::receiveMoneyTodayFromDllRestApi(int idaccount2, QString summ
     json_obj.insert("message",viesti);
     }
     QString site_url="http://localhost:3000/actions/money_action/";
+    QString credentials="automat123:pass123";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+    request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
+    moneyTodayManager = new QNetworkAccessManager(this);
+    connect(moneyTodayManager, SIGNAL(finished (QNetworkReply*)),this, SLOT(moneyTodaySlot(QNetworkReply*)));
+    moneyTodayReply=moneyTodayManager->post(request,QJsonDocument(json_obj).toJson());
+}
 
 void enginerestapi::receiveRequestFutureActionsFromRestApi(int id2, int pagenumber)
 {
@@ -256,17 +266,15 @@ void enginerestapi::receiveRequestFutureActionsFromRestApi(int id2, int pagenumb
     json_obj.insert("idaccount",idaccount);
     json_obj.insert("pagenumber",pagenumber);
     QString site_url="http://localhost:3000/future_actions/futureActions10/";
-
     QString credentials="automat123:pass123";
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QByteArray data = credentials.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
     request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
-
-    moneyTodayManager = new QNetworkAccessManager(this);
-    connect(moneyTodayManager, SIGNAL(finished (QNetworkReply*)),this, SLOT(moneyTodaySlot(QNetworkReply*)));
-    moneyTodayReply=moneyTodayManager->post(request,QJsonDocument(json_obj).toJson());
+    futureActionsManager = new QNetworkAccessManager(this);
+    connect(futureActionsManager, SIGNAL(finished (QNetworkReply*)),this, SLOT(futureActionsSlot(QNetworkReply*)));
+    futureActionsReply=futureActionsManager->post(request,QJsonDocument(json_obj).toJson());
 }
 
 void enginerestapi::moneyTodaySlot(QNetworkReply *reply)
@@ -294,11 +302,6 @@ void enginerestapi::moneyTodaySlot(QNetworkReply *reply)
     moneyTodayReply->deleteLater();
     reply->deleteLater();
     moneyTodayManager->deleteLater();
-}
-
-    futureActionsManager = new QNetworkAccessManager(this);
-    connect(futureActionsManager, SIGNAL(finished (QNetworkReply*)),this, SLOT(futureActionsSlot(QNetworkReply*)));
-    futureActionsReply=futureActionsManager->post(request,QJsonDocument(json_obj).toJson());
 }
 
 
