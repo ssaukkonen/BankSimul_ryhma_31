@@ -22,6 +22,8 @@ void tilisiirto::setDefaults()
     ui->dateEditPaiva->setMinimumDate(QDate::currentDate());
     ui->labelVirhe->clear();
     ui->labelIlmoitus->clear();
+    ui->labelTahti1->clear();
+    ui->labelTahti2->clear();
 }
 
 void tilisiirto::on_lineEditTilinumero_textEdited(const QString &arg1)
@@ -66,6 +68,8 @@ void tilisiirto::receiveCloseTilisiirto()
     ui->lineEditTilinumero->clear();
     ui->labelVirhe->clear();
     ui->labelIlmoitus->clear();
+    ui->labelTahti1->clear();
+    ui->labelTahti2->clear();
     this->close();
 }
 
@@ -141,6 +145,8 @@ void tilisiirto::on_buttonSendValues_clicked()
 {
     if (ui->lineEditSumma->text() == NULL || ui->lineEditTilinumero->text() == NULL){
         ui->labelVirhe->setText("*Täytä pakolliset kentät*");
+        ui->labelTahti1->setText("*");
+        ui->labelTahti2->setText("*");
     }
     else{
         QString summa = ui->lineEditSumma->text();
@@ -150,6 +156,8 @@ void tilisiirto::on_buttonSendValues_clicked()
         QString date = ui->dateEditPaiva->text();
         QString datetoday = QDate::currentDate().toString("yyyy-MM-dd");
         ui->labelVirhe->clear();
+        ui->labelTahti1->clear();
+        ui->labelTahti2->clear();
         if (date == datetoday){
             qDebug() << "tänään";
             emit sendMoneyTodayFromTilisiirto(summa, viite, viesti, tilinumero, date);

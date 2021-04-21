@@ -15,6 +15,7 @@ class nosto : public QDialog
 public:
     explicit nosto(QWidget *parent = nullptr);
     ~nosto();
+    void setNostoDefaults();
 
 private slots:
     void on_button20_clicked();

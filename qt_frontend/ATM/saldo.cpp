@@ -56,7 +56,7 @@ void saldo::receiveCloseSaldo()
 {
     qDebug() << "receiveCloseSaldo";
     this->close();
-    ui->tableWidget->clear();
+    ui->tableWidget->clearContents();
 }
 
 void saldo::on_buttonTakaisinSaldo_clicked()

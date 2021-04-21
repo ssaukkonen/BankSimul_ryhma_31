@@ -181,9 +181,10 @@ void engineatm::receiveSaldoKyselyFromNosto()
 
 void engineatm::receiveNostaRahaaMenu()
 {
- pValikko->hide();
- pnosto->show();
- ptimerEventATM->resetMyTimer();
+    pValikko->hide();
+    pnosto->show();
+    pnosto->setNostoDefaults();
+    ptimerEventATM->resetMyTimer();
 }
 
 void engineatm::receiveBalanceFromDllRestApi(QString balance)
@@ -264,12 +265,14 @@ void engineatm::receiveCloseFromSaldo()
 {
     emit sendCloseSaldo();
     pValikko->show();
+    ptimerEventATM->resetMyTimer();
 }
 
 void engineatm::receiveCloseFromTilitapahtumat()
 {
     emit sendCloseTilitapahtumat();
     pValikko->show();
+    ptimerEventATM->resetMyTimer();
 }
 
 
@@ -277,6 +280,7 @@ void engineatm::receiveCloseFromNosto()
 {
     emit sendCloseNosto();
     pValikko->show();
+    ptimerEventATM->resetMyTimer();
 }
 
 
@@ -293,6 +297,7 @@ void engineatm::receiveCloseFromTilisiirto()
 {
     emit sendCloseTilisiirto();
     pValikko->show();
+    ptimerEventATM->resetMyTimer();
 }
 
 void engineatm::receiveMoneyTodayFromTilisiirto(QString summa, QString viite, QString viesti, QString tilinumero, QString date)

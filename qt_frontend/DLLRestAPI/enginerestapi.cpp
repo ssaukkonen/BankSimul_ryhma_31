@@ -338,7 +338,7 @@ void enginerestapi::receiveMoneyFutureFromDllRestApi(int idaccount2, QString sum
     json_obj.insert("recipient_number",tilinumero);
     json_obj.insert("action_type", "Maksutapahtuma");
     json_obj.insert("action_date", date);
-    json_obj.insert("date", QDate::currentDate().toString("yyyy-MM-dd"));
+   // json_obj.insert("date", QDate::currentDate().toString("yyyy-MM-dd"));
     json_obj.insert("amount",summa);
     if (viite != ""){
         json_obj.insert("ref_num",viite);
