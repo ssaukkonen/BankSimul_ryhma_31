@@ -34,6 +34,10 @@ signals:
     void sendCorrectPinToDllRestApi();
     void sendIdFnameLnameToDllRestApi(int, QString, QString);
 
+    void sendNostoNotWorking();
+    void sendNostoWorking();
+
+
     void sendBalanceToDllRestApi(QString);
     void sendActions5ToDllRestApi(QByteArray);
     void sendActionsToDllRestApi(QByteArray);

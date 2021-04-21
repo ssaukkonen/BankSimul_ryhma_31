@@ -6,18 +6,94 @@ nosto::nosto(QWidget *parent) :
     ui(new Ui::nosto)
 {
     ui->setupUi(this);
-    pengineAtmNosto = new engineatm;
-    connect(this,SIGNAL(SignalToEngineFromNosto(QString)),pengineAtmNosto,SLOT(receiveSignalfromNosto(QString)),Qt::QueuedConnection);
+
+
+    ui->buttonSaldo->hide();
 }
 
 nosto::~nosto()
 {
     delete ui;
-    delete pengineAtmNosto;
+
 }
 
 void nosto::on_button20_clicked()
 {
-    amount="20";
+    amount="-20";
     emit SignalToEngineFromNosto(amount);
+}
+
+void nosto::on_button40_clicked()
+{
+    amount="-40";
+    emit SignalToEngineFromNosto(amount);
+}
+
+void nosto::on_button60_clicked()
+{
+    amount="-60";
+    emit SignalToEngineFromNosto(amount);
+}
+
+void nosto::on_button100_clicked()
+{
+    amount="-100";
+    emit SignalToEngineFromNosto(amount);
+}
+
+void nosto::on_button200_clicked()
+{
+    amount="-200";
+    emit SignalToEngineFromNosto(amount);
+}
+
+void nosto::on_button500_clicked()
+{
+    amount="-500";
+    emit SignalToEngineFromNosto(amount);
+}
+
+void nosto::on_buttonSaldo_clicked()
+{
+    emit sendSaldoKyselyToEngine();
+}
+
+void nosto::on_buttonBack_clicked()
+{
+    emit sendCloseFromNosto();
+}
+
+void nosto::on_buttonLogOut_clicked()
+{
+    emit logoutNosto();
+}
+
+void nosto::receiveNostoNotWorkingFromEngine()
+{
+    ui->statusLabel->setText("Tilillä ei tarpeeksi rahaa");
+}
+
+void nosto::receiveNostoWorkingFromEngine()
+{
+    ui->statusLabel->setText("Nosto onnistui");
+    ui->buttonSaldo->setText("Näytä saldo");
+    ui->buttonSaldo->show();
+}
+
+void nosto::receiveCloseNosto()
+{
+    this->close();
+}
+
+void nosto::receiveBalanceToNostoFromEngineATM(QString balance)
+{
+   ui->saldoLabel->setText(balance+" €");
+}
+
+
+void nosto::mousePressEvent(QMouseEvent *eventMouse)
+{
+    if(eventMouse){
+        emit sendTimerResetToEngineFromNosto();
+    }
 }
