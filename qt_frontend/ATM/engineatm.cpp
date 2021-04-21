@@ -7,14 +7,16 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     pDLLRestAPI = new DLLRestAPI;
     pDLLPinCode = new DLLPinCode;
     pValikko = new Valikko;
+    pnosto = new nosto;
+
     ptilisiirto = new tilisiirto;
+
     psaldo = new saldo;
     ptilitapahtumat = new tilitapahtumat;
 //    connect(this,SIGNAL(sendSignalToRfid()),pDllrfid,SLOT(receiveSignalFromExe()),Qt::QueuedConnection);
 
     connect(this,SIGNAL(sendStartToTimer()),ptimerEventATM,SLOT(receiveStartFromEngineATM()),Qt::QueuedConnection);
     connect(pDLLSerialPort,SIGNAL(sendSignalToExeFromRfid(long long)),this,SLOT(receiveSignalFromRfid(long long)),Qt::QueuedConnection);
-    connect(this,SIGNAL(sendSignalToDllRestApi(QString)),pDLLRestAPI,SLOT(SignalFromEngineNosto(QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendSignalPinToDLL()),pDLLPinCode,SLOT(receiveSignalPinFromEngine()),Qt::QueuedConnection);
     connect(pDLLPinCode,SIGNAL(sendPinCodeToEngineAtm(int)),this,SLOT(receiveSignalFromDllPin(int)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendKorttiPinToRestApi(QString, QString)),pDLLRestAPI,SLOT(KorttiPinFromEngine(QString, QString)),Qt::QueuedConnection);
@@ -24,6 +26,19 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(pDLLRestAPI,SIGNAL(sendIdFnameLnameToEngineATM(int, QString, QString)),this,SLOT(receiveIdFnameLnameFromDllRestApi(int, QString, QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendFnameLnameToValikko(QString, QString)),pValikko,SLOT(receiveFnameLnameFromEngineATM(QString, QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendClosePin()),pDLLPinCode,SLOT(receiveClosePin()),Qt::QueuedConnection);
+
+
+    connect(pnosto,SIGNAL(SignalToEngineFromNosto(QString)),this,SLOT(receiveSignalfromNosto(QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendSignalToDllRestApi(QString)),pDLLRestAPI,SLOT(SignalFromEngineNosto(QString)),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendNostoNotWorkingToEngineATM()),this,SLOT(receiveNostoNotWorkingFromDllRestApi()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendNostoNotWorkingToNostoFromEngine()),pnosto,SLOT(receiveNostoNotWorkingFromEngine()),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendNostoWorkingToEngineATM()),this,SLOT(receiveNostoWorkingFromDllRestApi()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendNostoWorkingToNostoFromEngine()),pnosto,SLOT(receiveNostoWorkingFromEngine()),Qt::QueuedConnection);
+    connect(pnosto,SIGNAL(logoutNosto()),this,SLOT(logout()),Qt::QueuedConnection);
+    connect(pValikko,SIGNAL(NostaRahaaMenu()),this,SLOT(receiveNostaRahaaMenu()),Qt::QueuedConnection);
+     connect(pnosto,SIGNAL(sendSaldoKyselyToEngine()),this,SLOT(receiveSaldoKyselyFromNosto()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendBalanceToNosto(QString)),pnosto,SLOT(receiveBalanceToNostoFromEngineATM(QString)),Qt::QueuedConnection);
+
     connect(pValikko,SIGNAL(SaldoMenu()),this,SLOT(receiveSaldoMenu()),Qt::QueuedConnection);
     connect(pDLLRestAPI,SIGNAL(sendBalanceToEngineATM(QString)),this,SLOT(receiveBalanceFromDllRestApi(QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(requestBalance(int)),pDLLRestAPI,SLOT(requestBalanceFromATMEngine(int)),Qt::QueuedConnection);
@@ -36,6 +51,7 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(this,SIGNAL(sendActionsToTilitapahtumat(QByteArray)),ptilitapahtumat,SLOT(receiveActionsFromEngineATM(QByteArray)),Qt::QueuedConnection);
     connect(ptilitapahtumat,SIGNAL(requestActionsFromTilitapahtumat(int)),this,SLOT(receiveTilitapahtumat(int)),Qt::QueuedConnection);
     connect(pDLLPinCode,SIGNAL(sendTimerResetFromDllPincode()),this,SLOT(receiveTimerReset()),Qt::QueuedConnection);
+    connect(pnosto,SIGNAL(sendTimerResetToEngineFromNosto()),this,SLOT(receiveTimerReset()),Qt::QueuedConnection);
     connect(ptimerEventATM,SIGNAL(sendLogout()),this,SLOT(logout()),Qt::QueuedConnection);
     connect(this,SIGNAL(sendCleanVariablesToDllRestApi()),pDLLRestAPI,SLOT(receiveCleanVariablesFromEngineATM()),Qt::QueuedConnection);
     connect(this,SIGNAL(sendReStartToDllSerialPort()),pDLLSerialPort,SLOT(receiveReStartFromEngineAtm()),Qt::QueuedConnection);
@@ -50,6 +66,9 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(this,SIGNAL(sendCloseSaldo()),psaldo,SLOT(receiveCloseSaldo()),Qt::QueuedConnection);
     connect(ptilitapahtumat,SIGNAL(sendCloseFromTilitapahtumat()),this,SLOT(receiveCloseFromTilitapahtumat()),Qt::QueuedConnection);
     connect(this,SIGNAL(sendCloseTilitapahtumat()),ptilitapahtumat,SLOT(receiveCloseTilitapahtumat()),Qt::QueuedConnection);
+    connect(pnosto,SIGNAL(sendCloseFromNosto()),this,SLOT(receiveCloseFromNosto()),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendCloseNosto()),pnosto,SLOT(receiveCloseNosto()),Qt::QueuedConnection);
+
     connect(psaldo,SIGNAL(logoutSaldo()),this,SLOT(logout()),Qt::QueuedConnection);
     connect(ptilitapahtumat,SIGNAL(logoutTilitapahtumat()),this,SLOT(logout()),Qt::QueuedConnection);
     connect(ptilitapahtumat,SIGNAL(sendTimerResetFromTilitapahtumat()),this,SLOT(receiveTimerReset()),Qt::QueuedConnection);
@@ -80,7 +99,11 @@ engineatm::~engineatm()
     delete pValikko;
     delete psaldo;
     delete ptilitapahtumat;
+
+    delete pnosto;
+
     delete ptilisiirto;
+
 }
 
 void engineatm::testfunction()
@@ -102,7 +125,7 @@ void engineatm::receiveSignalFromRfid(long long kortti2)
 
 void engineatm::receiveSignalfromNosto(QString amount)
 {
-    qDebug() << amount;
+    qDebug() << "Enginessä";
     emit sendSignalToDllRestApi(amount);
 }
 
@@ -136,10 +159,35 @@ void engineatm::receiveIdFnameLnameFromDllRestApi(int id, QString fname, QString
     emit sendFnameLnameToValikko(fname, lname);
 }
 
+void engineatm::receiveNostoNotWorkingFromDllRestApi()
+{
+    emit sendNostoNotWorkingToNostoFromEngine();
+}
+
+void engineatm::receiveNostoWorkingFromDllRestApi()
+{
+    emit sendNostoWorkingToNostoFromEngine();
+}
+
+void engineatm::receiveSaldoKyselyFromNosto()
+{
+    qDebug()<<"Engines";
+
+    emit requestBalance(idAccount);
+}
+
+void engineatm::receiveNostaRahaaMenu()
+{
+ pValikko->hide();
+ pnosto->show();
+ ptimerEventATM->resetMyTimer();
+}
+
 void engineatm::receiveBalanceFromDllRestApi(QString balance)
 {
     qDebug() << "balance from dllrestapi";
     emit sendBalanceToSaldo(balance);
+    emit sendBalanceToNosto(balance);
 }
 
 void engineatm::receiveSaldoMenu()
@@ -221,6 +269,14 @@ void engineatm::receiveCloseFromTilitapahtumat()
 }
 
 
+void engineatm::receiveCloseFromNosto()
+{
+    emit sendCloseNosto();
+    pValikko->show();
+}
+
+
+
 void engineatm::receiveTilisiirtoMenu()
 {
     pValikko->hide();
@@ -254,4 +310,5 @@ void engineatm::receiveFutureActionsToEngineATM(QByteArray futureActions10)
     emit sendFutureActionsToTilitapahtumat(futureActions10);
 
 }
+
 

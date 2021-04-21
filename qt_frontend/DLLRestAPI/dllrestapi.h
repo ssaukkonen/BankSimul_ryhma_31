@@ -20,6 +20,10 @@ public slots:
     void receiveCorrectPinFromEngineRestApi();
     void receiveIdFnameLnameFromEngineRestApi(int, QString, QString);
 
+    void receiveNostoNotWorking();
+    void receiveNostoWorking();
+
+
     void receiveBalanceFromEngineRestApi(QString);
     void requestBalanceFromATMEngine(int);
     void receiveActions5FromEngineRestApi(QByteArray);
@@ -42,6 +46,9 @@ signals:
     void sendWrongPinToEngineATM();
     void sendCorrectPinToEngineATM();
     void sendIdFnameLnameToEngineATM(int, QString, QString);
+
+    void sendNostoNotWorkingToEngineATM();
+    void sendNostoWorkingToEngineATM();
 
     void sendBalanceToEngineATM(QString);
     void sendBalanceRequestToEngine(int);

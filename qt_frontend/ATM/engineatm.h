@@ -9,6 +9,7 @@
 //#include "pin.h"
 #include "dllpincode.h"
 #include "valikko.h"
+#include "nosto.h"
 
 #include "saldo.h"
 #include "tilitapahtumat.h"
@@ -29,7 +30,6 @@ signals:
     void sendStartToTimer();
     void sendSignalToRfid();
     void sendSignalToExeFromEngineRfid();
-//    void sendSignalToNosto();
     void sendSignalToDllRestApi(QString);
     void sendSignalPinToDLL();
     void sendKorttiPinToRestApi(QString, QString);
@@ -55,6 +55,10 @@ signals:
     void sendStartLockedPinTimer();
     void sendCloseSaldo();
     void sendCloseTilitapahtumat();
+    void sendCloseNosto();
+    void sendNostoNotWorkingToNostoFromEngine();
+    void sendNostoWorkingToNostoFromEngine();
+    void sendBalanceToNosto(QString);
 
     void sendCloseTilisiirto();
     void sendMoneyTodayFromEngine(int, QString, QString, QString, QString, QString);
@@ -73,6 +77,11 @@ public slots:
     void receiveCorrectPinFromDllRestApi();
     void receiveIdFnameLnameFromDllRestApi(int, QString, QString);
 
+    void receiveNostoNotWorkingFromDllRestApi();
+    void receiveNostoWorkingFromDllRestApi();
+    void receiveSaldoKyselyFromNosto();
+    void receiveNostaRahaaMenu();
+
     void receiveBalanceFromDllRestApi(QString);
     void receiveSaldoMenu();
     void receiveActions5FromRestApi(QByteArray);
@@ -85,6 +94,7 @@ public slots:
     void receiveLockedPinFromDllRestApi();
     void receiveCloseFromSaldo();
     void receiveCloseFromTilitapahtumat();
+    void receiveCloseFromNosto();
 
     void receiveTilisiirtoMenu();
     void receiveCloseFromTilisiirto();
@@ -104,7 +114,11 @@ private:
     Valikko * pValikko;
     saldo * psaldo;
     tilitapahtumat * ptilitapahtumat;
+
+    nosto * pnosto;
+
     tilisiirto * ptilisiirto;
+
     long long kortti;
     int idAccount;
 
