@@ -43,6 +43,7 @@ signals:
     void logoutTilisiirto();
     void sendTimerResetToEngineATMFromTilisiirto();
     void sendMoneyTodayFromTilisiirto(QString, QString, QString, QString, QString);
+    void sendMoneyFutureFromTilisiirto(QString, QString, QString, QString, QString);
 
 protected:
     void keyPressEvent(QKeyEvent *eventKey);
@@ -51,6 +52,7 @@ protected:
 public slots:
     void receiveCloseTilisiirto();
     void receiveMoneyActionResultFromEngineATM(QString);
+    void receiveFutureActionResultFromEngineATM(QString);
 };
 
 #endif // TILISIIRTO_H

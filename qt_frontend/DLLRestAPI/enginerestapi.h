@@ -32,7 +32,8 @@ public slots:
 
     void receiveRequestFutureActionsFromRestApi(int,int);
     void futureActionsSlot(QNetworkReply *reply);
-
+    void receiveMoneyFutureFromDllRestApi(int, QString, QString, QString, QString, QString);
+    void moneyFutureSlot(QNetworkReply *reply);
 
 signals:
     void sendWrongPinToDllRestApi();
@@ -51,6 +52,7 @@ signals:
     void sendMoneyActionResultFromEngineRestApi(QString);
 
     void sendFutureActionsToDllRestApi(QByteArray);
+    void sendFutureActionResultFromEngineRestApi(QString);
 
 
 
@@ -81,6 +83,9 @@ private:
 
     QNetworkAccessManager *futureActionsManager;
     QNetworkReply *futureActionsReply;
+
+    QNetworkAccessManager *moneyFutureManager;
+    QNetworkReply *moneyFutureReply;
 
 
 };

@@ -48,9 +48,12 @@ void enginerestapi::nostoSlot(QNetworkReply *reply)
         qDebug() << "Nosto ei onnistu";
         emit sendNostoNotWorking();
     }
-    else{
+    else if (response_data.compare("1")==0){
         qDebug() << "Nosto onnistui";
         emit sendNostoWorking();
+    }
+    else{
+        qDebug() << "Virhe yhteydessä";
     }
 
     nostoReply->deleteLater();
@@ -322,6 +325,52 @@ void enginerestapi::futureActionsSlot(QNetworkReply *reply)
     futureActionsReply->deleteLater();
     reply->deleteLater();
     futureActionsManager->deleteLater();
+}
+
+void enginerestapi::receiveMoneyFutureFromDllRestApi(int idaccount2, QString summa, QString viite, QString viesti, QString tilinumero, QString date)
+{
+    qDebug() << "moneytodayenginerestapi";
+    //QString idaccount = QString::number(idaccount2);
+    QString idaccount = "1"; //väliaikainen
+    qDebug() << "tilitapahtuma tarkistus";
+    QJsonObject json_obj;
+    json_obj.insert("id_account",idaccount);
+    json_obj.insert("recipient_number",tilinumero);
+    json_obj.insert("action_type", "Maksutapahtuma");
+    json_obj.insert("action_date", date);
+   // json_obj.insert("date", QDate::currentDate().toString("yyyy-MM-dd"));
+    json_obj.insert("amount",summa);
+    if (viite != ""){
+        json_obj.insert("ref_num",viite);
+    }
+    if (viesti != ""){
+    json_obj.insert("message",viesti);
+    }
+    QString site_url="http://localhost:3000/future_actions/";
+    QString credentials="automat123:pass123";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray data = credentials.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+    request.setRawHeader( "Authorization", headerData.toLocal8Bit() );
+    moneyFutureManager = new QNetworkAccessManager(this);
+    connect(moneyFutureManager, SIGNAL(finished (QNetworkReply*)),this, SLOT(moneyFutureSlot(QNetworkReply*)));
+    moneyFutureReply=moneyFutureManager->post(request,QJsonDocument(json_obj).toJson());
+}
+
+void enginerestapi::moneyFutureSlot(QNetworkReply *reply)
+{
+    QString response_data=reply->readAll();
+    qDebug() << response_data;
+    if(response_data.compare("")==0){
+        qDebug() << "Virhe tietokantayhteydessä";
+    }
+    else{
+        emit sendFutureActionResultFromEngineRestApi(response_data);
+    }
+    moneyFutureReply->deleteLater();
+    reply->deleteLater();
+    moneyFutureManager->deleteLater();
 }
 
 void enginerestapi::BalanceFromEngine(int id2)

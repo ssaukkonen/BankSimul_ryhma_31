@@ -25,6 +25,8 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
     connect(this,SIGNAL(sendRequestFutureActionsFromRestApi(int,int)),pengineretsapi,SLOT(receiveRequestFutureActionsFromRestApi(int,int)),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendFutureActionsToDllRestApi(QByteArray)),this,SLOT(receiveFutureActionsToDllRestApi(QByteArray)),Qt::QueuedConnection);
 
+    connect(this,SIGNAL(sendMoneyFutureFromDllRestApi(int, QString, QString, QString, QString, QString)),pengineretsapi,SLOT(receiveMoneyFutureFromDllRestApi(int, QString, QString, QString, QString, QString)),Qt::QueuedConnection);
+    connect(pengineretsapi,SIGNAL(sendFutureActionResultFromEngineRestApi(QString)),this,SLOT(receiveFutureActionResultFromEngineRestApi(QString)),Qt::QueuedConnection);
 }
 
 DLLRestAPI::~DLLRestAPI()
@@ -123,5 +125,15 @@ void DLLRestAPI::receiveFutureActionsToDllRestApi(QByteArray futureActions10)
 {
     emit sendFutureActionsToEngineATM(futureActions10);
 
+}
+
+void DLLRestAPI::receiveMoneyFutureFromEngine(int idaccount, QString summa, QString viite, QString viesti, QString tilinumero, QString date)
+{
+    emit sendMoneyFutureFromDllRestApi(idaccount, summa, viite, viesti, tilinumero, date);
+}
+
+void DLLRestAPI::receiveFutureActionResultFromEngineRestApi(QString response_data)
+{
+    emit sendFutureActionResultFromDllRestApi(response_data);
 }
 

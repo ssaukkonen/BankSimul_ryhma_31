@@ -17,6 +17,13 @@ nosto::~nosto()
 
 }
 
+void nosto::setNostoDefaults()
+{
+    ui->saldoLabel->clear();
+    ui->statusLabel->clear();
+    ui->buttonSaldo->hide();
+}
+
 void nosto::on_button20_clicked()
 {
     amount="-20";
@@ -83,11 +90,14 @@ void nosto::receiveNostoWorkingFromEngine()
 void nosto::receiveCloseNosto()
 {
     this->close();
+    ui->saldoLabel->clear();
+    ui->statusLabel->clear();
+    ui->buttonSaldo->hide();
 }
 
 void nosto::receiveBalanceToNostoFromEngineATM(QString balance)
 {
-   ui->saldoLabel->setText(balance+" €");
+   ui->saldoLabel->setText("Saldo: "+balance+" €");
 }
 
 

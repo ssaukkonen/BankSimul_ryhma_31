@@ -22,6 +22,8 @@ void tilisiirto::setDefaults()
     ui->dateEditPaiva->setMinimumDate(QDate::currentDate());
     ui->labelVirhe->clear();
     ui->labelIlmoitus->clear();
+    ui->labelTahti1->clear();
+    ui->labelTahti2->clear();
 }
 
 void tilisiirto::on_lineEditTilinumero_textEdited(const QString &arg1)
@@ -66,6 +68,8 @@ void tilisiirto::receiveCloseTilisiirto()
     ui->lineEditTilinumero->clear();
     ui->labelVirhe->clear();
     ui->labelIlmoitus->clear();
+    ui->labelTahti1->clear();
+    ui->labelTahti2->clear();
     this->close();
 }
 
@@ -106,6 +110,27 @@ void tilisiirto::receiveMoneyActionResultFromEngineATM(QString response_data)
     }
 }
 
+void tilisiirto::receiveFutureActionResultFromEngineATM(QString response_data)
+{
+    qDebug() << "response_data future" << response_data;
+    if(response_data == "1"){
+        qDebug() << "future_action meni läpi";
+        ui->labelIlmoitus->setText("Maksu tallennettu");
+        ui->lineEditSumma->clear();
+        ui->lineEditViite->clear();
+        ui->lineEditViesti->clear();
+        ui->lineEditTilinumero->clear();
+    }
+    if (response_data == "0"){
+        qDebug() << "future_action ei mennyt läpi";
+        ui->labelIlmoitus->setText("Maksun tallennus ei onnistunut");
+        ui->lineEditSumma->clear();
+        ui->lineEditViite->clear();
+        ui->lineEditViesti->clear();
+        ui->lineEditTilinumero->clear();
+    }
+}
+
 void tilisiirto::on_buttonTakaisinTilisiirto_clicked()
 {
     emit sendCloseFromTilisiirto();
@@ -120,6 +145,8 @@ void tilisiirto::on_buttonSendValues_clicked()
 {
     if (ui->lineEditSumma->text() == NULL || ui->lineEditTilinumero->text() == NULL){
         ui->labelVirhe->setText("*Täytä pakolliset kentät*");
+        ui->labelTahti1->setText("*");
+        ui->labelTahti2->setText("*");
     }
     else{
         QString summa = ui->lineEditSumma->text();
@@ -128,13 +155,16 @@ void tilisiirto::on_buttonSendValues_clicked()
         QString tilinumero = ui->lineEditTilinumero->text();
         QString date = ui->dateEditPaiva->text();
         QString datetoday = QDate::currentDate().toString("yyyy-MM-dd");
+        ui->labelVirhe->clear();
+        ui->labelTahti1->clear();
+        ui->labelTahti2->clear();
         if (date == datetoday){
             qDebug() << "tänään";
             emit sendMoneyTodayFromTilisiirto(summa, viite, viesti, tilinumero, date);
         }
         else {
             qDebug() << "tulevat";
-            //emit sendMoneyFutureFromTilisiirto(summa, viite, viesti, tilinumero, date);
+            emit sendMoneyFutureFromTilisiirto(summa, viite, viesti, tilinumero, date);
         }
     }
 

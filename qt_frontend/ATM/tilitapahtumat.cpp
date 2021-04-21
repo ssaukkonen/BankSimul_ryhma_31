@@ -142,6 +142,7 @@ void tilitapahtumat::on_buttonTakaisinTilitapahtumat_clicked()
 void tilitapahtumat::receiveCloseTilitapahtumat()
 {
     this->close();
+    ui->tableWidget1->clearContents();
 }
 
 void tilitapahtumat::on_buttonLogoutTilitapahtumat_clicked()

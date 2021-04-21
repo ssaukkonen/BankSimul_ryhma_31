@@ -37,12 +37,12 @@
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>200</height>
+          <height>100</height>
          </size>
         </property>
        </spacer>
       </item>
-      <item alignment="Qt::AlignHCenter">
+      <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
        <widget class="QLabel" name="label">
         <property name="font">
          <font>
@@ -60,7 +60,7 @@
         </property>
        </widget>
       </item>
-      <item alignment="Qt::AlignHCenter">
+      <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
        <widget class="QLabel" name="label_2">
         <property name="font">
          <font>
@@ -89,7 +89,7 @@
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>100</height>
+          <height>50</height>
          </size>
         </property>
        </spacer>
@@ -101,6 +101,10 @@
           <width>605</width>
           <height>100</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(100, 100, 100);
+background-color: rgb(200, 200, 200);</string>
         </property>
         <property name="sizeAdjustPolicy">
          <enum>QAbstractScrollArea::AdjustToContents</enum>
@@ -176,31 +180,39 @@
         <property name="spacing">
          <number>200</number>
         </property>
-        <item>
+        <item alignment="Qt::AlignRight">
          <widget class="QPushButton" name="PreviousButton">
           <property name="enabled">
            <bool>false</bool>
           </property>
           <property name="font">
            <font>
-            <pointsize>10</pointsize>
+            <pointsize>8</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(100, 100, 100);
+background-color: rgb(200, 200, 200);</string>
           </property>
           <property name="text">
            <string>Edelliset 10</string>
           </property>
          </widget>
         </item>
-        <item>
+        <item alignment="Qt::AlignLeft">
          <widget class="QPushButton" name="NextButton">
           <property name="font">
            <font>
-            <pointsize>10</pointsize>
+            <pointsize>8</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(100, 100, 100);
+background-color: rgb(200, 200, 200);</string>
           </property>
           <property name="text">
            <string>Seuraavat 10</string>
@@ -214,42 +226,54 @@
         <property name="spacing">
          <number>200</number>
         </property>
-        <item>
+        <item alignment="Qt::AlignRight">
          <widget class="QPushButton" name="buttonTakaisinTilitapahtumat">
           <property name="font">
            <font>
-            <pointsize>10</pointsize>
+            <pointsize>8</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(100, 100, 100);
+background-color: rgb(200, 200, 200);</string>
           </property>
           <property name="text">
            <string>Takaisin</string>
           </property>
          </widget>
         </item>
-        <item>
+        <item alignment="Qt::AlignHCenter">
          <widget class="QPushButton" name="buttonTulevat">
           <property name="font">
            <font>
-            <pointsize>10</pointsize>
+            <pointsize>8</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(100, 100, 100);
+background-color: rgb(200, 200, 200);</string>
           </property>
           <property name="text">
            <string>Tulevat maksut</string>
           </property>
          </widget>
         </item>
-        <item>
+        <item alignment="Qt::AlignLeft">
          <widget class="QPushButton" name="buttonLogoutTilitapahtumat">
           <property name="font">
            <font>
-            <pointsize>10</pointsize>
+            <pointsize>8</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(100, 100, 100);
+background-color: rgb(200, 200, 200);</string>
           </property>
           <property name="text">
            <string>Kirjaudu ulos</string>
