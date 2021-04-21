@@ -87,7 +87,10 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(this,SIGNAL(sendRequestFutureActionsFromEngineATM(int,int)),pDLLRestAPI,SLOT(receiveRequestFutureActionsFromEngineATM(int,int)),Qt::QueuedConnection);
     connect(pDLLRestAPI,SIGNAL(sendFutureActionsToEngineATM(QByteArray)),this,SLOT(receiveFutureActionsToEngineATM(QByteArray)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendFutureActionsToTilitapahtumat(QByteArray)),ptilitapahtumat,SLOT(receiveFutureActionsToTilitapahtumat(QByteArray)),Qt::QueuedConnection);
-
+    connect(ptilisiirto,SIGNAL(sendMoneyFutureFromTilisiirto(QString, QString, QString, QString, QString)),this,SLOT(receiveMoneyFutureFromTilisiirto(QString, QString, QString, QString, QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendMoneyFutureFromEngine(int, QString, QString, QString, QString, QString)),pDLLRestAPI,SLOT(receiveMoneyFutureFromEngine(int, QString, QString, QString, QString, QString)),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendFutureActionResultFromDllRestApi(QString)),this,SLOT(receiveFutureActionResultFromDllRestApi(QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendFutureActionResultFromEngineATM(QString)),ptilisiirto,SLOT(receiveFutureActionResultFromEngineATM(QString)),Qt::QueuedConnection);
 }
 
 engineatm::~engineatm()
@@ -245,6 +248,7 @@ void engineatm::logout()
     emit sendCloseValikko();
     emit sendCloseTilitapahtumat();
     emit sendCloseTilisiirto();
+    emit sendCloseNosto();
     emit sendCleanVariablesToDllRestApi();
     emit sendReStartToDllSerialPort();
     emit sendShowToMainWindow();
@@ -309,6 +313,16 @@ void engineatm::receiveFutureActionsToEngineATM(QByteArray futureActions10)
 {
     emit sendFutureActionsToTilitapahtumat(futureActions10);
 
+}
+
+void engineatm::receiveMoneyFutureFromTilisiirto(QString summa, QString viite, QString viesti, QString tilinumero, QString date)
+{
+    emit sendMoneyFutureFromEngine(idAccount, summa, viite, viesti, tilinumero, date);
+}
+
+void engineatm::receiveFutureActionResultFromDllRestApi(QString response_data)
+{
+    emit sendFutureActionResultFromEngineATM(response_data);
 }
 
 

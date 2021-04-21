@@ -66,8 +66,8 @@ signals:
 
     void sendRequestFutureActionsFromEngineATM(int,int);
     void sendFutureActionsToTilitapahtumat(QByteArray);
-
-
+    void sendMoneyFutureFromEngine(int, QString, QString, QString, QString, QString);
+    void sendFutureActionResultFromEngineATM(QString);
 
 public slots:
     void receiveSignalFromRfid(long long);
@@ -103,7 +103,8 @@ public slots:
 
     void receiveRequestFutureActionsFromTilitapahtumat(int);
     void receiveFutureActionsToEngineATM(QByteArray);
-
+    void receiveMoneyFutureFromTilisiirto(QString, QString, QString, QString, QString);
+    void receiveFutureActionResultFromDllRestApi(QString);
 
 
 private:
