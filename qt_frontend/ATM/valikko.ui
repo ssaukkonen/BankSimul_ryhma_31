@@ -113,7 +113,7 @@ color: rgb(100, 100, 100);</string>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_4">
+            <widget class="QPushButton" name="buttonTilisiirto">
              <property name="font">
               <font>
                <family>Arial</family>

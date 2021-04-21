@@ -14,6 +14,7 @@
 #include "saldo.h"
 #include "tilitapahtumat.h"
 #include "timerevent.h"
+#include "tilisiirto.h"
 
 
 class engineatm : public QObject
@@ -59,6 +60,14 @@ signals:
     void sendNostoWorkingToNostoFromEngine();
     void sendBalanceToNosto(QString);
 
+    void sendCloseTilisiirto();
+    void sendMoneyTodayFromEngine(int, QString, QString, QString, QString, QString);
+    void sendMoneyActionResultFromEngineATM(QString);
+
+    void sendRequestFutureActionsFromEngineATM(int,int);
+    void sendFutureActionsToTilitapahtumat(QByteArray);
+
+
 
 public slots:
     void receiveSignalFromRfid(long long);
@@ -78,8 +87,7 @@ public slots:
     void receiveActions5FromRestApi(QByteArray);
     void receiveTilitapahtumatMenu();
     void receiveActionsFromRestApi(QByteArray);
-    void receiveNextTilitap(int);
-    void reveivePreviousTilitap(int);
+    void receiveTilitapahtumat(int);
 
     void receiveTimerReset();
     void logout();
@@ -87,6 +95,15 @@ public slots:
     void receiveCloseFromSaldo();
     void receiveCloseFromTilitapahtumat();
     void receiveCloseFromNosto();
+
+    void receiveTilisiirtoMenu();
+    void receiveCloseFromTilisiirto();
+    void receiveMoneyTodayFromTilisiirto(QString, QString, QString, QString, QString);
+    void receiveMoneyActionResultFromDllRestApi(QString);
+
+    void receiveRequestFutureActionsFromTilitapahtumat(int);
+    void receiveFutureActionsToEngineATM(QByteArray);
+
 
 
 private:
@@ -97,7 +114,11 @@ private:
     Valikko * pValikko;
     saldo * psaldo;
     tilitapahtumat * ptilitapahtumat;
+
     nosto * pnosto;
+
+    tilisiirto * ptilisiirto;
+
     long long kortti;
     int idAccount;
 

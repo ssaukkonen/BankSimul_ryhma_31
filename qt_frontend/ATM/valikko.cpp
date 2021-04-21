@@ -43,7 +43,13 @@ void Valikko::on_TilitapahtumatButton_clicked()
     emit TilitapahtumatMenu();
 }
 
+
 void Valikko::on_buttonNostaRahaa_clicked()
 {
     emit NostaRahaaMenu();
+
+void Valikko::on_buttonTilisiirto_clicked()
+{
+    emit TilisiirtoMenu();
+
 }

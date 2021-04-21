@@ -29,11 +29,15 @@ public slots:
     void receiveActions5FromEngineRestApi(QByteArray);
     void requestActionsFromATMEngine(int,int);
     void receiveActionsToDllRestApi(QByteArray);
-//    void receiveNextTilitapFromEngineATM(int);
-//    void receivePreviousTilitapFromEngineATM(int);
-
     void receiveCleanVariablesFromEngineATM();
     void receiveLockedPinFromEngineRestApi();
+
+    void receiveMoneyTodayFromEngine(int, QString, QString, QString, QString, QString);
+    void receiveMoneyActionResultFromEngineRestApi(QString);
+
+    void receiveRequestFutureActionsFromEngineATM(int,int);
+    void receiveFutureActionsToDllRestApi(QByteArray);
+
 
 
 signals:
@@ -51,11 +55,15 @@ signals:
     void sendActions5FromRestApi(QByteArray);
     void sendActionsRequestToEngineRestApi(int,int);
     void sendActionsFromRestApi(QByteArray);
-//    void sendNextTilitapFromRestApi(int);
-//    void sendPreviousTilitapFromRestApi(int);
+
+    void sendMoneyTodayFromDllRestApi(int, QString, QString, QString, QString, QString);
+
+
+    void sendMoneyActionResultFromDllRestApi(QString);
 
     void sendLockedPinToEngineATM();
-
+    void sendRequestFutureActionsFromRestApi(int,int);
+    void sendFutureActionsToEngineATM(QByteArray);
 
 private:
     enginerestapi * pengineretsapi;
