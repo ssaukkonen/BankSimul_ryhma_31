@@ -22,6 +22,14 @@ void nosto::setNostoDefaults()
     ui->saldoLabel->clear();
     ui->statusLabel->clear();
     ui->buttonSaldo->hide();
+    ui->button20->show();
+    ui->button40->show();
+    ui->button40->show();
+    ui->button60->show();
+    ui->button100->show();
+    ui->button200->show();
+    ui->button500->show();
+    ui->label->show();
 }
 
 void nosto::on_button20_clicked()
@@ -85,6 +93,14 @@ void nosto::receiveNostoWorkingFromEngine()
     ui->statusLabel->setText("Nosto onnistui");
     ui->buttonSaldo->setText("Näytä saldo");
     ui->buttonSaldo->show();
+    ui->label->hide();
+    ui->button20->hide();
+    ui->button40->hide();
+    ui->button40->hide();
+    ui->button60->hide();
+    ui->button100->hide();
+    ui->button200->hide();
+    ui->button500->hide();
 }
 
 void nosto::receiveCloseNosto()
