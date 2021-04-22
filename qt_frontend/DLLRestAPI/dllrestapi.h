@@ -18,7 +18,7 @@ public slots:
     void KorttiPinFromEngine(QString, QString);
     void receiveWrongPinFromEngineRestApi();
     void receiveCorrectPinFromEngineRestApi();
-    void receiveIdFnameLnameFromEngineRestApi(int, QString, QString);
+    void receiveIdFnameLnameFromEngineRestApi(int, QString, QString, QString);
 
     void receiveNostoNotWorking();
     void receiveNostoWorking();
@@ -46,7 +46,7 @@ signals:
     void KorttiPinToRestApiEngine(QString, QString);
     void sendWrongPinToEngineATM();
     void sendCorrectPinToEngineATM();
-    void sendIdFnameLnameToEngineATM(int, QString, QString);
+    void sendIdFnameLnameToEngineATM(int, QString, QString, QString);
 
     void sendNostoNotWorkingToEngineATM();
     void sendNostoWorkingToEngineATM();

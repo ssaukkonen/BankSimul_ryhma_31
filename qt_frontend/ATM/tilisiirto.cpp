@@ -6,7 +6,7 @@ tilisiirto::tilisiirto(QWidget *parent) :
     ui(new Ui::tilisiirto)
 {
     ui->setupUi(this); 
-    ui->lineEditSumma->setValidator(new QDoubleValidator);
+    ui->lineEditSumma->setValidator(new QRegExpValidator(QRegExp("[0-9]*\\.?[0-9]\\d{0,1}")));
     ui->lineEditViite->setValidator(new QDoubleValidator);
     ui->lineEditTilinumero->setValidator(new QDoubleValidator);
 }
@@ -70,6 +70,8 @@ void tilisiirto::receiveCloseTilisiirto()
     ui->labelIlmoitus->clear();
     ui->labelTahti1->clear();
     ui->labelTahti2->clear();
+    ui->labelNimi->clear();
+    ui->labelOmaTili->clear();
     this->close();
 }
 
@@ -129,6 +131,12 @@ void tilisiirto::receiveFutureActionResultFromEngineATM(QString response_data)
         ui->lineEditViesti->clear();
         ui->lineEditTilinumero->clear();
     }
+}
+
+void tilisiirto::receivenimiToTilisiirtoFromEngineATM(QString nimi, QString accnumber)
+{
+    ui->labelNimi->setText(nimi);
+    ui->labelOmaTili->setText(accnumber);
 }
 
 void tilisiirto::on_buttonTakaisinTilisiirto_clicked()

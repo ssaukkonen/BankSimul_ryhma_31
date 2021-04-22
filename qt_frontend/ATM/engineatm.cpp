@@ -23,7 +23,7 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(pDLLRestAPI,SIGNAL(sendWrongPinToEngineATM()),this,SLOT(receiveWrongPinFromDllRestApi()),Qt::QueuedConnection);
     connect(this,SIGNAL(sendWrongPinToDLLPinCode()),pDLLPinCode,SLOT(receiveWrongPinFromEngineATM()),Qt::QueuedConnection);
     connect(pDLLRestAPI,SIGNAL(sendCorrectPinToEngineATM()),this,SLOT(receiveCorrectPinFromDllRestApi()),Qt::QueuedConnection);
-    connect(pDLLRestAPI,SIGNAL(sendIdFnameLnameToEngineATM(int, QString, QString)),this,SLOT(receiveIdFnameLnameFromDllRestApi(int, QString, QString)),Qt::QueuedConnection);
+    connect(pDLLRestAPI,SIGNAL(sendIdFnameLnameToEngineATM(int, QString, QString, QString)),this,SLOT(receiveIdFnameLnameFromDllRestApi(int, QString, QString, QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendFnameLnameToValikko(QString, QString)),pValikko,SLOT(receiveFnameLnameFromEngineATM(QString, QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendClosePin()),pDLLPinCode,SLOT(receiveClosePin()),Qt::QueuedConnection);
 
@@ -91,6 +91,11 @@ engineatm::engineatm(QObject *parent):QObject(parent)
     connect(this,SIGNAL(sendMoneyFutureFromEngine(int, QString, QString, QString, QString, QString)),pDLLRestAPI,SLOT(receiveMoneyFutureFromEngine(int, QString, QString, QString, QString, QString)),Qt::QueuedConnection);
     connect(pDLLRestAPI,SIGNAL(sendFutureActionResultFromDllRestApi(QString)),this,SLOT(receiveFutureActionResultFromDllRestApi(QString)),Qt::QueuedConnection);
     connect(this,SIGNAL(sendFutureActionResultFromEngineATM(QString)),ptilisiirto,SLOT(receiveFutureActionResultFromEngineATM(QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(nimiToSaldoFromEngineATM(QString)),psaldo,SLOT(receivenimiToSaldoFromEngineATM(QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(nimiToNostoFromEngineATM(QString)),pnosto,SLOT(receivenimiToNostoFromEngineATM(QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(nimiToTilitapahtumatFromEngineATM(QString)),ptilitapahtumat,SLOT(receivenimiToTilitapahtumatFromEngineATM(QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(nimiToTilisiirtoFromEngineATM(QString, QString)),ptilisiirto,SLOT(receivenimiToTilisiirtoFromEngineATM(QString, QString)),Qt::QueuedConnection);
+    connect(this,SIGNAL(sendBalanceToTilitapahtumat(QString)),ptilitapahtumat,SLOT(receiveBalanceToTilitapahtumat(QString)),Qt::QueuedConnection);
 }
 
 engineatm::~engineatm()
@@ -155,10 +160,12 @@ void engineatm::receiveCorrectPinFromDllRestApi()
 //    pValikko = nullptr;
 }
 
-void engineatm::receiveIdFnameLnameFromDllRestApi(int id, QString fname, QString lname)
+void engineatm::receiveIdFnameLnameFromDllRestApi(int id, QString fname, QString lname, QString accnumber2)
 {
     qDebug() << "received id, fname, lname from dllrestapi";
     idAccount=id;
+    nimi = fname+" "+lname;
+    accnumber=accnumber2;
     emit sendFnameLnameToValikko(fname, lname);
 }
 
@@ -184,7 +191,8 @@ void engineatm::receiveNostaRahaaMenu()
     pValikko->hide();
     pnosto->show();
     pnosto->setNostoDefaults();
-    ptimerEventATM->resetMyTimer();
+    emit nimiToNostoFromEngineATM(nimi);
+    ptimerEventATM->resetMyTimer(); 
 }
 
 void engineatm::receiveBalanceFromDllRestApi(QString balance)
@@ -192,6 +200,7 @@ void engineatm::receiveBalanceFromDllRestApi(QString balance)
     qDebug() << "balance from dllrestapi";
     emit sendBalanceToSaldo(balance);
     emit sendBalanceToNosto(balance);
+    emit sendBalanceToTilitapahtumat(balance);
 }
 
 void engineatm::receiveSaldoMenu()
@@ -199,6 +208,7 @@ void engineatm::receiveSaldoMenu()
     emit requestBalance(idAccount);
     pValikko -> hide();
     psaldo -> show();
+    emit nimiToSaldoFromEngineATM(nimi);
     ptimerEventATM->resetMyTimer();
 //    psaldo -> show();
 //    delete psaldo;
@@ -214,6 +224,8 @@ void engineatm::receiveTilitapahtumatMenu()
 {
     emit requestActions(idAccount,0);
     pValikko -> hide();
+    emit nimiToTilitapahtumatFromEngineATM(nimi);
+    emit requestBalance(idAccount);
     ptilitapahtumat -> show();
     ptimerEventATM->resetMyTimer();
 //    ptilitapahtumat -> show();
@@ -244,6 +256,7 @@ void engineatm::logout()
     emit sendTimerStop();
     idAccount=0;
     kortti=0;
+    accnumber="0";
     emit sendClosePinWindow();
     emit sendCloseSaldo();
     emit sendCloseValikko();
@@ -290,6 +303,7 @@ void engineatm::receiveTilisiirtoMenu()
     pValikko->hide();
     ptilisiirto->setDefaults();
     ptilisiirto->show();
+    emit nimiToTilisiirtoFromEngineATM(nimi,accnumber);
     ptimerEventATM->resetMyTimer();
 }
 

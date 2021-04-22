@@ -42,6 +42,7 @@ public slots:
     void receiveNostoWorkingFromEngine();
     void receiveCloseNosto();
     void receiveBalanceToNostoFromEngineATM(QString);
+    void receivenimiToNostoFromEngineATM(QString);
 
 private:
     Ui::nosto *ui;

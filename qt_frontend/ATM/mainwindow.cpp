@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     pengineatm = new engineatm;
     connect(pengineatm,SIGNAL(sendSignalToExeFromEngineRfid()),this,SLOT(SignalFromEngineRfidToExe()),Qt::QueuedConnection);
     connect(pengineatm,SIGNAL(sendShowToMainWindow()),this,SLOT(receiveShowFromEngineATM()),Qt::QueuedConnection);
+    ui->pushButton->hide();
 }
 
 MainWindow::~MainWindow()

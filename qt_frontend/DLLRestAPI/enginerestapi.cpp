@@ -120,13 +120,15 @@ void enginerestapi::idAccountSlot(QNetworkReply *reply)
     else{
     QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
     QJsonObject json_obj = json_doc.object();
+    QString accnumber=QString::number(json_obj["acc_number"].toInt());
+    qDebug() << "accnumber "+accnumber;
     int idAccount=json_obj["id_account"].toInt();
     id = QString::number(idAccount);
     qDebug() << "id-numero" << id;
     QString fname=json_obj["fname"].toString();
     QString lname=json_obj["lname"].toString();
     qDebug() << idAccount << fname << lname;
-    emit sendIdFnameLnameToDllRestApi(idAccount, fname, lname);
+    emit sendIdFnameLnameToDllRestApi(idAccount, fname, lname, accnumber);
     }
     idAccountReply->deleteLater();
     reply->deleteLater();

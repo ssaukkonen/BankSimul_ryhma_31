@@ -64,6 +64,24 @@ alternate-background-color: rgb(200, 200, 200);</string>
         </property>
        </widget>
       </item>
+      <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+       <widget class="QLabel" name="labelNimi">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(100, 100, 100);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
        <widget class="QLabel" name="label">
         <property name="font">
@@ -161,7 +179,7 @@ alternate-background-color: rgb(200, 200, 200);</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(200, 200, 200);</string>
+         <string notr="true">color: rgb(100, 100, 100);</string>
         </property>
         <property name="sizeAdjustPolicy">
          <enum>QAbstractScrollArea::AdjustToContents</enum>

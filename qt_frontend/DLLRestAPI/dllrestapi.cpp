@@ -7,7 +7,7 @@ DLLRestAPI::DLLRestAPI(QObject *parent):QObject(parent)
     connect(this,SIGNAL(KorttiPinToRestApiEngine(QString, QString)),pengineretsapi,SLOT(KorttiPinFromEngine(QString, QString)),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendWrongPinToDllRestApi()),this,SLOT(receiveWrongPinFromEngineRestApi()),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendCorrectPinToDllRestApi()),this,SLOT(receiveCorrectPinFromEngineRestApi()),Qt::QueuedConnection);
-    connect(pengineretsapi,SIGNAL(sendIdFnameLnameToDllRestApi(int, QString, QString)),this,SLOT(receiveIdFnameLnameFromEngineRestApi(int, QString, QString)),Qt::QueuedConnection);
+    connect(pengineretsapi,SIGNAL(sendIdFnameLnameToDllRestApi(int, QString, QString, QString)),this,SLOT(receiveIdFnameLnameFromEngineRestApi(int, QString, QString, QString)),Qt::QueuedConnection);
 
     connect(pengineretsapi,SIGNAL(sendNostoNotWorking()),this,SLOT(receiveNostoNotWorking()),Qt::QueuedConnection);
     connect(pengineretsapi,SIGNAL(sendNostoWorking()),this,SLOT(receiveNostoWorking()),Qt::QueuedConnection);
@@ -56,9 +56,9 @@ void DLLRestAPI::receiveCorrectPinFromEngineRestApi()
     emit sendCorrectPinToEngineATM();
 }
 
-void DLLRestAPI::receiveIdFnameLnameFromEngineRestApi(int idAccount, QString fname, QString lname)
+void DLLRestAPI::receiveIdFnameLnameFromEngineRestApi(int idAccount, QString fname, QString lname, QString accnumber)
 {
-    emit sendIdFnameLnameToEngineATM(idAccount, fname, lname);
+    emit sendIdFnameLnameToEngineATM(idAccount, fname, lname, accnumber);
 }
 
 

@@ -27,6 +27,9 @@ private:
 public slots:
     void receiveActionsFromEngineATM(QByteArray);
     void receiveFutureActionsToTilitapahtumat(QByteArray);
+    void receivenimiToTilitapahtumatFromEngineATM(QString);
+    void receiveBalanceToTilitapahtumat(QString);
+
 private slots:
     void on_NextButton_clicked();
     void on_PreviousButton_clicked();
