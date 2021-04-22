@@ -13,19 +13,20 @@ enginerestapi::~enginerestapi()
 void enginerestapi::cleanVariablesEngineRestApi()
 {
     korttiToId="0";
+    id="0";
 }
 
 void enginerestapi::SignalFromDllRestApi(QString amount)
 {
     qDebug() << amount;
-        qDebug() << "enginerestapi55";
-        QString id = "1";
+    qDebug() << "enginerestapi55";
+    //QString id = "1";
 
-        QJsonObject json_obj;
+    QJsonObject json_obj;
     //    json_obj.insert("id",QString::number(AccountID));
-        json_obj.insert("id",id);
-        json_obj.insert("amount",amount);
-        QString site_url="http://localhost:3000/actions/balance_action";
+    json_obj.insert("id",id);
+    json_obj.insert("amount",amount);
+    QString site_url="http://localhost:3000/actions/balance_action";
     QString credentials="automat123:pass123";
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -119,11 +120,15 @@ void enginerestapi::idAccountSlot(QNetworkReply *reply)
     else{
     QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
     QJsonObject json_obj = json_doc.object();
+    QString accnumber=QString::number(json_obj["acc_number"].toInt());
+    qDebug() << "accnumber "+accnumber;
     int idAccount=json_obj["id_account"].toInt();
+    id = QString::number(idAccount);
+    qDebug() << "id-numero" << id;
     QString fname=json_obj["fname"].toString();
     QString lname=json_obj["lname"].toString();
     qDebug() << idAccount << fname << lname;
-    emit sendIdFnameLnameToDllRestApi(idAccount, fname, lname);
+    emit sendIdFnameLnameToDllRestApi(idAccount, fname, lname, accnumber);
     }
     idAccountReply->deleteLater();
     reply->deleteLater();
@@ -150,7 +155,7 @@ void enginerestapi::receiveIdAccount()
 void enginerestapi::actions5(QString id2)
 {
     //    QString id = QString::number(id2);
-    id = "1"; //väliaikainen
+    //id = id2; //väliaikainen
     qDebug() << "balance tarkistus";
     QString site_url="http://localhost:3000/actions/actions5/"+id;
     QString credentials="automat123:pass123";
@@ -171,17 +176,7 @@ void enginerestapi::actions5Slot(QNetworkReply *reply)
     if(response_data.compare("")==0){
         qDebug() << "Virhe tietokantayhteydessä";
     }
-    else
-    {
-//        QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
-//        QJsonArray json_array = json_doc.array();
-//        QString listActions5;
-//        foreach(const QJsonValue &value, json_array)
-//        {
-//            QJsonObject json_obj = value.toObject();
-//            listActions5+=QString::number(json_obj["amount"].toDouble())+" €\t"+json_obj["date"].toString()+"\t"+json_obj["action_type"].toString()+"\t"+QString::number(json_obj["ref_num"].toDouble())+"\t"+json_obj["message"].toString()+"\t"+QString::number(json_obj["acc_sender"].toInt())+"\r\n";
-//            qDebug() << listActions5;
-//        }
+    else{
         emit sendActions5ToDllRestApi(response_data);
     }
     actions5Reply->deleteLater();
@@ -192,7 +187,7 @@ void enginerestapi::actions5Slot(QNetworkReply *reply)
 void enginerestapi::receiveActionsRequestToEngineRestApi(int id2, int pagenumber)
 {
     //    QString id = QString::number(id2);
-    QString idaccount = "1"; //väliaikainen
+    QString idaccount = id; //väliaikainen
     qDebug() << "tilitapahtuma tarkistus";
     QJsonObject json_obj;
     json_obj.insert("idaccount",idaccount);
@@ -218,15 +213,6 @@ void enginerestapi::actionsSlot(QNetworkReply *reply)
     }
     else
     {
-//        QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
-//        QJsonArray json_array = json_doc.array();
-//        QString listActions10;
-//        foreach(const QJsonValue &value, json_array)
-//        {
-//            QJsonObject json_obj = value.toObject();
-//            listActions10+=QString::number(json_obj["amount"].toDouble())+" €\t"+json_obj["date"].toString()+"\t"+json_obj["action_type"].toString()+"\t"+QString::number(json_obj["ref_num"].toDouble())+"\t"+json_obj["message"].toString()+"\t"+QString::number(json_obj["acc_sender"].toInt())+"\r\n";
-//            qDebug() << listActions10;
-//        }
         emit sendActionsToDllRestApi(response_data);
     }
     actionsReply->deleteLater();
@@ -239,7 +225,7 @@ void enginerestapi::receiveMoneyTodayFromDllRestApi(int idaccount2, QString summ
 {
     qDebug() << "moneytodayenginerestapi";
     //QString idaccount = QString::number(idaccount2);
-    QString idaccount = "1"; //väliaikainen
+    QString idaccount = id; //väliaikainen
     qDebug() << "tilitapahtuma tarkistus";
     QJsonObject json_obj;
     json_obj.insert("first_id",idaccount);
@@ -266,7 +252,7 @@ void enginerestapi::receiveMoneyTodayFromDllRestApi(int idaccount2, QString summ
 void enginerestapi::receiveRequestFutureActionsFromRestApi(int id2, int pagenumber)
 {
     //    QString id = QString::number(id2);
-    QString idaccount = "1"; //väliaikainen
+    QString idaccount = id; //väliaikainen
     qDebug() << "tilitapahtuma tarkistus";
     QJsonObject json_obj;
     json_obj.insert("idaccount",idaccount);
@@ -293,18 +279,6 @@ void enginerestapi::moneyTodaySlot(QNetworkReply *reply)
     else{
         emit sendMoneyActionResultFromEngineRestApi(response_data);
     }
-    //    else if(response_data.compare("0")==1){
-//        qDebug() << "money_action meni läpi";
-//    }
-//    else if (response_data.compare("1")==1){
-//        qDebug() << "ei katetta";
-//    }
-//    else if (response_data.compare("2")==1){
-//        qDebug() << "väärä tili";
-//    }
-//    else if (response_data.compare("3")==1){
-//        qDebug() << "error";
-//    }
     moneyTodayReply->deleteLater();
     reply->deleteLater();
     moneyTodayManager->deleteLater();
@@ -331,7 +305,7 @@ void enginerestapi::receiveMoneyFutureFromDllRestApi(int idaccount2, QString sum
 {
     qDebug() << "moneytodayenginerestapi";
     //QString idaccount = QString::number(idaccount2);
-    QString idaccount = "1"; //väliaikainen
+    QString idaccount = id; //väliaikainen
     qDebug() << "tilitapahtuma tarkistus";
     QJsonObject json_obj;
     json_obj.insert("id_account",idaccount);
@@ -377,7 +351,7 @@ void enginerestapi::BalanceFromEngine(int id2)
 {
 //    qDebug() << balance;
 //    QString id = QString::number(id2);
-    id = "1"; //väliaikainen
+    id = id; //väliaikainen
     qDebug() << "balance tarkistus";
     QString site_url="http://localhost:3000/account/balance/"+id;
     QString credentials="automat123:pass123";

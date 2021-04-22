@@ -57,6 +57,12 @@ void saldo::receiveCloseSaldo()
     qDebug() << "receiveCloseSaldo";
     this->close();
     ui->tableWidget->clearContents();
+    ui->labelNimi->clear();
+}
+
+void saldo::receivenimiToSaldoFromEngineATM(QString nimi)
+{
+    ui->labelNimi->setText(nimi);
 }
 
 void saldo::on_buttonTakaisinSaldo_clicked()

@@ -84,6 +84,16 @@ void tilitapahtumat::receiveFutureActionsToTilitapahtumat(QByteArray futureActio
     }
 }
 
+void tilitapahtumat::receivenimiToTilitapahtumatFromEngineATM(QString nimi)
+{
+    ui->labelNimi->setText(nimi);
+}
+
+void tilitapahtumat::receiveBalanceToTilitapahtumat(QString balance)
+{
+    ui->saldoLabel->setText("Saldo: "+balance+" €");
+}
+
 void tilitapahtumat::on_NextButton_clicked()
 {
     switch (tapahtuma){
@@ -143,6 +153,12 @@ void tilitapahtumat::receiveCloseTilitapahtumat()
 {
     this->close();
     ui->tableWidget1->clearContents();
+    ui->labelNimi->clear();
+    ui->saldoLabel->clear();
+    ui->label_2->setText("Tilitapahtumat");
+    ui->buttonTulevat->setText("Tulevat maksut");
+    tapahtuma = 0;
+    pagenumber = 0;
 }
 
 void tilitapahtumat::on_buttonLogoutTilitapahtumat_clicked()

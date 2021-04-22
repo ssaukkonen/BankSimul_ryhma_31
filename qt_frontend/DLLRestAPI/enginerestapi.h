@@ -38,7 +38,7 @@ public slots:
 signals:
     void sendWrongPinToDllRestApi();
     void sendCorrectPinToDllRestApi();
-    void sendIdFnameLnameToDllRestApi(int, QString, QString);
+    void sendIdFnameLnameToDllRestApi(int, QString, QString, QString);
 
 
     void sendNostoNotWorking();

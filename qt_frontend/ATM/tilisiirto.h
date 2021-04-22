@@ -53,6 +53,7 @@ public slots:
     void receiveCloseTilisiirto();
     void receiveMoneyActionResultFromEngineATM(QString);
     void receiveFutureActionResultFromEngineATM(QString);
+    void receivenimiToTilisiirtoFromEngineATM(QString, QString);
 };
 
 #endif // TILISIIRTO_H

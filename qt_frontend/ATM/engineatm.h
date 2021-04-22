@@ -68,6 +68,11 @@ signals:
     void sendFutureActionsToTilitapahtumat(QByteArray);
     void sendMoneyFutureFromEngine(int, QString, QString, QString, QString, QString);
     void sendFutureActionResultFromEngineATM(QString);
+    void nimiToSaldoFromEngineATM(QString);
+    void nimiToNostoFromEngineATM(QString);
+    void nimiToTilitapahtumatFromEngineATM(QString);
+    void sendBalanceToTilitapahtumat(QString);
+    void nimiToTilisiirtoFromEngineATM(QString, QString);
 
 public slots:
     void receiveSignalFromRfid(long long);
@@ -75,7 +80,7 @@ public slots:
     void receiveSignalFromDllPin(int);
     void receiveWrongPinFromDllRestApi();
     void receiveCorrectPinFromDllRestApi();
-    void receiveIdFnameLnameFromDllRestApi(int, QString, QString);
+    void receiveIdFnameLnameFromDllRestApi(int, QString, QString, QString);
 
     void receiveNostoNotWorkingFromDllRestApi();
     void receiveNostoWorkingFromDllRestApi();
@@ -122,7 +127,8 @@ private:
 
     long long kortti;
     int idAccount;
-
+    QString nimi;
+    QString accnumber;
 };
 
 #endif // ENGINEATM_H

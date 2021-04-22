@@ -26,6 +26,8 @@ public slots:
     void receiveBalanceFromEngineATM(QString);
     void receiveActions5FromEngineATM(QByteArray);
     void receiveCloseSaldo();
+    void receivenimiToSaldoFromEngineATM(QString);
+
 private slots:
     void on_buttonTakaisinSaldo_clicked();
 

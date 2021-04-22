@@ -60,6 +60,24 @@
         </property>
        </widget>
       </item>
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QLabel" name="labelNimi">
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(100, 100, 100);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
        <widget class="QLabel" name="label">
         <property name="font">
@@ -101,87 +119,14 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="1" column="3">
-         <widget class="QLabel" name="label_6">
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(100, 100, 100);</string>
-          </property>
-          <property name="text">
-           <string>Viesti</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="4">
-         <widget class="QLineEdit" name="lineEditViite"/>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLineEdit" name="lineEditSumma"/>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="labelTilinumero">
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(100, 100, 100);</string>
-          </property>
-          <property name="text">
-           <string>Saajan tilinumero</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <widget class="QLabel" name="label_5">
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(100, 100, 100);</string>
-          </property>
-          <property name="text">
-           <string>Viite</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QLineEdit" name="lineEditTilinumero"/>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="labelSumma">
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>11</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(100, 100, 100);</string>
-          </property>
-          <property name="text">
-           <string>Summa</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="4">
+        <item row="2" column="4">
          <widget class="QLineEdit" name="lineEditViesti">
           <property name="text">
            <string/>
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
+        <item row="1" column="0">
          <widget class="QLabel" name="labelTahti1">
           <property name="enabled">
            <bool>true</bool>
@@ -202,7 +147,44 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item row="1" column="4">
+         <widget class="QLineEdit" name="lineEditViite"/>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_3">
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>11</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(100, 100, 100);</string>
+          </property>
+          <property name="text">
+           <string>Tililtä</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="labelTilinumero">
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(100, 100, 100);</string>
+          </property>
+          <property name="text">
+           <string>Saajan tilinumero</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
          <widget class="QLabel" name="labelTahti2">
           <property name="enabled">
            <bool>true</bool>
@@ -217,6 +199,78 @@
           </property>
           <property name="styleSheet">
            <string notr="true">color: rgb(255, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QLabel" name="label_6">
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(100, 100, 100);</string>
+          </property>
+          <property name="text">
+           <string>Viesti</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLineEdit" name="lineEditSumma"/>
+        </item>
+        <item row="1" column="3">
+         <widget class="QLabel" name="label_5">
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(100, 100, 100);</string>
+          </property>
+          <property name="text">
+           <string>Viite</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLineEdit" name="lineEditTilinumero"/>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="labelSumma">
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(100, 100, 100);</string>
+          </property>
+          <property name="text">
+           <string>Summa</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="labelOmaTili">
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>11</pointsize>
+            <weight>50</weight>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(100, 100, 100);</string>
           </property>
           <property name="text">
            <string/>
